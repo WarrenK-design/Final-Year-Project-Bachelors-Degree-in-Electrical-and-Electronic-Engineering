@@ -3,15 +3,32 @@
 #Run to check the current values of the meters 
 #And then write these values to the 
 import sys
-import datetime 
-sys.path.append(r'../lib')
-from openHAB_Proj import openHAB_Proj
+import time 
+sys.path.append(r'..')
+
+
+from openHAB_Proj.open_HAB import open_HAB
+
 
 if __name__ == '__main__':
-    obj = openHAB_Proj()
+    obj = open_HAB()
     obj.get_items()
+    print(obj.read_items())
+    print(obj.get_switches())
     while True:
-        print(obj.read_items(),datetime.datetime.now() )
+        for key, value in obj.switches.items():
+            if (obj.read_item(value)=="OFF"): 
+                obj.item_on(value)
+            else:
+                obj.item_off(value)
+            time.sleep(2)
+    
+
+
+
+
+#while True:
+    #    print(obj.read_items(),datetime.datetime.now() )
 #    for key, value in obj.items.items():
 #        a = obj.read_items(obj.items[key])
 #        print(a)
