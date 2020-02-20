@@ -1,12 +1,20 @@
 #!/usr/bin/env python
+
+##House Keeping##
+#Author    - Warren Kavanagh 
+#Last edit - 19/02/2020
+
+
 #This script will contain all of the openHAB functionalitys 
 #Functions to be implmented:
-#   1. Retrieving items from a given location 
+#   1. Retrieving items through the REST API  
 #   2. Turing items on and off 
 #   3. Reading the values of items
+#   4. Returng Switch items to implment control over multiple switches 
 
 ##Librarys to import##
-#openhab - A package to interface with the openHAB REST API  
+#openhab    - A package to interface with the openHAB REST API  
+#SwitchItem - A class that needs to be directly accessed  
 from openhab import openHAB
 from openhab.items import SwitchItem
 
@@ -80,10 +88,7 @@ class open_HAB:
     #This will then be sorted through to only obtain the switch items and store
     #the switch items in a dictionary 'switches'
     def get_switches(self):
-        self.get_items()
         for key, value in self.items.items():
             if isinstance(value,SwitchItem):
                 self.switches[key] = value
         return self.switches
-
-

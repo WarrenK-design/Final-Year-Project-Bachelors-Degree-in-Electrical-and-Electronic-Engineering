@@ -13,6 +13,7 @@ from openHAB_Proj.open_HAB import open_HAB
 if __name__ == '__main__':
     obj = open_HAB()
     obj.get_items()
+    print("Here",obj.openhab)
     print(obj.read_items())
     print(obj.get_switches())
     while True:
