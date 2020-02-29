@@ -3,35 +3,31 @@
 #Run to check the current values of the meters 
 #And then write these values to the 
 import sys
-import time 
 sys.path.append(r'..')
-
-
 from openHAB_Proj.open_HAB import open_HAB
+import time 
 
 
 if __name__ == '__main__':
+    #1. Retrieve all things and items in configuration
+    #2. Sort the items based upon type/name 
+    #   z-wave items 
+    #   modbus TCP items 
+    #3. Multithread this process so it is operating at seprate times 
+
+    ##Step One: Retrieve the items## 
     obj = open_HAB()
-    obj.get_items()
-    print("Here",obj.openhab)
-    print(obj.read_items())
-    print(obj.get_switches())
-    while True:
-        for key, value in obj.switches.items():
-            if (obj.read_item(value)=="OFF"): 
-                obj.item_on(value)
-            else:
-                obj.item_off(value)
-            time.sleep(2)
-    
+    obj.get_things()
 
+    ##Step Two: Sort the items based on brand type##
+    obj.sort_AeotechZW096()
 
-
-
-#while True:
-    #    print(obj.read_items(),datetime.datetime.now() )
-#    for key, value in obj.items.items():
-#        a = obj.read_items(obj.items[key])
-#        print(a)
-#    #obj.read_items()
-    #print((items.keys()))
+    ##Step Three: Control Loop##
+    #for key, plug in obj.AeotechZW096things.items():
+        #val.update_all()
+    ##    print('********************************')
+     #   plug.read_status()
+     #   plug.turn_on()
+     #   plug.read_switch()
+     #   plug.turn_off()
+     #   plug.read_switch()
