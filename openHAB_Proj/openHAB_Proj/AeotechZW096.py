@@ -85,26 +85,35 @@ class AeotechZW096(open_HAB.open_HAB):
         #Else the thing is ONLINE
         else:
             #json in this loop will be the json data describing
-            #each of the channels associated with the given thing 
+            #each of the channels associated with the given thing
+            # linked items is a temporary list to check for index error 
+            # If there is an index error then no items are configured  
+            linked_items = list()
             for json in self.config['channels']:
+                # Try to index the linkeditems list
+                try:
+                    linked_items = (json['linkedItems'][0])
+                # If there is index error set linked_items to null
+                except IndexError:
+                    linked_items = "Null"
                 if json['channelTypeUID'] == 'zwave:switch_binary':
-                    self.sort_type(self.switch,json['channelTypeUID'],json['linkedItems'][0],"Bool")
+                    self.sort_type(self.switch,json['channelTypeUID'],linked_items,"Bool")
                 elif json['channelTypeUID'] == 'zwave:meter_kwh':
-                    self.sort_type(self.energy,json['channelTypeUID'],json['linkedItems'][0],"kWh")
+                    self.sort_type(self.energy,json['channelTypeUID'],linked_items,"kWh")
                 elif json['channelTypeUID'] == 'zwave:meter_current':
-                    self.sort_type(self.current,json['channelTypeUID'],json['linkedItems'][0],"Amps")
+                    self.sort_type(self.current,json['channelTypeUID'],linked_items,"Amps")
                 elif json['channelTypeUID'] == 'zwave:meter_voltage':
-                    self.sort_type(self.voltage,json['channelTypeUID'],json['linkedItems'][0],"Volts")
+                    self.sort_type(self.voltage,json['channelTypeUID'],linked_items,"Volts")
                 elif json['channelTypeUID'] == 'zwave:meter_watts':
-                    self.sort_type(self.power,json['channelTypeUID'],json['linkedItems'][0],"Watts")
+                    self.sort_type(self.power,json['channelTypeUID'],linked_items,"Watts")
 
     ##sort_type##
     # Gives values to instance variable based on sort_vars function
     # Inputs:
     #   var     - The instance variable to assign a value too 
     #   name    - The value that the name key will point to e.g 'zwave:switch_binary'
-    #   item    - The value that the item key will poin too e.g 'Switch_Zwave_Node3'
-    #   unit    - The units of the given variabel e.g Volts 
+    #   item    - The value that the item key will point too e.g 'Switch_Zwave_Node3'
+    #   unit    - The units of the given variable e.g Volts 
     def sort_type(self,var,name,item,unit):
         var['name'] = name
         var['item'] = item

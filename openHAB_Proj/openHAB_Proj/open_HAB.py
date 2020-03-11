@@ -60,7 +60,7 @@ class open_HAB:
     # is instantiated 
     def __init__ (self):
         self.base_url             = 'http://localhost:8080/rest'
-        self.switches             = dict()
+        self.switches             = dict() #DELETE NOT USED
         self.AeotechZW096things   = dict()
 
     ##get_things##
@@ -86,6 +86,8 @@ class open_HAB:
     # stored in the AeotechZW096things dictionary 
     def sort_AeotechZW096(self):
         # Fill the variables with the items associated with a AeotechZW096 switch
+        # key is the label given to the thing in openHAB config
+        # aeotechobj is an instance of the AeotechZW096 class
         for key, aeotechobj in self.AeotechZW096things.items():
             aeotechobj.sort_vars()
 

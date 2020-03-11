@@ -3,7 +3,7 @@
 #Run to check the current values of the meters 
 #And then write these values to the 
 import sys
-sys.path.append(r'..')
+sys.path.append(r'/home/openhabian/Environments/env_1/openHAB_Proj/')
 from openHAB_Proj.open_HAB import open_HAB
 import time 
 
@@ -23,11 +23,12 @@ if __name__ == '__main__':
     obj.sort_AeotechZW096()
 
     ##Step Three: Control Loop##
-    #for key, plug in obj.AeotechZW096things.items():
+    for key, plug in obj.AeotechZW096things.items():
         #val.update_all()
-    ##    print('********************************')
-     #   plug.read_status()
-     #   plug.turn_on()
-     #   plug.read_switch()
-     #   plug.turn_off()
-     #   plug.read_switch()
+        print('********************************')
+        plug.read_status()
+        plug.turn_on()
+        plug.read_switch()
+        time.sleep(5)
+        plug.turn_off()
+        plug.read_switch()
