@@ -17,6 +17,7 @@ if __name__ == '__main__':
 
     ##Step One: Retrieve the items## 
     obj = open_HAB()
+    obj.initialise_hub_data()
     obj.get_things()
 
     ##Step Two: Sort the items based on brand type##
@@ -24,11 +25,9 @@ if __name__ == '__main__':
 
     ##Step Three: Control Loop##
     for key, plug in obj.AeotechZW096things.items():
-        #val.update_all()
-        print('********************************')
-        plug.read_status()
+      #  plug.update_all()
+    #    print(plug.items)
+   # #    print('********************************')
         plug.turn_on()
-        plug.read_switch()
-        time.sleep(5)
-        plug.turn_off()
-        plug.read_switch()
+        plug.update_devices_data()
+        plug.update_items_data()
