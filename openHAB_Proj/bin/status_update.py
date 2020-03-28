@@ -15,4 +15,3 @@ for device in args.UID:
     a.UID = device
     a.read_status()
     a.update_devices_data()
-

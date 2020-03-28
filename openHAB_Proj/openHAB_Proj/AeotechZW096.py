@@ -74,7 +74,7 @@ class AeotechZW096(open_HAB.open_HAB):
         self.config                 = config
         self.UID                    = UID
         self.status                 = dict.fromkeys(['status','statusDetail','description']) 
-        self.keys    	            = ['name','item','unit','value']
+        self.keys    	            = ['name','UID','unit','value']
         self.items                  = dict() 
 
 
@@ -133,7 +133,7 @@ class AeotechZW096(open_HAB.open_HAB):
     #   unit    - The units of the given variable e.g Volts 
     def sort_type(self,var,name,item,unit):
         var['name'] = name
-        var['item'] = item
+        var['UID'] = item
         var['unit'] = unit
 
     ##read_voltage##
@@ -143,7 +143,7 @@ class AeotechZW096(open_HAB.open_HAB):
             self.voltage['value'] = None
         #The return of read_item will be the voltage value 
         else: 
-            val = self.read_item(self.voltage['item'])
+            val = self.read_item(self.voltage['UID'])
             if val =='NULL':
                 self.voltage['value'] = None    
             else:
@@ -156,7 +156,7 @@ class AeotechZW096(open_HAB.open_HAB):
             self.current['value'] = None
         #The return of read_item will be the current value 
         else:
-            val = self.read_item(self.current['item'])
+            val = self.read_item(self.current['UID'])
             if val =='NULL':
                 self.current['value'] = None
             else:
@@ -169,7 +169,7 @@ class AeotechZW096(open_HAB.open_HAB):
             self.switch['value'] = None
         else:
             #The return of read_item will be the On/Off value 
-            val = self.read_item(self.switch['item'])
+            val = self.read_item(self.switch['UID'])
             if val =='OFF':
                 self.switch['value'] = 0
             elif val == 'ON':
@@ -184,7 +184,7 @@ class AeotechZW096(open_HAB.open_HAB):
             self.power['value'] = None
         else:
        	    #The return of read_item will be the watts value 
-       	    val = self.read_item(self.power['item'])
+       	    val = self.read_item(self.power['UID'])
        	    if val =='NULL':
        	        self.power['value']= None
        	    else:
@@ -198,7 +198,7 @@ class AeotechZW096(open_HAB.open_HAB):
             self.energy['value'] = None
         else:
             #The return of read_item will be the kWh value 
-            val = self.read_item(self.energy['item'])
+            val = self.read_item(self.energy['UID'])
             if val =='NULL':
                 self.energy['value'] = None
             else:
@@ -226,7 +226,7 @@ class AeotechZW096(open_HAB.open_HAB):
             pass
         else:
             #Call the item_on method from the base class
-            self.item_on(self.switch['item'])
+            self.item_on(self.switch['UID'])
 
     ##turn_off##
     #Turns the smart plug off 
@@ -235,7 +235,7 @@ class AeotechZW096(open_HAB.open_HAB):
             pass
         else:
             #Call the item_off method from the base class
-            self.item_off(self.switch['item'])
+            self.item_off(self.switch['UID'])
 
     ##read_status##
     #Reads the status of the smart plug
@@ -255,7 +255,7 @@ class AeotechZW096(open_HAB.open_HAB):
         self.update_all()
         #Iterate through the avaialable items
         for key, val in self.items.items():
-            sql_data.append((val['item'],self.UID,val['value'],val['unit'],datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+            sql_data.append((val['UID'],self.UID,val['value'],val['unit'],datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
         #Pass these to the update_item function of MySQL
         MySQL.insert_item(sql_data)
 

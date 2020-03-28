@@ -1,0 +1,19 @@
+{
+    "Script1": {
+        "zwave:aeon_zw096_00_000:controller:node2": {
+            "zwave:meter_current": "Current_Zwave_Node2",
+            "zwave:meter_kwh": "Energy_Zwave_Node2",
+            "zwave:meter_voltage": "Voltage_Zwave_Node2",
+            "zwave:meter_watts": "Power_Zwave_Node2",
+            "zwave:switch_binary": "Switch_Zwave_Node2"
+        },
+        "zwave:aeon_zw096_00_000:controller:node3": {
+            "zwave:switch_binary": "Switch_Zwave_Node3"
+        }
+    },
+    "Script2": {
+        "zwave:aeon_zw096_00_000:controller:node3": {
+            "zwave:meter_voltage": "Voltage_Zwave_Node3"
+        }
+    }
+}

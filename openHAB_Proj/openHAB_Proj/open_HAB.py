@@ -31,6 +31,8 @@ from openHAB_Proj import MySQL
 import socket 
 from datetime import datetime
 import pprint #**********DELETE****************
+import json
+import os
 
 
 ###  Class: open_HAB  ###
@@ -139,6 +141,16 @@ class open_HAB:
         res = requests.get(f'{self.base_url}/items/{item}/state')
         return res.text
    
+    ##get_item##
+    #Gets the item configuration from openhab
+    #Input
+    #   item - The name of the item you want to get 
+    def get_item(self,item):
+        # Get request, returns a request object 
+        res = requests.get(f'{self.base_url}/items/{item}')
+        return res.json()
+
+
     ##item_on##
     # This function will turn the item that is passed to it on 
     # Inputs:
@@ -166,10 +178,58 @@ class open_HAB:
     
     ##get_thing##
     #Retrieves the thing based on the UID passed to it 
-    # 
     #Inputs:
     #   UID - The UID of the thing 
     def get_thing(self,UID):
         res =  requests.get(f'{self.base_url}/things/{UID}')
         return (res.json())
-                        
+
+
+    ##write_config##
+    #Writes the config file for the scripts
+    #Inputs:
+    #   items - A dictionary containing all the items associated with a thing
+    #   thing - A string containin the name of a thing
+    #   dir   - The directory to generate the file to  
+    def write_config(self,items,thing,dir):
+        data = dict()
+        #See if the file exists first 
+        try:
+            with open(f"{dir}/config.json", "r+") as jsonFile:
+                data = json.load(jsonFile)
+                jsonFile.close()
+                print(f"Updating file {dir}/config.json")
+        #If doesnt exists create it 
+        except:
+            fh = open(f'{dir}/config.json','w')
+            print(f"File {dir}/config.json created")
+            fh.close()
+        finally:
+            # Open the file 
+            with open(f"{dir}/config.json", "w") as jsonFile:
+                # Iterate through the items dictionary 
+                for item, val in items.items():
+                    # Get the item info first as you need the groupnames 
+                    res = (self.get_item(val['UID']))
+                    #See if it has a group assigned to it
+                    try: 
+                        group = res['groupNames'][0]
+                    #If it doesnt go to next iteration 
+                    except IndexError:
+                        continue
+                    #Get the group name 
+                    group = res['groupNames'][0]
+                    #Create a dictionary for it 
+                    if group not in data:
+                        data[group] = dict()
+                    #See if there is already an entry for the current thing 
+                    try:
+                        x = data[group][thing]
+                    #If there is not create a dictionary 
+                    except KeyError:
+                       data[group][thing] = dict()
+                    #Append the current item entry to the Thing list inside the Script dictionary
+                    data[group][thing][(val['name'])] = val['UID']
+                json.dump(data,jsonFile,indent=4,sort_keys=True)
+                jsonFile.close()
+                
