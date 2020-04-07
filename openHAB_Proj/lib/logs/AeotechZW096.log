@@ -1,2 +1,40 @@
 2020-04-07 16:03:04,942:INFO:18594:MainProcess:AeotechZW096.py:AeotechZW096 object instantaited with UID of None
 2020-04-07 16:03:05,008:INFO:18595:MainProcess:AeotechZW096.py:AeotechZW096 object instantaited with UID of None
+2020-04-07 17:03:28,584:INFO:21766:MainProcess:AeotechZW096.py:AeotechZW096 object instantaited with UID of zwave:aeon_zw096_00_000:controller:node3
+2020-04-07 17:03:28,585:INFO:21766:MainProcess:AeotechZW096.py:AeotechZW096 object instantaited with UID of zwave:aeon_zw096_00_000:controller:node2
+2020-04-07 17:03:28,608:INFO:21766:MainProcess:AeotechZW096.py:zwave:aeon_zw096_00_000:controller:node3 status updated to: ONLINE, StatusDetail: NONE
+2020-04-07 17:03:28,609:INFO:21766:MainProcess:AeotechZW096.py:Item named Switch_Zwave_Node3 found for zwave:aeon_zw096_00_000:controller:node3 zwave:switch_binary
+2020-04-07 17:03:28,609:INFO:21766:MainProcess:AeotechZW096.py:Item named Energy_Zwave_Node3 found for zwave:aeon_zw096_00_000:controller:node3 zwave:meter_kwh
+2020-04-07 17:03:28,610:INFO:21766:MainProcess:AeotechZW096.py:Item named Current_Zwave_Node3 found for zwave:aeon_zw096_00_000:controller:node3 zwave:meter_current
+2020-04-07 17:03:28,610:INFO:21766:MainProcess:AeotechZW096.py:Item named Voltage_Zwave_Node3 found for zwave:aeon_zw096_00_000:controller:node3 zwave:meter_voltage
+2020-04-07 17:03:28,610:INFO:21766:MainProcess:AeotechZW096.py:Item named Power_Zwave_Node3 found for zwave:aeon_zw096_00_000:controller:node3 zwave:meter_watts
+2020-04-07 17:03:28,610:WARNING:21766:MainProcess:AeotechZW096.py:There is no linked item to zwave:meter_reset 
+2020-04-07 17:03:28,610:WARNING:21766:MainProcess:AeotechZW096.py:There is no linked item to zwave:color_color 
+2020-04-07 17:03:28,641:INFO:21766:MainProcess:AeotechZW096.py:zwave:aeon_zw096_00_000:controller:node2 status updated to: ONLINE, StatusDetail: NONE
+2020-04-07 17:03:28,641:INFO:21766:MainProcess:AeotechZW096.py:Item named Switch_Zwave_Node2 found for zwave:aeon_zw096_00_000:controller:node2 zwave:switch_binary
+2020-04-07 17:03:28,642:INFO:21766:MainProcess:AeotechZW096.py:Item named Energy_Zwave_Node2 found for zwave:aeon_zw096_00_000:controller:node2 zwave:meter_kwh
+2020-04-07 17:03:28,642:INFO:21766:MainProcess:AeotechZW096.py:Item named Current_Zwave_Node2 found for zwave:aeon_zw096_00_000:controller:node2 zwave:meter_current
+2020-04-07 17:03:28,643:INFO:21766:MainProcess:AeotechZW096.py:Item named Voltage_Zwave_Node2 found for zwave:aeon_zw096_00_000:controller:node2 zwave:meter_voltage
+2020-04-07 17:03:28,643:INFO:21766:MainProcess:AeotechZW096.py:Item named Power_Zwave_Node2 found for zwave:aeon_zw096_00_000:controller:node2 zwave:meter_watts
+2020-04-07 17:03:28,643:WARNING:21766:MainProcess:AeotechZW096.py:There is no linked item to zwave:meter_reset 
+2020-04-07 17:03:28,644:WARNING:21766:MainProcess:AeotechZW096.py:There is no linked item to zwave:color_color 
+2020-04-07 17:03:28,644:INFO:21766:MainProcess:AeotechZW096.py:zwave:aeon_zw096_00_000:controller:node3 sent a command to turn on
+2020-04-07 17:03:28,741:INFO:21766:MainProcess:AeotechZW096.py:zwave:aeon_zw096_00_000:controller:node3 status updated to: ONLINE, StatusDetail: NONE
+2020-04-07 17:03:28,742:INFO:21766:MainProcess:AeotechZW096.py:Attempting to update 'devices' table for zwave:aeon_zw096_00_000:controller:node3 device in database
+2020-04-07 17:03:29,253:INFO:21766:MainProcess:AeotechZW096.py:Attempting to update all items associated with zwave:aeon_zw096_00_000:controller:node3
+2020-04-07 17:03:29,300:INFO:21766:MainProcess:AeotechZW096.py:zwave:aeon_zw096_00_000:controller:node3 voltage value has been updated to 226.646
+2020-04-07 17:03:29,343:INFO:21766:MainProcess:AeotechZW096.py:zwave:aeon_zw096_00_000:controller:node3 current value has been updated to 0
+2020-04-07 17:03:29,387:INFO:21766:MainProcess:AeotechZW096.py:Switch_Zwave_Node3 has been updated to ON
+2020-04-07 17:03:29,431:INFO:21766:MainProcess:AeotechZW096.py:Power_Zwave_Node3 has been updated to 0
+2020-04-07 17:03:29,471:INFO:21766:MainProcess:AeotechZW096.py:Energy_Zwave_Node3 has been updated to 16.192
+2020-04-07 17:03:29,472:INFO:21766:MainProcess:AeotechZW096.py:Attempting to update 'items' table for zwave:aeon_zw096_00_000:controller:node3 items in database
+2020-04-07 17:03:30,600:INFO:21766:MainProcess:AeotechZW096.py:zwave:aeon_zw096_00_000:controller:node2 sent a command to turn on
+2020-04-07 17:03:30,689:INFO:21766:MainProcess:AeotechZW096.py:zwave:aeon_zw096_00_000:controller:node2 status updated to: ONLINE, StatusDetail: NONE
+2020-04-07 17:03:30,690:INFO:21766:MainProcess:AeotechZW096.py:Attempting to update 'devices' table for zwave:aeon_zw096_00_000:controller:node2 device in database
+2020-04-07 17:03:31,174:INFO:21766:MainProcess:AeotechZW096.py:Attempting to update all items associated with zwave:aeon_zw096_00_000:controller:node2
+2020-04-07 17:03:31,214:INFO:21766:MainProcess:AeotechZW096.py:zwave:aeon_zw096_00_000:controller:node2 voltage value has been updated to 227.192
+2020-04-07 17:03:31,257:INFO:21766:MainProcess:AeotechZW096.py:zwave:aeon_zw096_00_000:controller:node2 current value has been updated to 0
+2020-04-07 17:03:31,298:INFO:21766:MainProcess:AeotechZW096.py:Switch_Zwave_Node2 has been updated to ON
+2020-04-07 17:03:31,339:INFO:21766:MainProcess:AeotechZW096.py:Power_Zwave_Node2 has been updated to 0
+2020-04-07 17:03:31,380:INFO:21766:MainProcess:AeotechZW096.py:Energy_Zwave_Node2 has been updated to 20.821
+2020-04-07 17:03:31,382:INFO:21766:MainProcess:AeotechZW096.py:Attempting to update 'items' table for zwave:aeon_zw096_00_000:controller:node2 items in database
