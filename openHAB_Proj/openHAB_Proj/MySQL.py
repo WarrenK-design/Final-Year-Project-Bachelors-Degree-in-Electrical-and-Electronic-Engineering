@@ -22,7 +22,26 @@
 # ConfigParser     - Module to parse configuration files, used to get database config
 from mysql.connector import MySQLConnection, Error
 from configparser import ConfigParser
+import logging
+import sys
+import os
 
+###Set up logger##
+##get the logger
+logger = logging.getLogger(__name__) #Get the logger
+logger.setLevel(logging.INFO) #Set the log level 
+#set up the formatting 
+formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(process)d:%(processName)s:%(filename)s:%(message)s') #Crete a formatter
+#setup the file handler 
+file_handler = logging.FileHandler('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/MySQL.log') #Get a file handler
+file_handler.setFormatter(formatter)
+#setup a stream handler
+stream_handler = logging.StreamHandler(sys.stdout) # get a stream hander 
+stream_handler.setLevel(logging.ERROR) #set the stream handler level 
+#Add the handlers to the logger
+logger.addHandler(file_handler) #Add the handler to logger 
+logger.addHandler(stream_handler)
+#os.chmod('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/MySQL.log', 0o777)
 
 ##Function List##
 #   read_db_config - Reads the configuration file for mysql retruns the configuration parameters for in a dictionary
@@ -42,10 +61,10 @@ from configparser import ConfigParser
 #Return
 #   db  - Configuration parameters to access database in a dictionary 
 def read_db_config(filename='/home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini',section='mysql'):
-
     # create parser and read ini configuration file
     parser = ConfigParser()
     parser.read(filename)
+    logger.info(f"Parsing file {filename}")
 
     # get section, default to mysql
     db = {}
@@ -56,7 +75,9 @@ def read_db_config(filename='/home/openhabian/Environments/env_1/openHAB_Proj/op
         for item in items:
             db[item[0]] = item[1]
     else:
+        logger.error(f'{section} no found in the {filename} file')
         raise Exception(f'{section} no found in the {filename} file')
+    logger.info(f"Database Configuration:{db}")
     return db
 
 
@@ -71,15 +92,15 @@ def connect():
     db_config = read_db_config()
     conn = None
     try:
-        print('Connecting to MySQL database...')
+        logger.info('Attempting to connect to MySQL database')
         conn = MySQLConnection(**db_config)
         if conn.is_connected():
+            logger.info("Connection established to database")
             return conn
         else:
-            print('Connection failed.')
-
+            logging.warning('Connection to database failed')
     except Error as error:
-        print(error)
+        logger.error(error)
 
 ##update_item##
 #Updates an enrty in the items table 
@@ -97,6 +118,7 @@ def update_items(item):
     '''
     #Try to insert to table
     try:
+        logger.info("Attempting to update items table")
         conn = connect()
         cursor = conn.cursor()
 
@@ -104,16 +126,17 @@ def update_items(item):
         cursor.executemany(query,item)
         # Commit the query 
         conn.commit()
-        print("Items Updated")
+        logger.info(f"Items table has been updated updated{item}")
 
     #Print the error out
     except Error as e:
-      print(e)
+      logger.error(e)
 
     #Close the connection
     finally:
         cursor.close()
         conn.close()
+        logger.info("Connection to database closed")
 
 ##insert_item##
 #Inserts sseveral entrys into the community_grid database table items
@@ -142,12 +165,12 @@ def insert_item(items):
         cursor.executemany(query,items)
         # Commit the query 
         conn.commit()
-
+        logging.info(f"New entry in items table {items}")
     #Print the error out
     except Error as e:
         #The entry is duplicate detected by error code 1062
         if e.errno == 1062:
-            print("Entry Exists, updatiing...")
+            logger.warning(f"Duplicate entry in items table {items}")
             item = list()
             ID = list()
             # Recorganize each tuple to pass to the update_items function
@@ -159,12 +182,13 @@ def insert_item(items):
             conn.close()
             update_items(item)
         else:
-            print(e)
-
+            logger.error(e)
+    
     #Close the connection
     finally:
         cursor.close()
         conn.close()
+        logger.info("Connection to database closed")
 
 ##hub_data##
 #This function populates the hubs table in the database
@@ -185,17 +209,18 @@ def hub_data(MAC,IP,Time):
     try:
         conn = connect()
         cursor = conn.cursor()
-
+        logger.info("Attempting to update hub table")
         # execute the query
         cursor.execute(query,(MAC,IP,Time))
         # Commit the query 
         conn.commit()
+        logger.info(f"Hub data entry {MAC} insereted into hub table")
 
     #Print the error out
     except Error as e:
         #The entry is duplicate detected by error code 1062
         if e.errno == 1062:
-            print(f"Entry {MAC} exists, updating entry")
+            logger.warning(f"Entry {MAC} exists, attempting to update table")
             #Update the value for this primary key
             query = '''UPDATE hubs
                 SET IP_Address = %s,
@@ -205,14 +230,16 @@ def hub_data(MAC,IP,Time):
             try:
                 cursor.execute(query,(IP,Time,MAC))
                 conn.commit()
+                logger.info(f"Entry {MAC} has been updated")
             except Error as error:
-                print(error)
+                logger.error(error)
         else:
-            print(e)
+            logger.error(e)
     #Close the connection
     finally:
         cursor.close()
         conn.close()
+        logger.info("Connection to database closed")
 
 
 ##insert_device##
@@ -236,16 +263,16 @@ def insert_device(DeviceID,RaspberryPi_ID,Status,Status_Detail,Status_Desc,Commu
     try:
         conn = connect()
         cursor = conn.cursor()
-
+        logger.info(f"Attempting to insert {DeviceID} into devices table")
         # execute the query
         cursor.execute(query,(DeviceID,RaspberryPi_ID,Status,Status_Detail,Status_Desc,Communication_Protocol,Binding,Time))
         # Commit the query 
         conn.commit()
-
+        logger.info(f"{DeviceID} entry added to devices table")
     #Print the error out
     except Error as e:
         if e.errno == 1062:
-            print(f"Entry {DeviceID} exists, updating entry")
+            logger.warning(f"Entry {DeviceID} exists, attempting to update entry")
             query = '''UPDATE devices
                 SET 
                 RaspberryPi_ID =%s,
@@ -257,33 +284,39 @@ def insert_device(DeviceID,RaspberryPi_ID,Status,Status_Detail,Status_Desc,Commu
                 Time = %s
                 WHERE 
                 DeviceID = %s'''
-            cursor.execute(query,(RaspberryPi_ID,Status,Status_Detail,Status_Desc,Communication_Protocol,Binding,Time,DeviceID))
-            conn.commit()
+            try:
+                cursor.execute(query,(RaspberryPi_ID,Status,Status_Detail,Status_Desc,Communication_Protocol,Binding,Time,DeviceID))
+                conn.commit()
+                logger.info(f"Entry {DeviceID} has been updated in devices table)")
+            except Error as error:
+                logger.error(error)
         else:
-            print(e)
+            logger.error(e)
 
     #Close the connection
     finally:
         cursor.close()
         conn.close()
+        logger.info("Connection to database closed")
 
 
 ##update_voltage##
-#This function will add an entry to the voltage table 
+#This function will add an entry to the voltages table 
 #The schema for the voltage table currently is 
-#+-------+--------------+------+-----+---------+----------------+
-#| Field | Type         | Null | Key | Default | Extra          |
-#+-------+--------------+------+-----+---------+----------------+
-#| ID    | int          | NO   | PRI | NULL    | auto_increment |
-#| Value | int          | YES  |     | NULL    |                |
-#| Units | varchar(255) | YES  |     | Volts   |                |
-#| Time  | datetime     | YES  |     | NULL    |                |
-#+-------+--------------+------+-----+---------+----------------+
+#+---------+--------------+------+-----+----------------------+-------------------+
+#| Field   | Type         | Null | Key | Default              | Extra             |
+#+---------+--------------+------+-----+----------------------+-------------------+
+#| ID      | int          | NO   | PRI | NULL                 | auto_increment    |
+#| MeterID | varchar(255) | YES  |     | NULL                 |                   |
+#| Value   | float        | YES  |     | NULL                 |                   |
+#| Units   | varchar(255) | YES  |     | Volts                |                   |
+#| Time    | timestamp(3) | NO   |     | CURRENT_TIMESTAMP(3) | DEFAULT_GENERATED |
+#+---------+--------------+------+-----+----------------------+-------------------+
 #Inputs:
 #   value   - The value of voltage 
-#   time    - Time stamp of when the measuremnt was recorded   
-def update_voltage(value,time):
-    query = ''' INSERT INTO voltages(Value,Time)
+#   IP      - The IP address of the smart_meter    
+def update_voltage(value,IP):
+    query = ''' INSERT INTO voltages(Value,MeterID)
                  VALUES(%s,%s)
     '''
 
@@ -292,20 +325,22 @@ def update_voltage(value,time):
         conn = connect()
         cursor = conn.cursor()
 
+        logger.info(f"Attempting to add entry to voltages table from {IP}")
         # execute the query
-        cursor.execute(query,(value,time))
+        cursor.execute(query,(value,IP))
         # Commit the query 
         conn.commit()
 
     except Error as e:
-        print(e)
+        logger.error(e)
     
     else:
-        print("New entry inserted into voltages table")
+        logger.info(f"New voltage entry from {IP} in voltages table")
     
     finally:
         cursor.close()
         conn.close()
+        logger.info("Connection to database closed")
 
 
 

@@ -1,0 +1,4 @@
+2020-04-07 16:03:04,943:INFO:18594:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-07 16:03:04,944:INFO:18594:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
+2020-04-07 16:03:05,009:INFO:18595:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.80
+2020-04-07 16:03:05,010:INFO:18595:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.80

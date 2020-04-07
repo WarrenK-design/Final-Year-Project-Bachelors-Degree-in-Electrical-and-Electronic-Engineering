@@ -12,8 +12,27 @@
 from openHAB_Proj import open_HAB
 from openHAB_Proj import MySQL
 from datetime import datetime
+import logging 
+import os
 import pprint
 
+
+##Set up logger##
+#get the logger
+logger = logging.getLogger(__name__) #Get the logger
+logger.setLevel(logging.INFO) #Set the log level 
+#set up the formatting 
+formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(process)d:%(processName)s:%(filename)s:%(message)s') #Crete a formatter
+#setup the file handler 
+file_handler = logging.FileHandler('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/AeotechZW096.log') #Get a file handler
+file_handler.setFormatter(formatter)
+#setup a stream handler
+stream_handler = logging.StreamHandler() # get a stream hander 
+stream_handler.setLevel(logging.ERROR) #set the stream handler level 
+#Add the handlers to the logger
+logger.addHandler(file_handler) #Add the handler to logger 
+logger.addHandler(stream_handler)
+#os.chmod('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/AeotechZW096.log', 0o777)
 
 ###  Class: AeotechZW096  ###
 ## Description ##
@@ -71,6 +90,7 @@ class AeotechZW096(open_HAB.open_HAB):
     #   UID    - The unique ID assigned to the smart plug 
     def __init__ (self,config=None,UID=None):
         super().__init__()
+        logger.info(f"AeotechZW096 object instantaited with UID of {UID}")
         self.config                 = config
         self.UID                    = UID
         self.status                 = dict.fromkeys(['status','statusDetail','description']) 
@@ -88,11 +108,11 @@ class AeotechZW096(open_HAB.open_HAB):
         self.read_status()
         #If the thing is OFFLINE then dont continue setting up variables as they wont have values
         if self.status['status'] !='ONLINE' or self.status['statusDetail'] == 'COMMUNICATION_ERROR':
-            print("Device",self.UID,"is offline")
+            logger.warning(f"Device {self.UID} is offline")
         #Else the thing is ONLINE
         else:
-            #json in this loop will be the json data describing
-            #each of the channels associated with the given thing
+            # json in this loop will be the json data describing
+            # each of the channels associated with the given thing
             # linked items is a temporary list to check for index error 
             # If there is an index error then no items are configured  
             linked_items = list()
@@ -103,6 +123,7 @@ class AeotechZW096(open_HAB.open_HAB):
                 # If there is index error set linked_items to null
                 except IndexError:
                     linked_items = "Null"
+                    logger.warning(f"There is no linked item to {json['channelTypeUID']} ")
                 if json['channelTypeUID'] == 'zwave:switch_binary':
                     self.switch = dict.fromkeys(self.keys)
                     self.sort_type(self.switch,json['channelTypeUID'],linked_items,"Bool")
@@ -135,59 +156,73 @@ class AeotechZW096(open_HAB.open_HAB):
         var['name'] = name
         var['UID'] = item
         var['unit'] = unit
+        logger.info(f"Item named {item} found for {self.UID} {name}")
 
     ##read_voltage##
     #Reads the voltage of the z-wave node 
     def read_voltage(self):
         if self.status['status']=="OFFLINE":
+            logger.warning(f"{self.UID} is offline, setting voltage reading to None")
             self.voltage['value'] = None
         #The return of read_item will be the voltage value 
         else: 
             val = self.read_item(self.voltage['UID'])
             if val =='NULL':
+                logger.warning(f"{self.UID} voltage reading has returned NULL, setting voltage reading to None")
                 self.voltage['value'] = None    
             else:
+                logger.info(f"{self.UID} voltage value has been updated to {val}")
                 self.voltage['value'] = val
             
     ##read_current##
     #Reads the current of the z-wave node 
     def read_current(self):
         if self.status['status']=="OFFLINE":
+            logger.warning(f"{self.UID} is offline, setting current reading to None")
             self.current['value'] = None
         #The return of read_item will be the current value 
         else:
             val = self.read_item(self.current['UID'])
             if val =='NULL':
+                logger.warning(f"{self.UID} current reading has returned NULL, setting voltage reading to None")
                 self.current['value'] = None
             else:
+                logger.info(f"{self.UID} current value has been updated to {val}")
                 self.current['value'] = val
     
     ##read_switch##
     #Reads the switch of the z-wave node 
     def read_switch(self):
         if self.status['status']=="OFFLINE":
+            logger.warning(f"{self.UID} is offline, setting switch reading to None")
             self.switch['value'] = None
         else:
             #The return of read_item will be the On/Off value 
             val = self.read_item(self.switch['UID'])
             if val =='OFF':
+                logger.info(f"{self.switch['UID']} has been updated to {val}")
                 self.switch['value'] = 0
             elif val == 'ON':
+                logger.info(f"{self.switch['UID']} has been updated to {val}")
                 self.switch['value'] = 1
             else:
+                logger.info(f"{self.switch['UID']} has been set to Null due to unreadbale value recieved from API")
                 self.switch['value'] = None
 
     ##read_power##
     #Reads the power of the z-wave node 
     def read_power(self):
         if self.status['status']=="OFFLINE":
+            logger.warning(f"{self.UID} is offline, setting power reading to None")
             self.power['value'] = None
         else:
        	    #The return of read_item will be the watts value 
        	    val = self.read_item(self.power['UID'])
        	    if val =='NULL':
+                logger.warning(f"API returned NULL, setting power reading to None")
        	        self.power['value']= None
        	    else:
+                logger.info(f"{self.power['UID']} has been updated to {val}")
        	        self.power['value'] = val
        	    #pprint.pprint(self.power)
 
@@ -195,19 +230,23 @@ class AeotechZW096(open_HAB.open_HAB):
     #Reads the switch of the z-wave node 
     def read_energy(self):
         if self.status['status']=="OFFLINE":
+            logger.warning(f"{self.UID} is offline, setting energy reading to None")
             self.energy['value'] = None
         else:
             #The return of read_item will be the kWh value 
             val = self.read_item(self.energy['UID'])
             if val =='NULL':
+                logger.warning(f"API returned NULL, setting power reading to None")
                 self.energy['value'] = None
             else:
+                logger.info(f"{self.energy['UID']} has been updated to {val}")
                 self.energy['value'] = val
        #     pprint.pprint(self.energy)
 
     ##update_all##
     #This function updates all item values for the given node 
     def update_all(self):
+        logger.info(f"Attempting to update all items associated with {self.UID}")
         if 'voltage' in self.items:
             self.read_voltage()
         if 'current' in self.items:
@@ -223,18 +262,22 @@ class AeotechZW096(open_HAB.open_HAB):
     #Turns the smart plug on 
     def turn_on(self):
         if self.status['status'] == 'OFFLINE':
+            logger.warning(f"{self.UID} is offline, cannot turn on device")
             pass
         else:
             #Call the item_on method from the base class
+            logger.info(f"{self.UID} sent a command to turn on")
             self.item_on(self.switch['UID'])
 
     ##turn_off##
     #Turns the smart plug off 
     def turn_off(self):
         if self.status['status'] == 'OFFLINE':
+            logger.warning(f"{self.UID} is offline, cannot turn off device")
             pass
         else:
             #Call the item_off method from the base class
+            logger.info(f"{self.UID} sent a command to turn off")
             self.item_off(self.switch['UID'])
 
     ##read_status##
@@ -243,6 +286,7 @@ class AeotechZW096(open_HAB.open_HAB):
         #Call the check_status in the base class
         desc = (self.check_status(self.UID))
         self.status['status'], self.status['statusDetail'] = desc['status'], desc['statusDetail']
+        logger.info(f"{self.UID} status updated to: {self.status['status']}, StatusDetail: {self.status['statusDetail']}")
         if 'description' in desc:
             self.status['description'] = desc['description']
 
@@ -257,6 +301,7 @@ class AeotechZW096(open_HAB.open_HAB):
         for key, val in self.items.items():
             sql_data.append((val['UID'],self.UID,val['value'],val['unit'],datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
         #Pass these to the update_item function of MySQL
+        logger.info(f"Attempting to update 'items' table for {self.UID} items in database")
         MySQL.insert_item(sql_data)
 
     ##update_devices_data##
@@ -271,6 +316,7 @@ class AeotechZW096(open_HAB.open_HAB):
         #Status_Detail          - self.status['statusDetail']
         #Communication_Protocol - Z-Wave 
         #Binding                - Z-Wave Binding description
+        logger.info(f"Attempting to update 'devices' table for {self.UID} device in database")
         MySQL.insert_device(self.UID,self.MAC,self.status['status'],self.status['statusDetail'],self.status['description'],'Z-Wave','Z-Wave Binding',datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
 
@@ -280,4 +326,5 @@ class AeotechZW096(open_HAB.open_HAB):
     def update_volts(self):
         #Get the most recent value for voltage
         self.read_voltage()
+        logger.info(f"Attempting to update 'voltages' table for {self.UID} device in database")
         MySQL.update_voltage(self.voltage['value'],datetime.now().strftime('%Y-%m-%d %H:%M:%S'))

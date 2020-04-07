@@ -1,0 +1,14 @@
+2020-04-07 16:03:04,961:INFO:18594:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-07 16:03:04,962:INFO:18594:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-07 16:03:04,963:INFO:18594:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-07 16:03:05,025:INFO:18595:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-07 16:03:05,026:INFO:18595:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-07 16:03:05,026:INFO:18595:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-07 16:03:05,457:INFO:18594:MainProcess:MySQL.py:Connection established to database
+2020-04-07 16:03:05,463:INFO:18594:MainProcess:MySQL.py:Attempting to add entry to voltages table from 192.168.0.116
+2020-04-07 16:03:05,473:INFO:18594:MainProcess:MySQL.py:New voltage entry from 192.168.0.116 in voltages table
+2020-04-07 16:03:05,475:INFO:18594:MainProcess:MySQL.py:Connection to database closed
+2020-04-07 16:03:05,565:INFO:18595:MainProcess:MySQL.py:Connection established to database
+2020-04-07 16:03:05,569:INFO:18595:MainProcess:MySQL.py:Attempting to add entry to voltages table from 192.168.0.80
+2020-04-07 16:03:05,581:INFO:18595:MainProcess:MySQL.py:New voltage entry from 192.168.0.80 in voltages table
+2020-04-07 16:03:05,583:INFO:18595:MainProcess:MySQL.py:Connection to database closed

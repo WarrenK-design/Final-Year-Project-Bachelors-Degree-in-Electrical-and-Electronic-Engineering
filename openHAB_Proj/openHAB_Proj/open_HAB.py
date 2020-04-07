@@ -33,6 +33,27 @@ from datetime import datetime
 import pprint #**********DELETE****************
 import json
 import os
+import subprocess
+import logging 
+
+
+##Set up logger##
+#get the logger
+logger = logging.getLogger(__name__) #Get the logger
+logger.setLevel(logging.INFO) #Set the log level 
+#set up the formatting 
+formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(process)d:%(processName)s:%(filename)s:%(message)s') #Crete a formatter
+#setup the file handler 
+file_handler = logging.FileHandler('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/open_HAB.log') #Get a file handler
+file_handler.setFormatter(formatter)
+#setup a stream handler
+stream_handler = logging.StreamHandler() # get a stream hander 
+stream_handler.setLevel(logging.ERROR) #set the stream handler level 
+#Add the handlers to the logger
+logger.addHandler(file_handler) #Add the handler to logger 
+logger.addHandler(stream_handler)
+#os.chmod('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/open_HAB.log', 0o777)
+
 
 
 ###  Class: open_HAB  ###
@@ -53,6 +74,8 @@ import os
 #   sort_AeotechZW096   - Will create instance of AeotechZW096 if thing configured in openHAB 
 #   check_status        - Checks the status of the thing passed to the function 
 #   get_thing           - Gets a single thing based on the thing UID  
+#   get_item            - Gets the item configuration 
+#   write_config        - Writes the config JSON file for the current item setup 
 #
 ## Class Variables ##
 #   things  - Stores the JSON data for the config of all things in openHAB 
@@ -70,6 +93,7 @@ class open_HAB:
     # Initialise method called when new instance of the open_HAB
     # is instantiated 
     def __init__ (self):
+        logger.info(f"New open_HAB object created {self}")
         self.base_url             = 'http://localhost:8080/rest'
         self.AeotechZW096things   = dict()
         self.MAC                  = ':'.join(re.findall('..', format(uuid.getnode(),'x')))
@@ -81,6 +105,7 @@ class open_HAB:
     def initialise_hub_data(self):
         # Get the IP Address of the RaspberryPi
         IP = self.get_IP()
+        logger.info(f"IP address for object {self} of: {IP}")
         # Get the current location of the HUB
         MySQL.hub_data(self.MAC,IP,datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
@@ -97,9 +122,14 @@ class open_HAB:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         # Make a connection using
         # Address - 8.8.8.8 makes an external connection which resolves full route
-        # port    - 80 
-        s.connect(("8.8.8.8", 80))
-        return(s.getsockname()[0])
+        # port    - 80
+        try: 
+            s.connect(("8.8.8.8", 80))
+            logger.info(f"IP address of device found to be: {(s.getsockname()[0])}")
+            return(s.getsockname()[0])
+        except:
+            logger.warning("Could not resolve IP address for hub setting as None")
+            return(None)
 
 
     ##get_things##
@@ -111,24 +141,30 @@ class open_HAB:
     # "things". The "things" variable will then be sorted to find the type of things
     def get_things(self):
         #Get request, returns a request object 
+        logger.info(f"Get request made to {self.base_url}/things")
         res = requests.get(f'{self.base_url}/things')
         #Get the JSON from the request object, store in a class variable "things"
         open_HAB.things = (res.json())
         for thing in open_HAB.things:
             if thing['thingTypeUID'] == "zwave:aeon_zw096_00_000":
+                logger.info(f"Found Aeotech smart plug UID: {thing['UID']}")
                 from openHAB_Proj import AeotechZW096 #Only importing as needed resolves "cylic import" https://stackabuse.com/python-circular-imports/
                 self.AeotechZW096things[thing['label']] = AeotechZW096.AeotechZW096(thing,thing['UID'])
+
      
     ##sort_AeotechZW096##
     # This function will sort the AeotechZW096 things found in 
     # the opeHAB configuration and assign values to the AeotechZW096 insance variables
     # stored in the AeotechZW096things dictionary 
     def sort_AeotechZW096(self):
-        # Fill the variables with the items associated with a AeotechZW096 switch
-        # key is the label given to the thing in openHAB config
-        # aeotechobj is an instance of the AeotechZW096 class
-        for key, aeotechobj in self.AeotechZW096things.items():
-            aeotechobj.sort_vars()
+        if bool(self.AeotechZW096things):
+            # Fill the variables with the items associated with a AeotechZW096 switch
+            # key is the label given to the thing in openHAB config
+            # aeotechobj is an instance of the AeotechZW096 class
+            for key, aeotechobj in self.AeotechZW096things.items():
+                aeotechobj.sort_vars()
+        else:
+            logger.warning("No Aeotech plugs found, the AeotechZW096things is empty")
 
 
     ##read item##
@@ -138,6 +174,7 @@ class open_HAB:
     #    item - The name of the item  e.g Voltage_Zwave_Node3
     def read_item(self,item):
         # Get request, returns a request object 
+        logger.info(f"Get request sent to {self.base_url}/items/{item}/state")
         res = requests.get(f'{self.base_url}/items/{item}/state')
         return res.text
    
@@ -146,7 +183,8 @@ class open_HAB:
     #Input
     #   item - The name of the item you want to get 
     def get_item(self,item):
-        # Get request, returns a request object 
+        # Get request, returns a request object
+        logger.info(f"Get request sent to {self.base_url}/items/{item}")
         res = requests.get(f'{self.base_url}/items/{item}')
         return res.json()
 
@@ -156,6 +194,7 @@ class open_HAB:
     # Inputs:
     #    item - The name of the item to turn on
     def item_on(self,item):
+        logger.info(f"Post request sent to {self.base_url}/items/{item}, data=ON")
         res = requests.post(f'{self.base_url}/items/{item}',data="ON")
         
     ##item_off##
@@ -163,6 +202,7 @@ class open_HAB:
     # Inputs:
     #    item - The name of the item to turn off 
     def item_off(self,item):
+        logger.info(f"Post request sent to {self.base_url}/items/{item}, data=OFF")
         res = requests.post(f'{self.base_url}/items/{item}',data="OFF")
 
 
@@ -172,6 +212,7 @@ class open_HAB:
     # Inputs:
     #   UID - The UID of the thing to check the status of 
     def check_status(self,UID):
+        logger.info(f"Get request sent to {self.base_url}/things/{UID}/status")
         res = requests.get(f'{self.base_url}/things/{UID}/status')
         return (res.json())
 
@@ -181,55 +222,74 @@ class open_HAB:
     #Inputs:
     #   UID - The UID of the thing 
     def get_thing(self,UID):
+        logger.info(f"Get request sent to {self.base_url}/things/{UID}")
         res =  requests.get(f'{self.base_url}/things/{UID}')
         return (res.json())
 
 
-    ##write_config##
+    ##Write_Config##
     #Writes the config file for the scripts
     #Inputs:
-    #   items - A dictionary containing all the items associated with a thing
-    #   thing - A string containin the name of a thing
-    #   dir   - The directory to generate the file to  
-    def write_config(self,items,thing,dir):
+    #   switch - The name of the switch item in openHAB the given script will control 
+    #   thing  - A string containing the device UID
+    #   dir   - The directory to generate the file to 
+    def write_config(self,switch,thing,dir):
         data = dict()
-        #See if the file exists first 
+        res = (self.get_item(switch))
+        
+        #See if a group exists first  
+        try:
+            group = res['groupNames'][0]
+            logger.info(f"{switch} found to be part of {group} group in openHAB setup")
+        # If a group does not exist then exit the function
+        except IndexError:
+            logger.warning(f"No group found in openHAB for {switch}, will not be included in config file")
+            return 
+
+        #See if there is a file for the config already
         try:
             with open(f"{dir}/config.json", "r+") as jsonFile:
                 data = json.load(jsonFile)
                 jsonFile.close()
-                print(f"Updating file {dir}/config.json")
-        #If doesnt exists create it 
+                logger.info(f"Updating file {dir}/config.json")
+        
+        #If there isnt a config file create it  
         except:
-            fh = open(f'{dir}/config.json','w')
-            print(f"File {dir}/config.json created")
+            fh = open(f'{dir}/config.json','w+')
+            logger.info(f"File {dir}/config.json created")
             fh.close()
+            subprocess.call(['chmod','0777',dir+'/config.json'])
+            logger.info(f"Permissions changed on {dir}/config to 777")
+        
+        # Finally write to the file
         finally:
             # Open the file 
-            with open(f"{dir}/config.json", "w") as jsonFile:
-                # Iterate through the items dictionary 
-                for item, val in items.items():
-                    # Get the item info first as you need the groupnames 
-                    res = (self.get_item(val['UID']))
-                    #See if it has a group assigned to it
-                    try: 
-                        group = res['groupNames'][0]
-                    #If it doesnt go to next iteration 
-                    except IndexError:
-                        continue
-                    #Get the group name 
-                    group = res['groupNames'][0]
-                    #Create a dictionary for it 
-                    if group not in data:
-                        data[group] = dict()
-                    #See if there is already an entry for the current thing 
-                    try:
-                        x = data[group][thing]
-                    #If there is not create a dictionary 
-                    except KeyError:
-                       data[group][thing] = dict()
-                    #Append the current item entry to the Thing list inside the Script dictionary
-                    data[group][thing][(val['name'])] = val['UID']
+            with open(f"{dir}/config.json", "w+") as jsonFile:
+                # Get the group name
+                group = res['groupNames'][0]
+
+                #Create a dictionary for it 
+                if group not in data:
+                    logger.info(f"Entry added for {group} in {dir}/config.json")
+                    data[group] = dict()
+
+                #See if there is already an entry for the current thing 
+                try:
+                    x = data[group][thing]
+
+                #If there is not create a dictionary 
+                except KeyError:
+                   logger.info(f"New entry created in {dir}/config.json for {thing} under {group}")
+                   data[group][thing] = dict()
+
+                # Get the values of each of the variables, will return a string
+                obj = json.dumps(self.__dict__)
+
+                #Need to get it in dictinary form to create an object later 
+                clone = json.loads(obj)                    
+                data[group][thing] = clone
+
+                #Write the entry to the file 
                 json.dump(data,jsonFile,indent=4,sort_keys=True)
                 jsonFile.close()
-                
+                logger.info(f"{dir}/config.json has been updated")
