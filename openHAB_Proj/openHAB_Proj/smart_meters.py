@@ -21,7 +21,8 @@
 #Endian               - Used for the coding type of the 32 bit float register
 #BinaryPayloadDecoder - Used in the decoding of the 32 bit float registers 
 #MySQL                - The MySQL module to connect to the datbase 
-from pymodbus.client.sync import ModbusTcpClient
+from pymodbus.client.asynchronous.tcp import AsyncModbusTCPClient as ModbusClient
+from pymodbus.client.asynchronous import schedulers
 from pymodbus.constants import Endian
 from pymodbus.payload import BinaryPayloadDecoder
 from openHAB_Proj import MySQL
@@ -54,12 +55,13 @@ class smart_meter():
     # Initialiase method to intatiated object 
     # Inputs:
     #   IP - The IP address of the smart meter 
-    def __init__(self,IP):
+    #   client - A modbus client of type 'pymodbus.client.asynchronous.asyncio.ReconnectingAsyncioModbusTcpClient'
+    def __init__(self,IP,client):
         #Create the client object passing the IP address of the slave to it 
-        #client = ModbusTcpClient('192.168.0.116')
         logger.info(f"New instance of smart_meter instantaited with IP of {IP}")
         self.IP = IP
-        self.client = ModbusTcpClient(IP)
+        #self.client - 'pymodbus.client.asynchronous.asyncio.ModbusClientProtocol' 
+        self.client = client.protocol
 
     ##  read32bitfloat ##
     # Reads a 32 bit float from the smart meter
@@ -67,27 +69,28 @@ class smart_meter():
     #   address - The starting address of the 32 bit float
     # Return:
     #   response - A response object from the ModbusTcpClient module  
-    def read32bitfloat(self,address):
+    async def read32bitfloat(self,address):
         logger.info(f"Reading address:{address} from {self.IP}")
         try:
-            response = self.client.read_input_registers(address, 2)
-            return response
+            response = await self.client.read_input_registers(address, 2)
+            time = (datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3])
+            return response, time
         except Exception as e:
             logger.error(f"Error reading {address} from {self.IP}, {e}")
             
-
-
     ## read_voltage ##
     # Channel two is wired on the meter
     # The voltage for channel two starts at reg 0x1112
     # Return:
     #   Floating point number in volts
-    def read_voltage(self):
-        response = self.read32bitfloat(0x1112)
-        decoder = BinaryPayloadDecoder.fromRegisters(response.registers, Endian.Big, wordorder=Endian.Little)
-        value = decoder.decode_32bit_float()
-        MySQL.update_voltage(value,self.IP)
-        #print(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3])
+    async def read_voltage(self,conn):
+        response, time = await self.read32bitfloat(0x1112)
+        try:
+            decoder = BinaryPayloadDecoder.fromRegisters(response.registers, Endian.Big, wordorder=Endian.Little)
+            value = decoder.decode_32bit_float()
+            await MySQL.update_voltage(value,self.IP,time,conn)
+        except Exception as e:
+            logger.exception(f"Could not decode register response, tracback shown below{e}")
 
     ## read_current ##
     # Channel two is wired on the meter

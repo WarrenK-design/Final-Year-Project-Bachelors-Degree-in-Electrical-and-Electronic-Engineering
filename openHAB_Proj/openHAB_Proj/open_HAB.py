@@ -35,6 +35,8 @@ import json
 import os
 import subprocess
 import logging 
+import asyncio
+import aiohttp
 
 
 ##Set up logger##
@@ -78,7 +80,8 @@ logger.addHandler(stream_handler)
 #   write_config        - Writes the config JSON file for the current item setup 
 #
 ## Class Variables ##
-#   things  - Stores the JSON data for the config of all things in openHAB 
+#   things  - Stores the JSON data for the config of all things in openHAB
+#   session - A aiohttp session to interface with the rest API  
 #
 ## Instance Variables ##
 #   base_url[string]                - The destination for the REST requests 
@@ -88,6 +91,7 @@ class open_HAB:
 
     ##class varaiables##
     things = dict()
+    session = aiohttp.ClientSession()
 
     ##__init__##
     # Initialise method called when new instance of the open_HAB
@@ -98,16 +102,15 @@ class open_HAB:
         self.AeotechZW096things   = dict()
         self.MAC                  = ':'.join(re.findall('..', format(uuid.getnode(),'x')))
 
-
     ##initialise_hub_data##
     #Passes the required values to the hub_data function in the
     #MySQL module to store information on the hub in the database
-    def initialise_hub_data(self):
+    async def initialise_hub_data(self,conn):
         # Get the IP Address of the RaspberryPi
         IP = self.get_IP()
         logger.info(f"IP address for object {self} of: {IP}")
         # Get the current location of the HUB
-        MySQL.hub_data(self.MAC,IP,datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        await MySQL.hub_data(self.MAC,IP,datetime.now().strftime('%Y-%m-%d %H:%M:%S'),conn)
 
 
     ##get_IP##
@@ -139,30 +142,30 @@ class open_HAB:
     # of all things on the openHAB setup in JSON. 
     # The JSON data will be stored in a dictionary class variable
     # "things". The "things" variable will then be sorted to find the type of things
-    def get_things(self):
+    async def get_things(self):
         #Get request, returns a request object 
         logger.info(f"Get request made to {self.base_url}/things")
-        res = requests.get(f'{self.base_url}/things')
+        async with open_HAB.session.get(f'{self.base_url}/things') as resp:
+            res = (await resp.json())
         #Get the JSON from the request object, store in a class variable "things"
-        open_HAB.things = (res.json())
+        open_HAB.things = res
         for thing in open_HAB.things:
             if thing['thingTypeUID'] == "zwave:aeon_zw096_00_000":
                 logger.info(f"Found Aeotech smart plug UID: {thing['UID']}")
                 from openHAB_Proj import AeotechZW096 #Only importing as needed resolves "cylic import" https://stackabuse.com/python-circular-imports/
                 self.AeotechZW096things[thing['label']] = AeotechZW096.AeotechZW096(thing,thing['UID'])
-
      
     ##sort_AeotechZW096##
     # This function will sort the AeotechZW096 things found in 
     # the opeHAB configuration and assign values to the AeotechZW096 insance variables
     # stored in the AeotechZW096things dictionary 
-    def sort_AeotechZW096(self):
+    async def sort_AeotechZW096(self):
         if bool(self.AeotechZW096things):
             # Fill the variables with the items associated with a AeotechZW096 switch
             # key is the label given to the thing in openHAB config
             # aeotechobj is an instance of the AeotechZW096 class
             for key, aeotechobj in self.AeotechZW096things.items():
-                aeotechobj.sort_vars()
+                await aeotechobj.sort_vars()
         else:
             logger.warning("No Aeotech plugs found, the AeotechZW096things is empty")
 
@@ -172,11 +175,12 @@ class open_HAB:
     # and return the value that is read
     # Inputs:
     #    item - The name of the item  e.g Voltage_Zwave_Node3
-    def read_item(self,item):
+    async def read_item(self,item):
         # Get request, returns a request object 
         logger.info(f"Get request sent to {self.base_url}/items/{item}/state")
-        res = requests.get(f'{self.base_url}/items/{item}/state')
-        return res.text
+        async with open_HAB.session.get(f'{self.base_url}/items/{item}/state') as resp:
+            res = (await resp.text())
+        return res
    
     ##get_item##
     #Gets the item configuration from openhab
@@ -193,28 +197,33 @@ class open_HAB:
     # This function will turn the item that is passed to it on 
     # Inputs:
     #    item - The name of the item to turn on
-    def item_on(self,item):
+    async def item_on(self,item):
         logger.info(f"Post request sent to {self.base_url}/items/{item}, data=ON")
-        res = requests.post(f'{self.base_url}/items/{item}',data="ON")
+        req = f'{self.base_url}/items/{item}'
+        async with open_HAB.session.post(url=req,data='ON') as resp:
+           rep = (resp.status)  #Need to add check to this
         
     ##item_off##
     # This function will turn the item that is passed to it off
     # Inputs:
     #    item - The name of the item to turn off 
-    def item_off(self,item):
+    async def item_off(self,item):
         logger.info(f"Post request sent to {self.base_url}/items/{item}, data=OFF")
-        res = requests.post(f'{self.base_url}/items/{item}',data="OFF")
-
+        req = f'{self.base_url}/items/{item}'
+        async with open_HAB.session.post(url=req,data='OFF') as resp:
+            rep = (resp.status)  #Need to add check to this
+        
 
     ##check_status##
     # Checks the status of a given thing passed to it
     #  
     # Inputs:
     #   UID - The UID of the thing to check the status of 
-    def check_status(self,UID):
+    async def check_status(self,UID):
         logger.info(f"Get request sent to {self.base_url}/things/{UID}/status")
-        res = requests.get(f'{self.base_url}/things/{UID}/status')
-        return (res.json())
+        async with open_HAB.session.get(f'{self.base_url}/things/{UID}/status') as resp:
+            res = (await resp.json())
+        return (res)
 
     
     ##get_thing##

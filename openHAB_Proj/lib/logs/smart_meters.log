@@ -1,4 +1,55 @@
-2020-04-07 16:03:04,943:INFO:18594:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
-2020-04-07 16:03:04,944:INFO:18594:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
-2020-04-07 16:03:05,009:INFO:18595:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.80
-2020-04-07 16:03:05,010:INFO:18595:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.80
+2020-04-08 18:15:04,946:INFO:25909:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:22:44,472:INFO:26387:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:23:00,262:INFO:26413:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:23:18,208:INFO:26429:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:25:06,326:INFO:26553:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:25:33,240:INFO:26587:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:26:03,187:INFO:26621:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:26:03,189:INFO:26621:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
+2020-04-08 18:26:03,190:ERROR:26621:MainProcess:smart_meters.py:Error reading 4370 from 192.168.0.116, 'ReconnectingAsyncioModbusTcpClient' object has no attribute 'read_input_registers'
+2020-04-08 18:27:08,955:INFO:26693:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:27:08,956:INFO:26693:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
+2020-04-08 18:27:08,957:ERROR:26693:MainProcess:smart_meters.py:Error reading 4370 from 192.168.0.116, 'ReconnectingAsyncioModbusTcpClient' object has no attribute 'read_input_registers'
+2020-04-08 18:27:40,393:INFO:26726:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:27:40,394:INFO:26726:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
+2020-04-08 18:27:40,395:ERROR:26726:MainProcess:smart_meters.py:Error reading 4370 from 192.168.0.116, 'ReconnectingAsyncioModbusTcpClient' object has no attribute 'read_input_registers'
+2020-04-08 18:29:01,165:INFO:26803:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:29:01,167:INFO:26803:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
+2020-04-08 18:29:20,662:INFO:26820:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:29:20,664:INFO:26820:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
+2020-04-08 18:29:33,807:INFO:26836:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:29:33,809:INFO:26836:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
+2020-04-08 18:30:05,672:INFO:26865:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:30:05,673:INFO:26865:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
+2020-04-08 18:30:53,242:INFO:26913:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:30:53,244:INFO:26913:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
+2020-04-08 18:31:49,875:INFO:26970:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:31:49,877:INFO:26970:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
+2020-04-08 18:31:49,878:ERROR:26970:MainProcess:smart_meters.py:Error reading 4370 from 192.168.0.116, 'ModbusClientProtocol' object has no attribute 'protocol'
+2020-04-08 18:32:10,998:INFO:26991:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:32:10,999:INFO:26991:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
+2020-04-08 18:34:59,073:INFO:27163:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:34:59,074:INFO:27163:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
+2020-04-08 18:34:59,086:ERROR:27163:MainProcess:smart_meters.py:Could not decode register response, tracback shown belowupdate_voltage() missing 1 required positional argument: 'conn'
+Traceback (most recent call last):
+  File "/home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/smart_meters.py", line 90, in read_voltage
+    await MySQL.update_voltage(value,self.IP)
+TypeError: update_voltage() missing 1 required positional argument: 'conn'
+2020-04-08 18:35:26,671:INFO:27199:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:35:44,518:INFO:27227:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:35:44,552:INFO:27227:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
+2020-04-08 18:35:44,561:ERROR:27227:MainProcess:smart_meters.py:Could not decode register response, tracback shown belowupdate_voltage() missing 1 required positional argument: 'conn'
+Traceback (most recent call last):
+  File "/home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/smart_meters.py", line 90, in read_voltage
+    await MySQL.update_voltage(value,self.IP)
+TypeError: update_voltage() missing 1 required positional argument: 'conn'
+2020-04-08 18:36:07,773:INFO:27256:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:36:07,804:INFO:27256:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
+2020-04-08 18:46:35,158:INFO:27870:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:46:35,180:INFO:27870:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
+2020-04-08 18:47:21,348:INFO:27919:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:47:21,371:INFO:27919:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
+2020-04-08 18:47:48,194:INFO:27947:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:47:48,224:INFO:27947:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116
+2020-04-08 18:50:44,238:INFO:28125:MainProcess:smart_meters.py:New instance of smart_meter instantaited with IP of 192.168.0.116
+2020-04-08 18:50:44,261:INFO:28125:MainProcess:smart_meters.py:Reading address:4370 from 192.168.0.116

@@ -1,64 +1,423 @@
-2020-04-07 16:03:04,961:INFO:18594:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
-2020-04-07 16:03:04,962:INFO:18594:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
-2020-04-07 16:03:04,963:INFO:18594:MainProcess:MySQL.py:Attempting to connect to MySQL database
-2020-04-07 16:03:05,025:INFO:18595:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
-2020-04-07 16:03:05,026:INFO:18595:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
-2020-04-07 16:03:05,026:INFO:18595:MainProcess:MySQL.py:Attempting to connect to MySQL database
-2020-04-07 16:03:05,457:INFO:18594:MainProcess:MySQL.py:Connection established to database
-2020-04-07 16:03:05,463:INFO:18594:MainProcess:MySQL.py:Attempting to add entry to voltages table from 192.168.0.116
-2020-04-07 16:03:05,473:INFO:18594:MainProcess:MySQL.py:New voltage entry from 192.168.0.116 in voltages table
-2020-04-07 16:03:05,475:INFO:18594:MainProcess:MySQL.py:Connection to database closed
-2020-04-07 16:03:05,565:INFO:18595:MainProcess:MySQL.py:Connection established to database
-2020-04-07 16:03:05,569:INFO:18595:MainProcess:MySQL.py:Attempting to add entry to voltages table from 192.168.0.80
-2020-04-07 16:03:05,581:INFO:18595:MainProcess:MySQL.py:New voltage entry from 192.168.0.80 in voltages table
-2020-04-07 16:03:05,583:INFO:18595:MainProcess:MySQL.py:Connection to database closed
-2020-04-07 17:03:28,169:INFO:21766:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
-2020-04-07 17:03:28,170:INFO:21766:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
-2020-04-07 17:03:28,170:INFO:21766:MainProcess:MySQL.py:Attempting to connect to MySQL database
-2020-04-07 17:03:28,466:INFO:21766:MainProcess:MySQL.py:Connection established to database
-2020-04-07 17:03:28,471:INFO:21766:MainProcess:MySQL.py:Attempting to update hub table
-2020-04-07 17:03:28,480:WARNING:21766:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table
-2020-04-07 17:03:28,493:INFO:21766:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated
-2020-04-07 17:03:28,494:INFO:21766:MainProcess:MySQL.py:Connection to database closed
-2020-04-07 17:03:28,747:INFO:21766:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
-2020-04-07 17:03:28,749:INFO:21766:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
-2020-04-07 17:03:28,750:INFO:21766:MainProcess:MySQL.py:Attempting to connect to MySQL database
-2020-04-07 17:03:29,221:INFO:21766:MainProcess:MySQL.py:Connection established to database
-2020-04-07 17:03:29,225:INFO:21766:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node3 into devices table
-2020-04-07 17:03:29,232:WARNING:21766:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 exists, attempting to update entry
-2020-04-07 17:03:29,244:INFO:21766:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 has been updated in devices table)
-2020-04-07 17:03:29,249:INFO:21766:MainProcess:MySQL.py:Connection to database closed
-2020-04-07 17:03:29,476:INFO:21766:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
-2020-04-07 17:03:29,477:INFO:21766:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
-2020-04-07 17:03:29,477:INFO:21766:MainProcess:MySQL.py:Attempting to connect to MySQL database
-2020-04-07 17:03:29,923:INFO:21766:MainProcess:MySQL.py:Connection established to database
-2020-04-07 17:03:29,936:WARNING:21766:MainProcess:MySQL.py:Duplicate entry in items table [('Switch_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', 1, 'Bool', '2020-04-07 17:03:29'), ('Energy_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', '16.192', 'kWh', '2020-04-07 17:03:29'), ('Current_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', '0', 'Amps', '2020-04-07 17:03:29'), ('Voltage_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', '226.646', 'Volts', '2020-04-07 17:03:29'), ('Power_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', '0', 'Watts', '2020-04-07 17:03:29')]
-2020-04-07 17:03:29,938:INFO:21766:MainProcess:MySQL.py:Attempting to update items table
-2020-04-07 17:03:29,942:INFO:21766:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
-2020-04-07 17:03:29,943:INFO:21766:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
-2020-04-07 17:03:29,943:INFO:21766:MainProcess:MySQL.py:Attempting to connect to MySQL database
-2020-04-07 17:03:30,389:INFO:21766:MainProcess:MySQL.py:Connection established to database
-2020-04-07 17:03:30,418:INFO:21766:MainProcess:MySQL.py:Items table has been updated updated[('zwave:aeon_zw096_00_000:controller:node3', 1, 'Bool', '2020-04-07 17:03:29', 'Switch_Zwave_Node3'), ('zwave:aeon_zw096_00_000:controller:node3', '16.192', 'kWh', '2020-04-07 17:03:29', 'Energy_Zwave_Node3'), ('zwave:aeon_zw096_00_000:controller:node3', '0', 'Amps', '2020-04-07 17:03:29', 'Current_Zwave_Node3'), ('zwave:aeon_zw096_00_000:controller:node3', '226.646', 'Volts', '2020-04-07 17:03:29', 'Voltage_Zwave_Node3'), ('zwave:aeon_zw096_00_000:controller:node3', '0', 'Watts', '2020-04-07 17:03:29', 'Power_Zwave_Node3')]
-2020-04-07 17:03:30,420:INFO:21766:MainProcess:MySQL.py:Connection to database closed
-2020-04-07 17:03:30,432:INFO:21766:MainProcess:MySQL.py:Connection to database closed
-2020-04-07 17:03:30,694:INFO:21766:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
-2020-04-07 17:03:30,695:INFO:21766:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
-2020-04-07 17:03:30,696:INFO:21766:MainProcess:MySQL.py:Attempting to connect to MySQL database
-2020-04-07 17:03:31,150:INFO:21766:MainProcess:MySQL.py:Connection established to database
-2020-04-07 17:03:31,154:INFO:21766:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node2 into devices table
-2020-04-07 17:03:31,159:WARNING:21766:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 exists, attempting to update entry
-2020-04-07 17:03:31,171:INFO:21766:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 has been updated in devices table)
-2020-04-07 17:03:31,173:INFO:21766:MainProcess:MySQL.py:Connection to database closed
-2020-04-07 17:03:31,385:INFO:21766:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
-2020-04-07 17:03:31,386:INFO:21766:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
-2020-04-07 17:03:31,387:INFO:21766:MainProcess:MySQL.py:Attempting to connect to MySQL database
-2020-04-07 17:03:31,830:INFO:21766:MainProcess:MySQL.py:Connection established to database
-2020-04-07 17:03:31,840:WARNING:21766:MainProcess:MySQL.py:Duplicate entry in items table [('Switch_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', 1, 'Bool', '2020-04-07 17:03:31'), ('Energy_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '20.821', 'kWh', '2020-04-07 17:03:31'), ('Current_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '0', 'Amps', '2020-04-07 17:03:31'), ('Voltage_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '227.192', 'Volts', '2020-04-07 17:03:31'), ('Power_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '0', 'Watts', '2020-04-07 17:03:31')]
-2020-04-07 17:03:31,841:INFO:21766:MainProcess:MySQL.py:Attempting to update items table
-2020-04-07 17:03:31,845:INFO:21766:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
-2020-04-07 17:03:31,846:INFO:21766:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
-2020-04-07 17:03:31,846:INFO:21766:MainProcess:MySQL.py:Attempting to connect to MySQL database
-2020-04-07 17:03:32,171:INFO:21766:MainProcess:MySQL.py:Connection established to database
-2020-04-07 17:03:32,196:INFO:21766:MainProcess:MySQL.py:Items table has been updated updated[('zwave:aeon_zw096_00_000:controller:node2', 1, 'Bool', '2020-04-07 17:03:31', 'Switch_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '20.821', 'kWh', '2020-04-07 17:03:31', 'Energy_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '0', 'Amps', '2020-04-07 17:03:31', 'Current_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '227.192', 'Volts', '2020-04-07 17:03:31', 'Voltage_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '0', 'Watts', '2020-04-07 17:03:31', 'Power_Zwave_Node2')]
-2020-04-07 17:03:32,197:INFO:21766:MainProcess:MySQL.py:Connection to database closed
-2020-04-07 17:03:32,201:INFO:21766:MainProcess:MySQL.py:Connection to database closed
+2020-04-08 16:24:37,849:INFO:19478:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 16:24:37,850:INFO:19478:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 16:24:37,850:INFO:19478:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 16:24:37,865:INFO:19478:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 16:24:37,866:INFO:19478:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 16:24:37,875:WARNING:19478:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 16:24:37,888:INFO:19478:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 16:25:02,649:INFO:19497:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 16:25:02,650:INFO:19497:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 16:25:02,650:INFO:19497:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 16:25:02,665:INFO:19497:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 16:25:02,666:INFO:19497:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 16:25:02,680:WARNING:19497:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 16:25:02,690:INFO:19497:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 16:25:02,936:INFO:19497:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 16:25:02,938:INFO:19497:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 16:25:02,939:INFO:19497:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 16:25:03,390:INFO:19497:MainProcess:MySQL.py:Connection established to database
+2020-04-08 16:25:03,394:INFO:19497:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node2 into devices table
+2020-04-08 16:25:03,401:WARNING:19497:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 exists, attempting to update entry
+2020-04-08 16:25:03,412:INFO:19497:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 has been updated in devices table)
+2020-04-08 16:25:03,414:INFO:19497:MainProcess:MySQL.py:Connection to database closed
+2020-04-08 16:43:12,531:INFO:20415:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 16:43:12,532:INFO:20415:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 16:43:12,533:INFO:20415:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 16:43:12,548:INFO:20415:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:03:26,575:INFO:21438:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:03:26,576:INFO:21438:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:03:26,577:INFO:21438:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:03:26,593:INFO:21438:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:05:26,546:INFO:21549:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:05:26,547:INFO:21549:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:05:26,548:INFO:21549:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:05:26,564:INFO:21549:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:05:26,566:INFO:21549:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:05:26,571:WARNING:21549:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:05:26,586:INFO:21549:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:05:46,192:INFO:21579:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:05:46,193:INFO:21579:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:05:46,194:INFO:21579:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:05:46,207:INFO:21579:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:05:46,210:INFO:21579:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:05:46,213:WARNING:21579:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:05:46,220:INFO:21579:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:07:04,814:INFO:21640:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:07:04,815:INFO:21640:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:07:04,816:INFO:21640:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:07:04,830:INFO:21640:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:07:04,833:INFO:21640:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:07:04,845:WARNING:21640:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:07:04,855:INFO:21640:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:07:48,488:INFO:21685:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:07:48,489:INFO:21685:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:07:48,490:INFO:21685:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:07:48,503:INFO:21685:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:07:48,506:INFO:21685:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:07:48,517:WARNING:21685:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:07:48,525:INFO:21685:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:09:10,449:INFO:21739:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:09:10,450:INFO:21739:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:09:10,451:INFO:21739:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:09:10,467:INFO:21739:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:09:10,471:INFO:21739:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:09:10,484:WARNING:21739:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:09:10,501:INFO:21739:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:10:08,637:INFO:21785:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:10:08,638:INFO:21785:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:10:08,639:INFO:21785:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:10:08,653:INFO:21785:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:10:08,655:INFO:21785:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:10:08,658:WARNING:21785:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:10:08,669:INFO:21785:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:10:08,945:WARNING:21785:MainProcess:MySQL.py:Duplicate entry in items table [('Switch_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', 1, 'Bool', '2020-04-08 17:10:08'), ('Energy_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '20.825', 'kWh', '2020-04-08 17:10:08'), ('Current_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '0.042', 'Amps', '2020-04-08 17:10:08'), ('Voltage_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '222.111', 'Volts', '2020-04-08 17:10:08'), ('Power_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '3.579', 'Watts', '2020-04-08 17:10:08')]
+2020-04-08 17:10:08,946:INFO:21785:MainProcess:MySQL.py:Attempting to update items table
+2020-04-08 17:10:08,974:INFO:21785:MainProcess:MySQL.py:Items table has been updated updated[('zwave:aeon_zw096_00_000:controller:node2', 1, 'Bool', '2020-04-08 17:10:08', 'Switch_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '20.825', 'kWh', '2020-04-08 17:10:08', 'Energy_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '0.042', 'Amps', '2020-04-08 17:10:08', 'Current_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '222.111', 'Volts', '2020-04-08 17:10:08', 'Voltage_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '3.579', 'Watts', '2020-04-08 17:10:08', 'Power_Zwave_Node2')]
+2020-04-08 17:10:25,614:INFO:21808:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:10:25,615:INFO:21808:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:10:25,615:INFO:21808:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:10:25,634:INFO:21808:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:10:25,637:INFO:21808:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:10:25,642:WARNING:21808:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:10:25,656:INFO:21808:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:10:25,955:WARNING:21808:MainProcess:MySQL.py:Duplicate entry in items table [('Switch_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', 1, 'Bool', '2020-04-08 17:10:25'), ('Energy_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '20.825', 'kWh', '2020-04-08 17:10:25'), ('Current_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '0.042', 'Amps', '2020-04-08 17:10:25'), ('Voltage_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '223.266', 'Volts', '2020-04-08 17:10:25'), ('Power_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '3.776', 'Watts', '2020-04-08 17:10:25')]
+2020-04-08 17:10:25,956:INFO:21808:MainProcess:MySQL.py:Attempting to update items table
+2020-04-08 17:10:25,983:INFO:21808:MainProcess:MySQL.py:Items table has been updated updated[('zwave:aeon_zw096_00_000:controller:node2', 1, 'Bool', '2020-04-08 17:10:25', 'Switch_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '20.825', 'kWh', '2020-04-08 17:10:25', 'Energy_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '0.042', 'Amps', '2020-04-08 17:10:25', 'Current_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '223.266', 'Volts', '2020-04-08 17:10:25', 'Voltage_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '3.776', 'Watts', '2020-04-08 17:10:25', 'Power_Zwave_Node2')]
+2020-04-08 17:10:42,345:INFO:21825:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:10:42,346:INFO:21825:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:10:42,346:INFO:21825:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:10:42,360:INFO:21825:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:10:42,362:INFO:21825:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:10:42,369:WARNING:21825:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:10:42,381:INFO:21825:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:10:42,589:WARNING:21825:MainProcess:MySQL.py:Duplicate entry in items table [('Switch_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', 1, 'Bool', '2020-04-08 17:10:42'), ('Energy_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '20.825', 'kWh', '2020-04-08 17:10:42'), ('Current_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '0.043', 'Amps', '2020-04-08 17:10:42'), ('Voltage_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '223.56', 'Volts', '2020-04-08 17:10:42'), ('Power_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '3.78', 'Watts', '2020-04-08 17:10:42')]
+2020-04-08 17:10:42,590:INFO:21825:MainProcess:MySQL.py:Attempting to update items table
+2020-04-08 17:10:42,609:INFO:21825:MainProcess:MySQL.py:Items table has been updated updated[('zwave:aeon_zw096_00_000:controller:node2', 1, 'Bool', '2020-04-08 17:10:42', 'Switch_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '20.825', 'kWh', '2020-04-08 17:10:42', 'Energy_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '0.043', 'Amps', '2020-04-08 17:10:42', 'Current_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '223.56', 'Volts', '2020-04-08 17:10:42', 'Voltage_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '3.78', 'Watts', '2020-04-08 17:10:42', 'Power_Zwave_Node2')]
+2020-04-08 17:18:58,960:INFO:22193:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:18:58,961:INFO:22193:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:18:58,961:INFO:22193:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:18:58,980:INFO:22193:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:18:58,983:INFO:22193:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:18:58,996:WARNING:22193:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:18:59,011:INFO:22193:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:18:59,332:WARNING:22193:MainProcess:MySQL.py:Duplicate entry in items table [('Switch_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', None, 'Bool', '2020-04-08 17:18:59'), ('Energy_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', None, 'kWh', '2020-04-08 17:18:59'), ('Current_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', None, 'Amps', '2020-04-08 17:18:59'), ('Voltage_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', None, 'Volts', '2020-04-08 17:18:59'), ('Power_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', None, 'Watts', '2020-04-08 17:18:59')]
+2020-04-08 17:18:59,333:INFO:22193:MainProcess:MySQL.py:Attempting to update items table
+2020-04-08 17:18:59,359:INFO:22193:MainProcess:MySQL.py:Items table has been updated updated[('zwave:aeon_zw096_00_000:controller:node3', None, 'Bool', '2020-04-08 17:18:59', 'Switch_Zwave_Node3'), ('zwave:aeon_zw096_00_000:controller:node3', None, 'kWh', '2020-04-08 17:18:59', 'Energy_Zwave_Node3'), ('zwave:aeon_zw096_00_000:controller:node3', None, 'Amps', '2020-04-08 17:18:59', 'Current_Zwave_Node3'), ('zwave:aeon_zw096_00_000:controller:node3', None, 'Volts', '2020-04-08 17:18:59', 'Voltage_Zwave_Node3'), ('zwave:aeon_zw096_00_000:controller:node3', None, 'Watts', '2020-04-08 17:18:59', 'Power_Zwave_Node3')]
+2020-04-08 17:18:59,479:WARNING:22193:MainProcess:MySQL.py:Duplicate entry in items table [('Switch_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', 1, 'Bool', '2020-04-08 17:18:59'), ('Energy_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '20.825', 'kWh', '2020-04-08 17:18:59'), ('Current_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '0.043', 'Amps', '2020-04-08 17:18:59'), ('Voltage_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '225.137', 'Volts', '2020-04-08 17:18:59'), ('Power_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '3.957', 'Watts', '2020-04-08 17:18:59')]
+2020-04-08 17:18:59,480:INFO:22193:MainProcess:MySQL.py:Attempting to update items table
+2020-04-08 17:18:59,507:INFO:22193:MainProcess:MySQL.py:Items table has been updated updated[('zwave:aeon_zw096_00_000:controller:node2', 1, 'Bool', '2020-04-08 17:18:59', 'Switch_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '20.825', 'kWh', '2020-04-08 17:18:59', 'Energy_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '0.043', 'Amps', '2020-04-08 17:18:59', 'Current_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '225.137', 'Volts', '2020-04-08 17:18:59', 'Voltage_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '3.957', 'Watts', '2020-04-08 17:18:59', 'Power_Zwave_Node2')]
+2020-04-08 17:31:23,872:INFO:23016:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:31:23,873:INFO:23016:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:31:23,874:INFO:23016:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:31:23,899:INFO:23016:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:31:23,902:INFO:23016:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:31:23,911:WARNING:23016:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:31:23,926:INFO:23016:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:32:21,261:INFO:23089:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:32:21,263:INFO:23089:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:32:21,263:INFO:23089:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:32:21,278:INFO:23089:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:32:21,281:INFO:23089:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:32:21,285:WARNING:23089:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:32:21,299:INFO:23089:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:32:46,310:INFO:23128:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:32:46,312:INFO:23128:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:32:46,312:INFO:23128:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:32:46,326:INFO:23128:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:32:46,329:INFO:23128:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:32:46,333:WARNING:23128:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:32:46,344:INFO:23128:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:33:20,358:INFO:23168:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:33:20,360:INFO:23168:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:33:20,360:INFO:23168:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:33:20,376:INFO:23168:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:33:20,380:INFO:23168:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:33:20,384:WARNING:23168:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:33:20,394:INFO:23168:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:33:20,700:INFO:23168:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node3 into devices table
+2020-04-08 17:33:20,707:WARNING:23168:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 exists, attempting to update entry
+2020-04-08 17:33:20,708:ERROR:23168:MainProcess:MySQL.py:Could not update devices table, tracback shown below
+{e}
+Traceback (most recent call last):
+  File "/home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/MySQL.py", line 251, in insert_device
+    await cur.execute(query,(DeviceID,RaspberryPi_ID,Status,Status_Detail,Status_Desc,Communication_Protocol,Binding,Time))
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/cursors.py", line 239, in execute
+    await self._query(query)
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/cursors.py", line 457, in _query
+    await conn.query(q)
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/connection.py", line 428, in query
+    await self._read_query_result(unbuffered=unbuffered)
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/connection.py", line 622, in _read_query_result
+    await result.read()
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/connection.py", line 1105, in read
+    first_packet = await self.connection._read_packet()
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/connection.py", line 593, in _read_packet
+    packet.check_error()
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/pymysql/protocol.py", line 220, in check_error
+    err.raise_mysql_exception(self._data)
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/pymysql/err.py", line 109, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.IntegrityError: (1062, "Duplicate entry 'zwave:aeon_zw096_00_000:controller:node3' for key 'devices.PRIMARY'")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/MySQL.py", line 273, in insert_device
+    async with conn.cursor as cur:
+AttributeError: __aexit__
+2020-04-08 17:33:20,755:INFO:23168:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node2 into devices table
+2020-04-08 17:33:20,759:WARNING:23168:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 exists, attempting to update entry
+2020-04-08 17:33:20,760:ERROR:23168:MainProcess:MySQL.py:Could not update devices table, tracback shown below
+{e}
+Traceback (most recent call last):
+  File "/home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/MySQL.py", line 251, in insert_device
+    await cur.execute(query,(DeviceID,RaspberryPi_ID,Status,Status_Detail,Status_Desc,Communication_Protocol,Binding,Time))
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/cursors.py", line 239, in execute
+    await self._query(query)
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/cursors.py", line 457, in _query
+    await conn.query(q)
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/connection.py", line 428, in query
+    await self._read_query_result(unbuffered=unbuffered)
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/connection.py", line 622, in _read_query_result
+    await result.read()
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/connection.py", line 1105, in read
+    first_packet = await self.connection._read_packet()
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/connection.py", line 593, in _read_packet
+    packet.check_error()
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/pymysql/protocol.py", line 220, in check_error
+    err.raise_mysql_exception(self._data)
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/pymysql/err.py", line 109, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.IntegrityError: (1062, "Duplicate entry 'zwave:aeon_zw096_00_000:controller:node2' for key 'devices.PRIMARY'")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/MySQL.py", line 273, in insert_device
+    async with conn.cursor as cur:
+AttributeError: __aexit__
+2020-04-08 17:33:52,181:INFO:23201:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:33:52,183:INFO:23201:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:33:52,183:INFO:23201:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:33:52,200:INFO:23201:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:33:52,203:INFO:23201:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:33:52,207:WARNING:23201:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:33:52,217:INFO:23201:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:33:52,428:INFO:23201:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node3 into devices table
+2020-04-08 17:33:52,431:WARNING:23201:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 exists, attempting to update entry
+2020-04-08 17:33:52,443:INFO:23201:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 has been updated in devices table)
+2020-04-08 17:33:52,478:INFO:23201:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node2 into devices table
+2020-04-08 17:33:52,482:WARNING:23201:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 exists, attempting to update entry
+2020-04-08 17:33:52,491:INFO:23201:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 has been updated in devices table)
+2020-04-08 17:34:11,408:INFO:23230:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:34:11,410:INFO:23230:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:34:11,410:INFO:23230:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:34:11,428:INFO:23230:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:34:11,430:INFO:23230:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:34:11,435:WARNING:23230:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:34:11,450:INFO:23230:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:34:11,664:INFO:23230:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node3 into devices table
+2020-04-08 17:34:11,671:WARNING:23230:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 exists, attempting to update entry
+2020-04-08 17:34:11,685:INFO:23230:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 has been updated in devices table)
+2020-04-08 17:34:11,711:INFO:23230:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node2 into devices table
+2020-04-08 17:34:11,715:WARNING:23230:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 exists, attempting to update entry
+2020-04-08 17:34:11,724:INFO:23230:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 has been updated in devices table)
+2020-04-08 17:34:27,395:INFO:23253:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:34:27,396:INFO:23253:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:34:27,397:INFO:23253:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:34:27,415:INFO:23253:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:34:27,419:INFO:23253:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:34:27,423:WARNING:23253:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:34:27,438:INFO:23253:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:34:27,656:INFO:23253:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node3 into devices table
+2020-04-08 17:34:27,663:WARNING:23253:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 exists, attempting to update entry
+2020-04-08 17:34:27,673:INFO:23253:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 has been updated in devices table)
+2020-04-08 17:34:27,698:INFO:23253:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node2 into devices table
+2020-04-08 17:34:27,705:WARNING:23253:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 exists, attempting to update entry
+2020-04-08 17:34:27,717:INFO:23253:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 has been updated in devices table)
+2020-04-08 17:34:42,859:INFO:23274:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:34:42,861:INFO:23274:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:34:42,861:INFO:23274:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:34:42,878:INFO:23274:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:34:42,881:INFO:23274:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:34:42,895:WARNING:23274:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:34:42,910:INFO:23274:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:34:43,180:INFO:23274:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node3 into devices table
+2020-04-08 17:34:43,185:WARNING:23274:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 exists, attempting to update entry
+2020-04-08 17:34:43,200:INFO:23274:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 has been updated in devices table)
+2020-04-08 17:34:43,232:INFO:23274:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node2 into devices table
+2020-04-08 17:34:43,237:WARNING:23274:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 exists, attempting to update entry
+2020-04-08 17:34:43,250:INFO:23274:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 has been updated in devices table)
+2020-04-08 17:37:13,433:INFO:23453:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:37:13,435:INFO:23453:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:37:13,435:INFO:23453:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:37:13,448:INFO:23453:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:37:13,451:INFO:23453:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:37:13,454:WARNING:23453:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:37:13,461:INFO:23453:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:37:13,764:INFO:23453:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node3 into devices table
+2020-04-08 17:37:13,770:WARNING:23453:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 exists, attempting to update entry
+2020-04-08 17:37:13,783:INFO:23453:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 has been updated in devices table)
+2020-04-08 17:37:13,808:INFO:23453:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node2 into devices table
+2020-04-08 17:37:13,812:WARNING:23453:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 exists, attempting to update entry
+2020-04-08 17:37:13,824:INFO:23453:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 has been updated in devices table)
+2020-04-08 17:37:17,822:INFO:23455:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:37:17,824:INFO:23455:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:37:17,824:INFO:23455:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:37:17,843:INFO:23455:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:37:17,845:INFO:23455:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:37:17,859:WARNING:23455:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:37:17,873:INFO:23455:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:37:18,076:INFO:23455:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node3 into devices table
+2020-04-08 17:37:18,080:WARNING:23455:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 exists, attempting to update entry
+2020-04-08 17:37:18,093:INFO:23455:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 has been updated in devices table)
+2020-04-08 17:37:18,119:INFO:23455:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node2 into devices table
+2020-04-08 17:37:18,123:WARNING:23455:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 exists, attempting to update entry
+2020-04-08 17:37:18,137:INFO:23455:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 has been updated in devices table)
+2020-04-08 17:37:21,341:INFO:23458:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:37:21,342:INFO:23458:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:37:21,342:INFO:23458:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:37:21,357:INFO:23458:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:37:21,360:INFO:23458:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:37:21,373:WARNING:23458:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:37:21,385:INFO:23458:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:37:21,611:INFO:23458:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node3 into devices table
+2020-04-08 17:37:21,614:WARNING:23458:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 exists, attempting to update entry
+2020-04-08 17:37:21,630:INFO:23458:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 has been updated in devices table)
+2020-04-08 17:37:21,654:INFO:23458:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node2 into devices table
+2020-04-08 17:37:21,658:WARNING:23458:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 exists, attempting to update entry
+2020-04-08 17:37:21,671:INFO:23458:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 has been updated in devices table)
+2020-04-08 17:38:19,255:INFO:23513:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:38:19,256:INFO:23513:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:38:19,257:INFO:23513:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:38:19,273:INFO:23513:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:38:19,276:INFO:23513:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:38:19,289:WARNING:23513:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:38:19,299:INFO:23513:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:38:19,492:INFO:23513:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node3 into devices table
+2020-04-08 17:38:19,496:WARNING:23513:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 exists, attempting to update entry
+2020-04-08 17:38:19,511:INFO:23513:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 has been updated in devices table)
+2020-04-08 17:38:19,534:INFO:23513:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node2 into devices table
+2020-04-08 17:38:19,538:WARNING:23513:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 exists, attempting to update entry
+2020-04-08 17:38:19,552:INFO:23513:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 has been updated in devices table)
+2020-04-08 17:39:24,033:INFO:23578:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:39:24,034:INFO:23578:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:39:24,034:INFO:23578:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:39:24,054:INFO:23578:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:39:24,057:INFO:23578:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:39:24,071:WARNING:23578:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:39:24,080:INFO:23578:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:39:24,281:INFO:23578:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node3 into devices table
+2020-04-08 17:39:24,285:WARNING:23578:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 exists, attempting to update entry
+2020-04-08 17:39:24,298:INFO:23578:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 has been updated in devices table)
+2020-04-08 17:39:24,320:INFO:23578:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node2 into devices table
+2020-04-08 17:39:24,323:WARNING:23578:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 exists, attempting to update entry
+2020-04-08 17:39:24,333:INFO:23578:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 has been updated in devices table)
+2020-04-08 17:40:09,226:INFO:23630:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:40:09,228:INFO:23630:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:40:09,228:INFO:23630:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:40:09,245:INFO:23630:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:40:09,247:INFO:23630:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:40:09,261:WARNING:23630:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:40:09,272:INFO:23630:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:40:09,467:INFO:23630:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node3 into devices table
+2020-04-08 17:40:09,470:WARNING:23630:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 exists, attempting to update entry
+2020-04-08 17:40:09,483:INFO:23630:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 has been updated in devices table)
+2020-04-08 17:40:09,598:WARNING:23630:MainProcess:MySQL.py:Duplicate entry in items table [('Switch_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', 1, 'Bool', '2020-04-08 17:40:09'), ('Energy_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', '16.192', 'kWh', '2020-04-08 17:40:09'), ('Current_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', '0', 'Amps', '2020-04-08 17:40:09'), ('Voltage_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', '228.106', 'Volts', '2020-04-08 17:40:09'), ('Power_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', '0', 'Watts', '2020-04-08 17:40:09')]
+2020-04-08 17:40:09,599:INFO:23630:MainProcess:MySQL.py:Attempting to update items table
+2020-04-08 17:40:09,624:INFO:23630:MainProcess:MySQL.py:Items table has been updated updated[('zwave:aeon_zw096_00_000:controller:node3', 1, 'Bool', '2020-04-08 17:40:09', 'Switch_Zwave_Node3'), ('zwave:aeon_zw096_00_000:controller:node3', '16.192', 'kWh', '2020-04-08 17:40:09', 'Energy_Zwave_Node3'), ('zwave:aeon_zw096_00_000:controller:node3', '0', 'Amps', '2020-04-08 17:40:09', 'Current_Zwave_Node3'), ('zwave:aeon_zw096_00_000:controller:node3', '228.106', 'Volts', '2020-04-08 17:40:09', 'Voltage_Zwave_Node3'), ('zwave:aeon_zw096_00_000:controller:node3', '0', 'Watts', '2020-04-08 17:40:09', 'Power_Zwave_Node3')]
+2020-04-08 17:40:09,646:INFO:23630:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node2 into devices table
+2020-04-08 17:40:09,650:WARNING:23630:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 exists, attempting to update entry
+2020-04-08 17:40:09,663:INFO:23630:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 has been updated in devices table)
+2020-04-08 17:40:09,772:WARNING:23630:MainProcess:MySQL.py:Duplicate entry in items table [('Switch_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', 1, 'Bool', '2020-04-08 17:40:09'), ('Energy_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '20.827', 'kWh', '2020-04-08 17:40:09'), ('Current_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '0.042', 'Amps', '2020-04-08 17:40:09'), ('Voltage_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '227.395', 'Volts', '2020-04-08 17:40:09'), ('Power_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '3.586', 'Watts', '2020-04-08 17:40:09')]
+2020-04-08 17:40:09,773:INFO:23630:MainProcess:MySQL.py:Attempting to update items table
+2020-04-08 17:40:09,789:INFO:23630:MainProcess:MySQL.py:Items table has been updated updated[('zwave:aeon_zw096_00_000:controller:node2', 1, 'Bool', '2020-04-08 17:40:09', 'Switch_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '20.827', 'kWh', '2020-04-08 17:40:09', 'Energy_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '0.042', 'Amps', '2020-04-08 17:40:09', 'Current_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '227.395', 'Volts', '2020-04-08 17:40:09', 'Voltage_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '3.586', 'Watts', '2020-04-08 17:40:09', 'Power_Zwave_Node2')]
+2020-04-08 17:40:17,926:INFO:23644:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:40:17,928:INFO:23644:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:40:17,928:INFO:23644:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:40:17,942:INFO:23644:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:40:17,944:INFO:23644:MainProcess:MySQL.py:Attempting to update hub table
+2020-04-08 17:40:17,956:WARNING:23644:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 exists, attempting to update table entry
+2020-04-08 17:40:17,964:INFO:23644:MainProcess:MySQL.py:Entry b8:27:eb:bb:6c:f0 has been updated in hubs table
+2020-04-08 17:40:18,151:INFO:23644:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node3 into devices table
+2020-04-08 17:40:18,158:WARNING:23644:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 exists, attempting to update entry
+2020-04-08 17:40:18,171:INFO:23644:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node3 has been updated in devices table)
+2020-04-08 17:40:18,286:WARNING:23644:MainProcess:MySQL.py:Duplicate entry in items table [('Switch_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', 1, 'Bool', '2020-04-08 17:40:18'), ('Energy_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', '16.192', 'kWh', '2020-04-08 17:40:18'), ('Current_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', '0', 'Amps', '2020-04-08 17:40:18'), ('Voltage_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', '228.106', 'Volts', '2020-04-08 17:40:18'), ('Power_Zwave_Node3', 'zwave:aeon_zw096_00_000:controller:node3', '0', 'Watts', '2020-04-08 17:40:18')]
+2020-04-08 17:40:18,287:INFO:23644:MainProcess:MySQL.py:Attempting to update items table
+2020-04-08 17:40:18,301:INFO:23644:MainProcess:MySQL.py:Items table has been updated updated[('zwave:aeon_zw096_00_000:controller:node3', 1, 'Bool', '2020-04-08 17:40:18', 'Switch_Zwave_Node3'), ('zwave:aeon_zw096_00_000:controller:node3', '16.192', 'kWh', '2020-04-08 17:40:18', 'Energy_Zwave_Node3'), ('zwave:aeon_zw096_00_000:controller:node3', '0', 'Amps', '2020-04-08 17:40:18', 'Current_Zwave_Node3'), ('zwave:aeon_zw096_00_000:controller:node3', '228.106', 'Volts', '2020-04-08 17:40:18', 'Voltage_Zwave_Node3'), ('zwave:aeon_zw096_00_000:controller:node3', '0', 'Watts', '2020-04-08 17:40:18', 'Power_Zwave_Node3')]
+2020-04-08 17:40:18,324:INFO:23644:MainProcess:MySQL.py:Attempting to insert zwave:aeon_zw096_00_000:controller:node2 into devices table
+2020-04-08 17:40:18,326:WARNING:23644:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 exists, attempting to update entry
+2020-04-08 17:40:18,337:INFO:23644:MainProcess:MySQL.py:Entry zwave:aeon_zw096_00_000:controller:node2 has been updated in devices table)
+2020-04-08 17:40:18,453:WARNING:23644:MainProcess:MySQL.py:Duplicate entry in items table [('Switch_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', 1, 'Bool', '2020-04-08 17:40:18'), ('Energy_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '20.827', 'kWh', '2020-04-08 17:40:18'), ('Current_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '0.042', 'Amps', '2020-04-08 17:40:18'), ('Voltage_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '227.395', 'Volts', '2020-04-08 17:40:18'), ('Power_Zwave_Node2', 'zwave:aeon_zw096_00_000:controller:node2', '3.586', 'Watts', '2020-04-08 17:40:18')]
+2020-04-08 17:40:18,454:INFO:23644:MainProcess:MySQL.py:Attempting to update items table
+2020-04-08 17:40:18,475:INFO:23644:MainProcess:MySQL.py:Items table has been updated updated[('zwave:aeon_zw096_00_000:controller:node2', 1, 'Bool', '2020-04-08 17:40:18', 'Switch_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '20.827', 'kWh', '2020-04-08 17:40:18', 'Energy_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '0.042', 'Amps', '2020-04-08 17:40:18', 'Current_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '227.395', 'Volts', '2020-04-08 17:40:18', 'Voltage_Zwave_Node2'), ('zwave:aeon_zw096_00_000:controller:node2', '3.586', 'Watts', '2020-04-08 17:40:18', 'Power_Zwave_Node2')]
+2020-04-08 17:41:06,379:INFO:23690:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:41:06,381:INFO:23690:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:41:06,381:INFO:23690:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:41:06,398:INFO:23690:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:43:15,763:INFO:23832:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:43:15,764:INFO:23832:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:43:15,765:INFO:23832:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:43:15,780:INFO:23832:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:45:12,595:INFO:23974:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:45:12,605:INFO:23974:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:45:12,606:INFO:23974:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:45:12,626:INFO:23974:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:45:23,500:INFO:23982:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:45:23,501:INFO:23982:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:45:23,502:INFO:23982:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:45:23,519:INFO:23982:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:45:23,535:INFO:23982:MainProcess:MySQL.py:New voltage entry from 298 in voltages table
+2020-04-08 17:45:41,243:INFO:24000:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 17:45:41,251:INFO:24000:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 17:45:41,251:INFO:24000:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 17:45:41,262:INFO:24000:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 17:45:41,273:INFO:24000:MainProcess:MySQL.py:New voltage entry from 298 in voltages table
+2020-04-08 18:35:44,523:INFO:27227:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 18:35:44,524:INFO:27227:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 18:35:44,524:INFO:27227:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 18:35:44,551:INFO:27227:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 18:36:07,778:INFO:27256:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 18:36:07,779:INFO:27256:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 18:36:07,779:INFO:27256:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 18:36:07,803:INFO:27256:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 18:36:07,836:INFO:27256:MainProcess:MySQL.py:New voltage entry from 192.168.0.116 in voltages table
+2020-04-08 18:46:35,162:INFO:27870:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 18:46:35,163:INFO:27870:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 18:46:35,164:INFO:27870:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 18:46:35,180:INFO:27870:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 18:47:21,353:INFO:27919:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 18:47:21,354:INFO:27919:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 18:47:21,355:INFO:27919:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 18:47:21,370:INFO:27919:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 18:47:21,388:ERROR:27919:MainProcess:MySQL.py:(1054, "Unknown column 'Time_MTCP' in 'field list'")
+Traceback (most recent call last):
+  File "/home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/MySQL.py", line 313, in update_voltage
+    await cur.execute(query,(value,IP,time))
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/cursors.py", line 239, in execute
+    await self._query(query)
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/cursors.py", line 457, in _query
+    await conn.query(q)
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/connection.py", line 428, in query
+    await self._read_query_result(unbuffered=unbuffered)
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/connection.py", line 622, in _read_query_result
+    await result.read()
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/connection.py", line 1105, in read
+    first_packet = await self.connection._read_packet()
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/aiomysql/connection.py", line 593, in _read_packet
+    packet.check_error()
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/pymysql/protocol.py", line 220, in check_error
+    err.raise_mysql_exception(self._data)
+  File "/home/openhabian/Environments/env_1/lib/python3.7/site-packages/pymysql/err.py", line 109, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.InternalError: (1054, "Unknown column 'Time_MTCP' in 'field list'")
+2020-04-08 18:47:48,200:INFO:27947:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 18:47:48,202:INFO:27947:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 18:47:48,203:INFO:27947:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 18:47:48,223:INFO:27947:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 18:47:48,246:INFO:27947:MainProcess:MySQL.py:New voltage entry from 192.168.0.116 in voltages table
+2020-04-08 18:50:44,243:INFO:28125:MainProcess:MySQL.py:Parsing file /home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini
+2020-04-08 18:50:44,244:INFO:28125:MainProcess:MySQL.py:Database Configuration:{'host': '192.168.0.129', 'database': 'community_grid', 'user': 'RaspberryPi', 'password': 'openhabian', 'port': '3306'}
+2020-04-08 18:50:44,245:INFO:28125:MainProcess:MySQL.py:Attempting to connect to MySQL database
+2020-04-08 18:50:44,260:INFO:28125:MainProcess:MySQL.py:Connection established at IP:192.168.0.129 Database:community_grid
+2020-04-08 18:50:44,287:INFO:28125:MainProcess:MySQL.py:New voltage entry from 192.168.0.116 in voltages table

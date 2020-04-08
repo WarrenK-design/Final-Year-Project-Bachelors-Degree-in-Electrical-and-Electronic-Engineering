@@ -25,6 +25,9 @@ from configparser import ConfigParser
 import logging
 import sys
 import os
+import asyncio
+import aiomysql
+import aiofiles
 
 ###Set up logger##
 ##get the logger
@@ -42,6 +45,7 @@ stream_handler.setLevel(logging.ERROR) #set the stream handler level
 logger.addHandler(file_handler) #Add the handler to logger 
 logger.addHandler(stream_handler)
 #os.chmod('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/MySQL.log', 0o777)
+
 
 ##Function List##
 #   read_db_config - Reads the configuration file for mysql retruns the configuration parameters for in a dictionary
@@ -88,26 +92,25 @@ def read_db_config(filename='/home/openhabian/Environments/env_1/openHAB_Proj/op
 #function MySQLConnection
 #Return:
 #   conn - A MySQLConnection object
-def connect():
+async def connect():
     db_config = read_db_config()
-    conn = None
+    #print(help(aiomysql.create_pool)
     try:
         logger.info('Attempting to connect to MySQL database')
-        conn = MySQLConnection(**db_config)
-        if conn.is_connected():
-            logger.info("Connection established to database")
-            return conn
-        else:
-            logging.warning('Connection to database failed')
-    except Error as error:
-        logger.error(error)
+        conn = await aiomysql.connect(db='community_grid',read_default_file ='/home/openhabian/Environments/env_1/openHAB_Proj/openHAB_Proj/config.ini' )
+        logger.info(f"Connection established at IP:{conn._host} Database:{conn._db}")
+        return conn
+    except Exception as e:
+        logger.exception(f"Connection to database failed, tracback shown below\n{e}")
+
+
 
 ##update_item##
 #Updates an enrty in the items table 
 #An entry will be updated if the table contains a duplicate primary key of ItemUID
 #Inputs:
 #   item - A list containing tuples of items to update with the ItemUID last 
-def update_items(item):
+async def update_items(item,conn):
     query = ''' UPDATE items
                 SET DeviceID =%s,
                 Value = %s,
@@ -119,24 +122,20 @@ def update_items(item):
     #Try to insert to table
     try:
         logger.info("Attempting to update items table")
-        conn = connect()
-        cursor = conn.cursor()
-
-        # execute the query
-        cursor.executemany(query,item)
-        # Commit the query 
-        conn.commit()
-        logger.info(f"Items table has been updated updated{item}")
+        async with conn.cursor() as cur:
+            # execute the query
+            await cur.executemany(query,item)
+            # Commit the query 
+            await conn.commit()
+            logger.info(f"Items table has been updated updated{item}")
 
     #Print the error out
-    except Error as e:
-      logger.error(e)
+    except Exception as e:
+        logger.exception(f"Could not update the items table, traceback shown below\n{e}")
 
     #Close the connection
     finally:
-        cursor.close()
-        conn.close()
-        logger.info("Connection to database closed")
+        await cur.close()
 
 ##insert_item##
 #Inserts sseveral entrys into the community_grid database table items
@@ -153,23 +152,22 @@ def update_items(item):
 #+----------+--------------+------+-----+---------+-------+
 #Inputs:
 #   items - A list contating multiple tuples which have values for ItemUID,DeviceID,Value,Units,Time in that order or single tuple
-def insert_item(items):
+async def insert_item(items,conn):
     query = '''INSERT INTO items(ItemUID,DeviceID,Value,Units,Time)
                VALUES(%s,%s,%s,%s,%s)'''
     #Try to insert to table
     try:
-        conn = connect()
-        cursor = conn.cursor()
-
-        # execute the query
-        cursor.executemany(query,items)
-        # Commit the query 
-        conn.commit()
-        logging.info(f"New entry in items table {items}")
+        async with conn.cursor() as cur:
+            # execute the query
+            await cur.executemany(query,items)
+            # Commit the query 
+            await conn.commit()
+            logger.info(f"Items table has been updated updated{item}")
     #Print the error out
-    except Error as e:
+    except Exception as e:
+        code, message = e.args
         #The entry is duplicate detected by error code 1062
-        if e.errno == 1062:
+        if code == 1062:
             logger.warning(f"Duplicate entry in items table {items}")
             item = list()
             ID = list()
@@ -178,17 +176,12 @@ def insert_item(items):
             for val in items:
                 a = (val[1:5]+(val[0],))
                 item.append(a)
-            cursor.close()
-            conn.close()
-            update_items(item)
+            await update_items(item,conn)
         else:
             logger.error(e)
-    
     #Close the connection
     finally:
-        cursor.close()
-        conn.close()
-        logger.info("Connection to database closed")
+        await cur.close()
 
 ##hub_data##
 #This function populates the hubs table in the database
@@ -202,25 +195,20 @@ def insert_item(items):
     #MAC - The MAC address of the Raaspberry Pi 
     #IP  - The IP address of the Raspberry Pi 
 #The Location will have to be manually set as the location of the IP server can only be found
-def hub_data(MAC,IP,Time):
-    query = '''INSERT INTO hubs(RaspberryPi_ID,IP_Address,Time)
-               VALUES(%s,%s,%s)'''
-    #Try to insert to table
+async def hub_data(MAC,IP,Time,conn):
     try:
-        conn = connect()
-        cursor = conn.cursor()
-        logger.info("Attempting to update hub table")
-        # execute the query
-        cursor.execute(query,(MAC,IP,Time))
-        # Commit the query 
-        conn.commit()
-        logger.info(f"Hub data entry {MAC} insereted into hub table")
+        query = '''INSERT INTO hubs(RaspberryPi_ID,IP_Address,Time)
+               VALUES(%s,%s,%s)'''
 
-    #Print the error out
-    except Error as e:
-        #The entry is duplicate detected by error code 1062
-        if e.errno == 1062:
-            logger.warning(f"Entry {MAC} exists, attempting to update table")
+        async with conn.cursor() as cur:
+            logger.info("Attempting to update hub table")
+            await cur.execute(query,(MAC,IP,Time))
+            await conn.commit()
+            logger.info(f"Hub data entry {MAC} insereted into hub table")
+    except Exception as e:
+        code, message = e.args
+        if code == 1062:
+            logger.warning(f"Entry {MAC} exists, attempting to update table entry")
             #Update the value for this primary key
             query = '''UPDATE hubs
                 SET IP_Address = %s,
@@ -228,19 +216,16 @@ def hub_data(MAC,IP,Time):
                 WHERE 
                 RaspberryPi_ID = %s'''
             try:
-                cursor.execute(query,(IP,Time,MAC))
-                conn.commit()
-                logger.info(f"Entry {MAC} has been updated")
-            except Error as error:
-                logger.error(error)
-        else:
-            logger.error(e)
-    #Close the connection
+                async with conn.cursor() as cur:
+                    await cur.execute(query,(IP,Time,MAC))
+                    await conn.commit()
+                    logger.info(f"Entry {MAC} has been updated in hubs table")
+            except Exception as e:
+                logger.exception(f"Updating hub data entry of {MAC} failed\n{e}")
+        else: 
+            logger.exception(f"Could not insert data entry identified by {MAC} into hubs table\n{e}")
     finally:
-        cursor.close()
-        conn.close()
-        logger.info("Connection to database closed")
-
+        await cur.close()
 
 ##insert_device##
 #This function inserts an entry into the devices table of the community grid database 
@@ -254,24 +239,23 @@ def hub_data(MAC,IP,Time):
 #| Communication_Protocol | varchar(255) | YES  |     | NULL    |       |
 #| Binding                | varchar(255) | YES  |     | NULL    |       |
 #+------------------------+--------------+------+-----+---------+-------+
-def insert_device(DeviceID,RaspberryPi_ID,Status,Status_Detail,Status_Desc,Communication_Protocol,Binding,Time):
+async def insert_device(DeviceID,RaspberryPi_ID,Status,Status_Detail,Status_Desc,Communication_Protocol,Binding,Time,conn):
     query = ''' INSERT INTO devices(DeviceID,RaspberryPi_ID,Status,Status_Detail,Status_Description,Communication_Protocol,Binding,Time)
                VALUES(%s,%s,%s,%s,%s,%s,%s,%s)
     '''
 
     #Try to insert to table
     try:
-        conn = connect()
-        cursor = conn.cursor()
-        logger.info(f"Attempting to insert {DeviceID} into devices table")
-        # execute the query
-        cursor.execute(query,(DeviceID,RaspberryPi_ID,Status,Status_Detail,Status_Desc,Communication_Protocol,Binding,Time))
-        # Commit the query 
-        conn.commit()
-        logger.info(f"{DeviceID} entry added to devices table")
+        async with conn.cursor() as cur:
+            logger.info(f"Attempting to insert {DeviceID} into devices table")
+            await cur.execute(query,(DeviceID,RaspberryPi_ID,Status,Status_Detail,Status_Desc,Communication_Protocol,Binding,Time))
+            await conn.commit()
+            logger.info(f"{DeviceID} entry added to devices table")
+    
     #Print the error out
-    except Error as e:
-        if e.errno == 1062:
+    except Exception as e:
+        code, message = e.args
+        if code == 1062:
             logger.warning(f"Entry {DeviceID} exists, attempting to update entry")
             query = '''UPDATE devices
                 SET 
@@ -285,63 +269,57 @@ def insert_device(DeviceID,RaspberryPi_ID,Status,Status_Detail,Status_Desc,Commu
                 WHERE 
                 DeviceID = %s'''
             try:
-                cursor.execute(query,(RaspberryPi_ID,Status,Status_Detail,Status_Desc,Communication_Protocol,Binding,Time,DeviceID))
-                conn.commit()
-                logger.info(f"Entry {DeviceID} has been updated in devices table)")
-            except Error as error:
-                logger.error(error)
+                async with conn.cursor() as cur:
+                    await cur.execute(query,(RaspberryPi_ID,Status,Status_Detail,Status_Desc,Communication_Protocol,Binding,Time,DeviceID))
+                    await conn.commit()
+                    logger.info(f"Entry {DeviceID} has been updated in devices table)")
+            except Exception as e:
+                logger.exception("Could not update devices table, tracback shown below\n{e}")
         else:
-            logger.error(e)
+            logger.exception("Could not insert new device into devices table, tracback shown below\n{e}")
 
     #Close the connection
     finally:
-        cursor.close()
-        conn.close()
-        logger.info("Connection to database closed")
+        try:
+            await cur.close()
+        except UnboundLocalError:
+            pass
 
 
 ##update_voltage##
-#This function will add an entry to the voltages table 
-#The schema for the voltage table currently is 
-#+---------+--------------+------+-----+----------------------+-------------------+
-#| Field   | Type         | Null | Key | Default              | Extra             |
-#+---------+--------------+------+-----+----------------------+-------------------+
-#| ID      | int          | NO   | PRI | NULL                 | auto_increment    |
-#| MeterID | varchar(255) | YES  |     | NULL                 |                   |
-#| Value   | float        | YES  |     | NULL                 |                   |
-#| Units   | varchar(255) | YES  |     | Volts                |                   |
-#| Time    | timestamp(3) | NO   |     | CURRENT_TIMESTAMP(3) | DEFAULT_GENERATED |
-#+---------+--------------+------+-----+----------------------+-------------------+
+#This function will add an entry to the voltages_async table 
+#The schema for the voltages_async table currently is 
+#+-----------+--------------+------+-----+----------------------+-------------------+
+#| Field     | Type         | Null | Key | Default              | Extra             |
+#+-----------+--------------+------+-----+----------------------+-------------------+
+#| ID        | int          | NO   | PRI | NULL                 | auto_increment    |
+#| MeterID   | varchar(255) | YES  |     | NULL                 |                   |
+#| Value     | float        | YES  |     | NULL                 |                   |
+#| Units     | varchar(255) | YES  |     | Volts                |                   |
+#| Time_MTCP | timestamp(3) | YES  |     | NULL                 |                   |
+#| Time_SQL  | timestamp(3) | NO   |     | CURRENT_TIMESTAMP(3) | DEFAULT_GENERATED |
+#+-----------+--------------+------+-----+----------------------+-------------------+
 #Inputs:
 #   value   - The value of voltage 
-#   IP      - The IP address of the smart_meter    
-def update_voltage(value,IP):
-    query = ''' INSERT INTO voltages(Value,MeterID)
-                 VALUES(%s,%s)
-    '''
-
-    #Try to insert to table
+#   IP      - The IP address of the smart_meter
+#   time    - The time the voltage reading was recorded at     
+#   conn    - A connection to the database 
+async def update_voltage(value,IP,time,conn):
     try:
-        conn = connect()
-        cursor = conn.cursor()
+        query = ''' INSERT INTO voltages_async(Value,MeterID,Time_MTCP)
+                 VALUES(%s,%s,%s) '''
 
-        logger.info(f"Attempting to add entry to voltages table from {IP}")
-        # execute the query
-        cursor.execute(query,(value,IP))
-        # Commit the query 
-        conn.commit()
-
-    except Error as e:
-        logger.error(e)
+        async with conn.cursor() as cur:
+            await cur.execute(query,(value,IP,time))
+            await conn.commit()
     
+    except Exception as e:
+        logger.exception(e)
+
     else:
         logger.info(f"New voltage entry from {IP} in voltages table")
-    
     finally:
-        cursor.close()
-        conn.close()
-        logger.info("Connection to database closed")
-
+        await cur.close()
 
 
 

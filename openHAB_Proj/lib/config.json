@@ -235,7 +235,7 @@
                     "UID": "Voltage_Zwave_Node2",
                     "name": "zwave:meter_voltage",
                     "unit": "Volts",
-                    "value": "227.192"
+                    "value": "225.371"
                 }
             },
             "keys": [
@@ -265,7 +265,7 @@
                 "UID": "Voltage_Zwave_Node2",
                 "name": "zwave:meter_voltage",
                 "unit": "Volts",
-                "value": "227.192"
+                "value": "225.371"
             }
         }
     },
@@ -505,7 +505,7 @@
                     "UID": "Voltage_Zwave_Node3",
                     "name": "zwave:meter_voltage",
                     "unit": "Volts",
-                    "value": "226.646"
+                    "value": "225.639"
                 }
             },
             "keys": [
@@ -535,7 +535,7 @@
                 "UID": "Voltage_Zwave_Node3",
                 "name": "zwave:meter_voltage",
                 "unit": "Volts",
-                "value": "226.646"
+                "value": "225.639"
             }
         }
     }
