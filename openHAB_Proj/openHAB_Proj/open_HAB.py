@@ -186,11 +186,12 @@ class open_HAB:
     #Gets the item configuration from openhab
     #Input
     #   item - The name of the item you want to get 
-    def get_item(self,item):
+    async def get_item(self,item):
         # Get request, returns a request object
         logger.info(f"Get request sent to {self.base_url}/items/{item}")
-        res = requests.get(f'{self.base_url}/items/{item}')
-        return res.json()
+        async with open_HAB.session.get(f'{self.base_url}/items/{item}') as resp:
+            res = (await resp.json())
+        return res
 
 
     ##item_on##
@@ -230,10 +231,11 @@ class open_HAB:
     #Retrieves the thing based on the UID passed to it 
     #Inputs:
     #   UID - The UID of the thing 
-    def get_thing(self,UID):
+    async def get_thing(self,UID):
         logger.info(f"Get request sent to {self.base_url}/things/{UID}")
-        res =  requests.get(f'{self.base_url}/things/{UID}')
-        return (res.json())
+        async with open_HAB.session.get(f'{self.base_url}/things/{UID}') as resp:
+            res = (await resp.json())
+        return res
 
 
     ##Write_Config##
@@ -242,9 +244,9 @@ class open_HAB:
     #   switch - The name of the switch item in openHAB the given script will control 
     #   thing  - A string containing the device UID
     #   dir   - The directory to generate the file to 
-    def write_config(self,switch,thing,dir):
+    async def write_config(self,switch,thing,dir):
         data = dict()
-        res = (self.get_item(switch))
+        res = await (self.get_item(switch))
         
         #See if a group exists first  
         try:

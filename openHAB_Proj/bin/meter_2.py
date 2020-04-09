@@ -33,6 +33,10 @@ import sys
 sys.path.append(r'/home/openhabian/Environments/env_1/openHAB_Proj/')
 from openHAB_Proj.smart_meters import smart_meter
 from openHAB_Proj.AeotechZW096 import AeotechZW096
+from openHAB_Proj import MySQL
+from pymodbus.client.asynchronous.tcp import AsyncModbusTCPClient as ModbusClient
+from pymodbus.client.asynchronous import schedulers
+import asyncio
 import json
 import logging
 import os
@@ -58,10 +62,14 @@ logger.addHandler(stream_handler)
 #os.chmod('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/meter_2.log', 0o777)
 
 
-def main(meter,things):
-  #  while True:
-    meter.read_voltage()
-    print("Meter_2")
+async def main(meter,things):
+    print("Executing meter_2 event loop")
+    while True:
+        if 'conn' not in locals():
+            logger.info("Creating connection to database using MySQL.connect() function")
+            conn = await MySQL.connect()  
+        logger.info("Attempting to read voltage using smart_meter.read_voltage()")
+        await meter.read_voltage(conn)
 
 ## First parse the config file 
 with open('/home/openhabian/Environments/env_1/openHAB_Proj/lib/config.json') as json_file:
@@ -78,5 +86,7 @@ with open('/home/openhabian/Environments/env_1/openHAB_Proj/lib/config.json') as
         plug = AeotechZW096()
         plug.__dict__ = val
         things.append(plug)
-meter_2 = smart_meter('192.168.0.80')
-main(meter_2,things)
+loop = asyncio.get_event_loop()
+loop, client = ModbusClient(schedulers.ASYNC_IO,host ="192.168.0.80", loop=loop)
+meter_2 = smart_meter('192.168.0.80',client)
+loop.run_until_complete(main(meter_2,things))

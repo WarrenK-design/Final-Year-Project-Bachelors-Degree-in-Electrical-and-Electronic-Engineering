@@ -73,7 +73,7 @@ class smart_meter():
         logger.info(f"Reading address:{address} from {self.IP}")
         try:
             response = await self.client.read_input_registers(address, 2)
-            time = (datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3])
+            time = (datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3])
             return response, time
         except Exception as e:
             logger.error(f"Error reading {address} from {self.IP}, {e}")

@@ -23,11 +23,13 @@ sys.path.append(r'/home/openhabian/Environments/env_1/openHAB_Proj/')
 from openHAB_Proj.open_HAB import open_HAB
 from openHAB_Proj import smart_meters
 from openHAB_Proj.AeotechZW096 import AeotechZW096
+from openHAB_Proj import MySQL
 from datetime import datetime
 import logging
 import os
 import pprint
 import json
+import asyncio
 
 ##Set up logger##
 #get the logger
@@ -48,28 +50,39 @@ logger.addHandler(stream_handler)
 
 
 
+async def main():
+    ##create a database connection##
+    conn = await MySQL.connect()
+    ##The process##
+    #Intitialse an opeb_HAB object 
+    hub = open_HAB()
+    #Log the hub data to the "hub" table
+    await hub.initialise_hub_data(conn)
+    #Get the things configured in open_HAB setup
+    await hub.get_things()
+    #Sort the items based on brand type (Currently only using AeotechPlug, reading the smartMeter in Python)
+    await hub.sort_AeotechZW096()
 
-##The process##
-#Intitialse an opeb_HAB object 
-obj = open_HAB()
-#Log the hub data to the "hub" table
-obj.initialise_hub_data()
-#Get the things configured in open_HAB setup
-obj.get_things()
-#Sort the items based on brand type (Currently only using AeotechPlug, reading the smartMeter in Python)
-obj.sort_AeotechZW096()
+    #Loop through each of the devices found 
+    if hub.AeotechZW096things is not None:
+        for key, plug in hub.AeotechZW096things.items():
+            if (plug.status['status']) != "ONLINE":
+                logger.warning(f"{plug.UID} is offline not including in config file")
+            else:
+                #Log to the "Devices" table in community_grid
+                await plug.update_devices_data(conn)
+                #Log to the "items" table in community_grid
+                await plug.update_items_data(conn)
+                #Write the configuration file for controlling the scripts
+                await plug.write_config(plug.switch['UID'],plug.UID,'/home/openhabian/Environments/env_1/openHAB_Proj/lib')
+   
 
-#Loop through each of the devices found 
-if obj.AeotechZW096things is not None:
-    for key, plug in obj.AeotechZW096things.items():
-        if (plug.status['status']) != "ONLINE":
-            logger.warning(f"{plug.UID} is offline not including in config file")
-        else:
-            plug.turn_on()
-            #Log to the "Devices" table in community_grid
-            plug.update_devices_data()
-            #Log to the "items" table in community_grid
-            plug.update_items_data()
-            #Write the configuration file for controlling the scripts
-            plug.write_config(plug.switch['UID'],plug.UID,'/home/openhabian/Environments/env_1/openHAB_Proj/lib')
-logger.info("Start Up Script Executed")
+
+loop = asyncio.get_event_loop()
+#start = datetime.now()
+loop.run_until_complete(main())
+#end = datetime.now()
+#print(datetime.now()-start)
+#print(end)
+#print(start)
+print("Staty Script Complete")
