@@ -306,7 +306,7 @@ async def insert_device(DeviceID,RaspberryPi_ID,Status,Status_Detail,Status_Desc
 #   conn    - A connection to the database 
 async def update_voltage(value,IP,time,conn):
     try:
-        query = ''' INSERT INTO voltages_async(Value,MeterID,Time_MTCP)
+        query = ''' INSERT INTO voltage(Value,MeterID,Time_MTCP)
                  VALUES(%s,%s,%s) '''
 
         async with conn.cursor() as cur:
@@ -322,6 +322,75 @@ async def update_voltage(value,IP,time,conn):
         await cur.close()
 
 
+##update_power##
+#This function will add an entry to the voltages_async table 
+#The schema for the current table currently is 
+#+-----------+--------------+------+-----+----------------------+-------------------+
+#| Field     | Type         | Null | Key | Default              | Extra             |
+#+-----------+--------------+------+-----+----------------------+-------------------+
+#| ID        | int          | NO   | PRI | NULL                 | auto_increment    |
+#| MeterID   | varchar(255) | YES  |     | NULL                 |                   |
+#| Value     | float        | YES  |     | NULL                 |                   |
+#| Units     | varchar(255) | YES  |     | kW                   |                   |
+#| Time_MTCP | timestamp(3) | YES  |     | NULL                 |                   |
+#| Time_SQL  | timestamp(3) | NO   |     | CURRENT_TIMESTAMP(3) | DEFAULT_GENERATED |
+#+-----------+--------------+------+-----+----------------------+-------------------+
+#Inputs:
+#   value   - The value of power in kW 
+#   IP      - The IP address of the smart_meter
+#   time    - The time the voltage reading was recorded at by ModBus
+#   conn    - A connection to the database 
+async def update_power(value,IP,time,conn):
+    try:
+        query = ''' INSERT INTO power(Value,MeterID,Time_MTCP)
+                 VALUES(%s,%s,%s) '''
+
+        async with conn.cursor() as cur:
+            await cur.execute(query,(value,IP,time))
+            await conn.commit()
+    
+    except Exception as e:
+        logger.exception(e)
+
+    else:
+        logger.info(f"New voltage entry from {IP} in power table")
+    finally:
+        await cur.close()
+
+##update_current##
+#This function will add an entry to the voltages_async table 
+#The schema for the current table currently is 
+#+-----------+--------------+------+-----+----------------------+-------------------+
+#| Field     | Type         | Null | Key | Default              | Extra             |
+#+-----------+--------------+------+-----+----------------------+-------------------+
+#| ID        | int          | NO   | PRI | NULL                 | auto_increment    |
+#| MeterID   | varchar(255) | YES  |     | NULL                 |                   |
+#| Value     | float        | YES  |     | NULL                 |                   |
+#| Units     | varchar(255) | YES  |     | kW                   |                   |
+#| Time_MTCP | timestamp(3) | YES  |     | NULL                 |                   |
+#| Time_SQL  | timestamp(3) | NO   |     | CURRENT_TIMESTAMP(3) | DEFAULT_GENERATED |
+#+-----------+--------------+------+-----+----------------------+-------------------+
+#Inputs:
+#   value   - The value of power in kW 
+#   IP      - The IP address of the smart_meter
+#   time    - The time the voltage reading was recorded at by ModBus
+#   conn    - A connection to the database 
+async def update_current(value,IP,time,conn):
+    try:
+        query = ''' INSERT INTO current(Value,MeterID,Time_MTCP)
+                 VALUES(%s,%s,%s) '''
+
+        async with conn.cursor() as cur:
+            await cur.execute(query,(value,IP,time))
+            await conn.commit()
+    
+    except Exception as e:
+        logger.exception(e)
+
+    else:
+        logger.info(f"New voltage entry from {IP} in current table")
+    finally:
+        await cur.close()
 
 
 

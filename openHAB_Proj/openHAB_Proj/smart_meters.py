@@ -90,27 +90,36 @@ class smart_meter():
             value = decoder.decode_32bit_float()
             await MySQL.update_voltage(value,self.IP,time,conn)
         except Exception as e:
-            logger.exception(f"Could not decode register response, tracback shown below{e}")
+            logger.exception(f"Could not decode register response, tracback shown below")
 
     ## read_current ##
     # Channel two is wired on the meter
     # The current for channel two starts at reg 0x1114
     # Return:
     #   Floating point number in Amps
-    def read_current(self):
-        response = self.read32bitfloat(0x1114)
-        decoder = BinaryPayloadDecoder.fromRegisters(response.registers, Endian.Big, wordorder=Endian.Little)
-        return decoder.decode_32bit_float()
+    async def read_current(self,conn):
+        response, time =  await self.read32bitfloat(0x1114)
+        try:
+            decoder = BinaryPayloadDecoder.fromRegisters(response.registers, Endian.Big, wordorder=Endian.Little)
+            value = decoder.decode_32bit_float()
+            value = decoder.decode_32bit_float()
+            await MySQL.update_voltage(value,self.IP,time,conn)
+        except Exception as e:
+            logger.exception(f"Could not decode register response from reg 0x1114, tracback shown below")
 
     ## read_kw ##
     # Channel two is wired on the meter
     # The kilo watts channel two starts at reg 0x1116
     # Return:
     #   Floating point number in kw
-    def read_kw(self):
-        response = self.read32bitfloat(0x1116)
-        decoder = BinaryPayloadDecoder.fromRegisters(response.registers, Endian.Big, wordorder=Endian.Little)
-        return decoder.decode_32bit_float()
+    async def read_kw(self,conn):
+        response, time = await self.read32bitfloat(0x1116)
+        try:
+            decoder = BinaryPayloadDecoder.fromRegisters(response.registers, Endian.Big, wordorder=Endian.Little)
+            value = decoder.decode_32bit_float()
+            await MySQL.update_power(value,self.IP,time,conn)
+        except Exception as e:
+            logger.exception(f"Could not decode register response from reg 0x1116, tracback shown below")
 
 
     ## read_kvar ##

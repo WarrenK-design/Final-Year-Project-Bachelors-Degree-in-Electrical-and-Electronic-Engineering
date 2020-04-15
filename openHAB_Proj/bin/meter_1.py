@@ -68,6 +68,10 @@ async def main(meter,things):
             conn = await MySQL.connect()  
         logger.info("Attempting to read voltage using smart_meter.read_voltage()")
         await meter.read_voltage(conn)
+        logger.info("Attempting to read power using smart_meter.read_kw()")
+        await meter.read_kw(conn)
+        logger.info("Attempting to read current using smart_meter.read_current()")
+        await meter.read_current(conn)
 
 ## First parse the config file 
 with open('/home/openhabian/Environments/env_1/openHAB_Proj/lib/config.json') as json_file:
@@ -87,6 +91,7 @@ with open('/home/openhabian/Environments/env_1/openHAB_Proj/lib/config.json') as
 loop = asyncio.get_event_loop()
 loop, client = ModbusClient(schedulers.ASYNC_IO,host ="192.168.0.116", loop=loop)
 meter_1 = smart_meter('192.168.0.116',client)
-loop.run_until_complete(main(meter_1,things))
+loop.create_task(main(meter_1,things))
+loop.run_forever()
 
 
