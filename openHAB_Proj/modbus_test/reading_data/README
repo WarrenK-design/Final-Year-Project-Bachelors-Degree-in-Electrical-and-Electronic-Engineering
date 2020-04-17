@@ -1,3 +1,4 @@
 Each directory contains test with one or more thread scripts
-The scripts should be run using the run.sh file in each directory 
+The scripts should be run using the run.sh file in each directory
+The directory is broken up for reading one or multiple meters per thread 
 The results of the tests are csv files which are stored in the results sub directorys  
