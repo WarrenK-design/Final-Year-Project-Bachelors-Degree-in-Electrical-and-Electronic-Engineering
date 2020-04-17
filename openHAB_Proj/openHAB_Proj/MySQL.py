@@ -28,6 +28,7 @@ import os
 import asyncio
 import aiomysql
 import aiofiles
+from datetime import datetime
 
 ###Set up logger##
 ##get the logger
@@ -394,7 +395,25 @@ async def update_current(value,IP,time,conn):
 
 
 
-
+async def queryVCP(conn,file):
+    try:
+        query = ''' select voltage.value as Volts, power.value as kW, current.value as Amps 
+        from voltage,power,current where voltage.Time_SQL=(select max(Time_SQL) from voltage) 
+        AND power.Time_SQL=(select max(Time_SQL) from power) 
+        AND current.Time_SQL=(select max(Time_SQL) from current);
+        ''' 
+        async with conn.cursor() as cur:
+            await cur.execute(query)
+            await conn.commit()
+    except Exception as e:
+        logger.exception(e)
+    else:
+        result = (await cur.fetchone())
+        file.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],result[0],result[1],result[2]])
+        logger.info(f"Succesful read")
+        return result[0], result[1], result[2]
+    finally:
+        await cur.close()        
 
 
 

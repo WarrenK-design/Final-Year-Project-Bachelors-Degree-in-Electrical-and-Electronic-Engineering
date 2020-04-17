@@ -1,0 +1,3 @@
+This dircetory contains all the tests for modbus	
+	reading_data - Contains tests for reading data from modbus on multiple threads 
+		

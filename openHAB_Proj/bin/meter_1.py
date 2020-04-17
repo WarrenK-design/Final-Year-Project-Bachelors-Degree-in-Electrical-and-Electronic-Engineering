@@ -40,6 +40,7 @@ import json
 import logging 
 import os
 import sys
+import csv
 import pprint ###DELETE###
 
 
@@ -61,17 +62,21 @@ logger.addHandler(stream_handler)
 #os.chmod('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/meter_1.log', 0o777)
 
 async def main(meter,things):
-    print("Executing meter_1 event loop")
-    while True:
-        if 'conn' not in locals():
-            logger.info("Creating connection to database using MySQL.connect() function")
-            conn = await MySQL.connect()  
-        logger.info("Attempting to read voltage using smart_meter.read_voltage()")
-        await meter.read_voltage(conn)
-        logger.info("Attempting to read power using smart_meter.read_kw()")
-        await meter.read_kw(conn)
-        logger.info("Attempting to read current using smart_meter.read_current()")
-        await meter.read_current(conn)
+    with open('meter_1.csv', mode='a') as csv_file:
+        csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        print("Executing meter_1 event loop")
+        while True:
+            if 'conn' not in locals():
+                logger.info("Creating connection to database using MySQL.connect() function")
+                conn = await MySQL.connect()  
+            logger.info("Attempting to read voltage using smart_meter.read_voltage()")
+            await meter.read_voltage(conn)
+            logger.info("Attempting to read power using smart_meter.read_kw()")
+            await meter.read_kw(conn)
+            logger.info("Attempting to read current using smart_meter.read_current()")
+            await meter.read_current(conn)
+            volts, power, current = await MySQL.queryVCP(conn,csv_writer)
+
 
 ## First parse the config file 
 with open('/home/openhabian/Environments/env_1/openHAB_Proj/lib/config.json') as json_file:

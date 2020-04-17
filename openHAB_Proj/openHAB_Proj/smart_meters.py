@@ -1,4 +1,4 @@
-#!/urs/bin/env python
+#!/usr/bin/env python
 
 
 ##House Keeping##
@@ -63,6 +63,30 @@ class smart_meter():
         #self.client - 'pymodbus.client.asynchronous.asyncio.ModbusClientProtocol' 
         self.client = client.protocol
 
+    ## read_all_registers ##
+    # Reads the registers:
+    # V_2 - 0x1112
+    # I_2 - 0x1114
+    # kW_2 - 0x1116
+    # kvar_2 - 0x1118
+    # kVA_2 - 0x111A
+    # PF_2  - 0x111C 
+    async def read_all(self,file):
+        logger.info(f"Attempting to read all registers for channel two")
+        try:
+            response = await self.client.read_input_registers(0x1112,12) 
+            reg_value = dict.fromkeys(["Volts","Current","kW","kvar","kVA","PF"])
+            x,y = 0,2
+            for key in reg_value:
+                reg_value[key] = (BinaryPayloadDecoder.fromRegisters(response.registers[x:y],Endian.Big, wordorder=Endian.Little )).decode_32bit_float()
+                x+=2
+                y+=2
+            file.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]])
+        except Exception as e:
+            logger.exception("Error in reading all regeisters for channel two")
+
+
+
     ##  read32bitfloat ##
     # Reads a 32 bit float from the smart meter
     # Inputs:
@@ -88,6 +112,7 @@ class smart_meter():
         try:
             decoder = BinaryPayloadDecoder.fromRegisters(response.registers, Endian.Big, wordorder=Endian.Little)
             value = decoder.decode_32bit_float()
+            logger.info("Attempting to log voltage value to database using MySQL.update_voltage()")
             await MySQL.update_voltage(value,self.IP,time,conn)
         except Exception as e:
             logger.exception(f"Could not decode register response, tracback shown below")
@@ -102,8 +127,8 @@ class smart_meter():
         try:
             decoder = BinaryPayloadDecoder.fromRegisters(response.registers, Endian.Big, wordorder=Endian.Little)
             value = decoder.decode_32bit_float()
-            value = decoder.decode_32bit_float()
-            await MySQL.update_voltage(value,self.IP,time,conn)
+            logger.info("Attempting to log current value to database using MySQL.update_current()")
+            await MySQL.update_current(value,self.IP,time,conn)
         except Exception as e:
             logger.exception(f"Could not decode register response from reg 0x1114, tracback shown below")
 
@@ -117,6 +142,7 @@ class smart_meter():
         try:
             decoder = BinaryPayloadDecoder.fromRegisters(response.registers, Endian.Big, wordorder=Endian.Little)
             value = decoder.decode_32bit_float()
+            logger.info("Attempting to log power value to database using MySQL.update_power()")
             await MySQL.update_power(value,self.IP,time,conn)
         except Exception as e:
             logger.exception(f"Could not decode register response from reg 0x1116, tracback shown below")

@@ -41,6 +41,7 @@ import json
 import logging
 import os
 import sys
+import csv
 import pprint ###DELETE###
 
 
@@ -63,17 +64,22 @@ logger.addHandler(stream_handler)
 
 
 async def main(meter,things):
-    print("Executing meter_2 event loop")
-    while True:
-        if 'conn' not in locals():
-            logger.info("Creating connection to database using MySQL.connect() function")
-            conn = await MySQL.connect()  
-        logger.info("Attempting to read voltage using smart_meter.read_voltage()")
-        await meter.read_voltage(conn)
-        logger.info("Attempting to read power using smart_meter.read_kw()")
-        await meter.read_kw(conn)
-        logger.info("Attempting to read current using smart_meter.read_current()")
-        await meter.read_current(conn)
+    with open('meter_2.csv', mode='a') as csv_file:
+        csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        print("Executing meter_2 event loop")
+        while True:
+            if 'conn' not in locals():
+                logger.info("Creating connection to database using MySQL.connect() function")
+                conn = await MySQL.connect()  
+            logger.info("Attempting to read voltage using smart_meter.read_voltage()")
+            await meter.read_voltage(conn)
+            logger.info("Attempting to read power using smart_meter.read_kw()")
+            await meter.read_kw(conn)
+            logger.info("Attempting to read current using smart_meter.read_current()")
+            await meter.read_current(conn)
+            volts, power, current = await MySQL.queryVCP(conn,csv_writer)
+  
+
 
 ## First parse the config file 
 with open('/home/openhabian/Environments/env_1/openHAB_Proj/lib/config.json') as json_file:
@@ -91,7 +97,7 @@ with open('/home/openhabian/Environments/env_1/openHAB_Proj/lib/config.json') as
         plug.__dict__ = val
         things.append(plug)
 loop = asyncio.get_event_loop()
-loop, client = ModbusClient(schedulers.ASYNC_IO,host ="192.168.0.80", loop=loop)
-meter_2 = smart_meter('192.168.0.80',client)
+loop, client = ModbusClient(schedulers.ASYNC_IO,host ="192.168.0.81", loop=loop)
+meter_2 = smart_meter('192.168.0.81',client)
 loop.create_task(main(meter_2,things))
 loop.run_forever()
