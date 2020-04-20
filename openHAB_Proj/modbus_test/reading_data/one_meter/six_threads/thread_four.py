@@ -16,7 +16,7 @@ import logging
 import csv
 
 # IP address of the smart meter 
-meter_IP = "192.168.0.81"
+meter_IP = "192.168.0.80"
 
 async def main(meter):
     file_name = "results/thread_four_result.csv"

@@ -81,8 +81,9 @@ class smart_meter():
                 reg_value[key] = (BinaryPayloadDecoder.fromRegisters(response.registers[x:y],Endian.Big, wordorder=Endian.Little )).decode_32bit_float()
                 x+=2
                 y+=2
-            file.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]])
+            file.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],self.IP])
         except Exception as e:
+            file.writerow(["MISS",self.IP])
             logger.exception("Error in reading all regeisters for channel two")
 
 

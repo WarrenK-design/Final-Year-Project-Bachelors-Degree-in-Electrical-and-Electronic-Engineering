@@ -1,0 +1,3 @@
+The directorys:
+	diff_meter_per_thread - Each thread will query both meter_1 and meter_2  
+	same_meter_per_thread - Each thread will query either meter_1 or meter_2 twice
