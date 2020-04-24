@@ -1,5 +1,5 @@
 {
-    "meter_1": {
+    "test": {
         "zwave:aeon_zw096_00_000:controller:node2": {
             "AeotechZW096things": {},
             "MAC": "b8:27:eb:bb:6c:f0",
@@ -198,44 +198,44 @@
                 "UID": "Current_Zwave_Node2",
                 "name": "zwave:meter_current",
                 "unit": "Amps",
-                "value": "0.043"
+                "value": null
             },
             "energy": {
                 "UID": "Energy_Zwave_Node2",
                 "name": "zwave:meter_kwh",
                 "unit": "kWh",
-                "value": "20.832"
+                "value": null
             },
             "items": {
                 "current": {
                     "UID": "Current_Zwave_Node2",
                     "name": "zwave:meter_current",
                     "unit": "Amps",
-                    "value": "0.043"
+                    "value": null
                 },
                 "energy": {
                     "UID": "Energy_Zwave_Node2",
                     "name": "zwave:meter_kwh",
                     "unit": "kWh",
-                    "value": "20.832"
+                    "value": null
                 },
                 "power": {
                     "UID": "Power_Zwave_Node2",
                     "name": "zwave:meter_watts",
                     "unit": "Watts",
-                    "value": "3.869"
+                    "value": null
                 },
                 "switch": {
                     "UID": "Switch_Zwave_Node2",
                     "name": "zwave:switch_binary",
                     "unit": "Bool",
-                    "value": 1
+                    "value": null
                 },
                 "voltage": {
                     "UID": "Voltage_Zwave_Node2",
                     "name": "zwave:meter_voltage",
                     "unit": "Volts",
-                    "value": "227.736"
+                    "value": null
                 }
             },
             "keys": [
@@ -248,7 +248,7 @@
                 "UID": "Power_Zwave_Node2",
                 "name": "zwave:meter_watts",
                 "unit": "Watts",
-                "value": "3.869"
+                "value": null
             },
             "status": {
                 "description": null,
@@ -259,17 +259,15 @@
                 "UID": "Switch_Zwave_Node2",
                 "name": "zwave:switch_binary",
                 "unit": "Bool",
-                "value": 1
+                "value": null
             },
             "voltage": {
                 "UID": "Voltage_Zwave_Node2",
                 "name": "zwave:meter_voltage",
                 "unit": "Volts",
-                "value": "227.736"
+                "value": null
             }
-        }
-    },
-    "meter_2": {
+        },
         "zwave:aeon_zw096_00_000:controller:node3": {
             "AeotechZW096things": {},
             "MAC": "b8:27:eb:bb:6c:f0",
@@ -468,44 +466,44 @@
                 "UID": "Current_Zwave_Node3",
                 "name": "zwave:meter_current",
                 "unit": "Amps",
-                "value": "0"
+                "value": null
             },
             "energy": {
                 "UID": "Energy_Zwave_Node3",
                 "name": "zwave:meter_kwh",
                 "unit": "kWh",
-                "value": "16.192"
+                "value": null
             },
             "items": {
                 "current": {
                     "UID": "Current_Zwave_Node3",
                     "name": "zwave:meter_current",
                     "unit": "Amps",
-                    "value": "0"
+                    "value": null
                 },
                 "energy": {
                     "UID": "Energy_Zwave_Node3",
                     "name": "zwave:meter_kwh",
                     "unit": "kWh",
-                    "value": "16.192"
+                    "value": null
                 },
                 "power": {
                     "UID": "Power_Zwave_Node3",
                     "name": "zwave:meter_watts",
                     "unit": "Watts",
-                    "value": "0"
+                    "value": null
                 },
                 "switch": {
                     "UID": "Switch_Zwave_Node3",
                     "name": "zwave:switch_binary",
                     "unit": "Bool",
-                    "value": 1
+                    "value": null
                 },
                 "voltage": {
                     "UID": "Voltage_Zwave_Node3",
                     "name": "zwave:meter_voltage",
                     "unit": "Volts",
-                    "value": "227.639"
+                    "value": null
                 }
             },
             "keys": [
@@ -518,7 +516,7 @@
                 "UID": "Power_Zwave_Node3",
                 "name": "zwave:meter_watts",
                 "unit": "Watts",
-                "value": "0"
+                "value": null
             },
             "status": {
                 "description": null,
@@ -529,13 +527,549 @@
                 "UID": "Switch_Zwave_Node3",
                 "name": "zwave:switch_binary",
                 "unit": "Bool",
-                "value": 1
+                "value": null
             },
             "voltage": {
                 "UID": "Voltage_Zwave_Node3",
                 "name": "zwave:meter_voltage",
                 "unit": "Volts",
-                "value": "227.639"
+                "value": null
+            }
+        },
+        "zwave:aeon_zw096_00_000:controller:node4": {
+            "AeotechZW096things": {},
+            "MAC": "b8:27:eb:bb:6c:f0",
+            "UID": "zwave:aeon_zw096_00_000:controller:node4",
+            "base_url": "http://localhost:8080/rest",
+            "config": {
+                "UID": "zwave:aeon_zw096_00_000:controller:node4",
+                "bridgeUID": "zwave:serial_zstick:controller",
+                "channels": [
+                    {
+                        "channelTypeUID": "zwave:switch_binary",
+                        "configuration": {},
+                        "defaultTags": [],
+                        "description": "Switch the power on and off",
+                        "id": "switch_binary",
+                        "itemType": "Switch",
+                        "kind": "STATE",
+                        "label": "Switch",
+                        "linkedItems": [
+                            "Switch_Zwave_Node4"
+                        ],
+                        "properties": {
+                            "binding:*:OnOffType": "COMMAND_CLASS_SWITCH_BINARY,COMMAND_CLASS_BASIC"
+                        },
+                        "uid": "zwave:aeon_zw096_00_000:controller:node4:switch_binary"
+                    },
+                    {
+                        "channelTypeUID": "zwave:meter_kwh",
+                        "configuration": {},
+                        "defaultTags": [],
+                        "description": "Indicates the energy consumption (kWh)",
+                        "id": "meter_kwh",
+                        "itemType": "Number",
+                        "kind": "STATE",
+                        "label": "Electric meter (kWh)",
+                        "linkedItems": [
+                            "Energy_Zwave_Node4"
+                        ],
+                        "properties": {
+                            "binding:*:DecimalType": "COMMAND_CLASS_METER;type=E_KWh"
+                        },
+                        "uid": "zwave:aeon_zw096_00_000:controller:node4:meter_kwh"
+                    },
+                    {
+                        "channelTypeUID": "zwave:meter_current",
+                        "configuration": {},
+                        "defaultTags": [],
+                        "description": "Indicates the instantaneous current consumption",
+                        "id": "meter_current",
+                        "itemType": "Number",
+                        "kind": "STATE",
+                        "label": "Electric meter (amps)",
+                        "linkedItems": [
+                            "Current_Zwave_Node4"
+                        ],
+                        "properties": {
+                            "binding:*:DecimalType": "COMMAND_CLASS_METER;type=E_A"
+                        },
+                        "uid": "zwave:aeon_zw096_00_000:controller:node4:meter_current"
+                    },
+                    {
+                        "channelTypeUID": "zwave:meter_voltage",
+                        "configuration": {},
+                        "defaultTags": [],
+                        "description": "Indicates the instantaneous voltage",
+                        "id": "meter_voltage",
+                        "itemType": "Number",
+                        "kind": "STATE",
+                        "label": "Electric meter (volts)",
+                        "linkedItems": [
+                            "Voltage_Zwave_Node4"
+                        ],
+                        "properties": {
+                            "binding:*:DecimalType": "COMMAND_CLASS_METER;type=E_V"
+                        },
+                        "uid": "zwave:aeon_zw096_00_000:controller:node4:meter_voltage"
+                    },
+                    {
+                        "channelTypeUID": "zwave:meter_watts",
+                        "configuration": {},
+                        "defaultTags": [],
+                        "description": "Indicates the instantaneous power consumption",
+                        "id": "meter_watts",
+                        "itemType": "Number",
+                        "kind": "STATE",
+                        "label": "Electric meter (watts)",
+                        "linkedItems": [
+                            "Power_Zwave_Node4"
+                        ],
+                        "properties": {
+                            "binding:*:DecimalType": "COMMAND_CLASS_METER;type=E_W"
+                        },
+                        "uid": "zwave:aeon_zw096_00_000:controller:node4:meter_watts"
+                    },
+                    {
+                        "channelTypeUID": "zwave:meter_reset",
+                        "configuration": {},
+                        "defaultTags": [],
+                        "description": "Reset the meter",
+                        "id": "meter_reset",
+                        "itemType": "Switch",
+                        "kind": "STATE",
+                        "label": "Reset Meter",
+                        "linkedItems": [],
+                        "properties": {
+                            "binding:*:OnOffType": "COMMAND_CLASS_METER;reset=true"
+                        },
+                        "uid": "zwave:aeon_zw096_00_000:controller:node4:meter_reset"
+                    },
+                    {
+                        "channelTypeUID": "zwave:color_color",
+                        "configuration": {},
+                        "defaultTags": [],
+                        "description": "The color channel allows to control the color of a light. It is also possible to dim values and switch the light on and off.",
+                        "id": "color_color",
+                        "itemType": "Color",
+                        "kind": "STATE",
+                        "label": "Color",
+                        "linkedItems": [],
+                        "properties": {
+                            "binding:*:HSBType": "COMMAND_CLASS_SWITCH_COLOR;colorMode=RGB",
+                            "binding:*:PercentType": "COMMAND_CLASS_SWITCH_MULTILEVEL",
+                            "binding:Command:OnOffType": "COMMAND_CLASS_SWITCH_MULTILEVEL"
+                        },
+                        "uid": "zwave:aeon_zw096_00_000:controller:node4:color_color"
+                    }
+                ],
+                "configuration": {
+                    "binding_pollperiod": 10,
+                    "config_100_1_wo": 0,
+                    "config_101_4": 0,
+                    "config_102_4": 0,
+                    "config_103_4": 0,
+                    "config_110_1_wo": 0,
+                    "config_111_4": 3,
+                    "config_112_4": 600,
+                    "config_113_4": 600,
+                    "config_20_1": 0,
+                    "config_252_1": 0,
+                    "config_255_1_wo": 0,
+                    "config_33_4_wo": 0,
+                    "config_3_1": 1,
+                    "config_80_1": 0,
+                    "config_81_1": 0,
+                    "config_83_3": 1774619,
+                    "config_83_3_000000FF": 27,
+                    "config_83_3_0000FF00": 20,
+                    "config_83_3_00FF0000": 27,
+                    "config_84_3": 3289650,
+                    "config_84_3_000000FF": 50,
+                    "config_84_3_0000FF00": 50,
+                    "config_84_3_00FF0000": 50,
+                    "config_90_1": 0,
+                    "config_91_2": 25,
+                    "config_92_1": 5,
+                    "group_1": [
+                        "controller"
+                    ],
+                    "group_2": [],
+                    "node_id": 4,
+                    "switchall_mode": 255
+                },
+                "editable": false,
+                "label": "ZWave Node 4: aeon_plug",
+                "properties": {
+                    "dbReference": "63",
+                    "defaultAssociations": "1",
+                    "manufacturerId": "0086",
+                    "manufacturerRef": "0003:0060,0103:0060,0203:0060,1D03:0060",
+                    "modelId": "ZW096",
+                    "vendor": "AEON Labs",
+                    "zwave_beaming": "true",
+                    "zwave_class_basic": "BASIC_TYPE_ROUTING_SLAVE",
+                    "zwave_class_generic": "GENERIC_TYPE_SWITCH_BINARY",
+                    "zwave_class_specific": "SPECIFIC_TYPE_POWER_SWITCH_BINARY",
+                    "zwave_deviceid": "96",
+                    "zwave_devicetype": "3",
+                    "zwave_frequent": "false",
+                    "zwave_listening": "true",
+                    "zwave_manufacturer": "134",
+                    "zwave_neighbours": "",
+                    "zwave_nodeid": "4",
+                    "zwave_plus_devicetype": "NODE_TYPE_ZWAVEPLUS_NODE",
+                    "zwave_plus_roletype": "ROLE_TYPE_SLAVE_ALWAYS_ON",
+                    "zwave_routing": "true",
+                    "zwave_secure": "false",
+                    "zwave_version": "1.1"
+                },
+                "statusInfo": {
+                    "status": "ONLINE",
+                    "statusDetail": "NONE"
+                },
+                "thingTypeUID": "zwave:aeon_zw096_00_000"
+            },
+            "current": {
+                "UID": "Current_Zwave_Node4",
+                "name": "zwave:meter_current",
+                "unit": "Amps",
+                "value": null
+            },
+            "energy": {
+                "UID": "Energy_Zwave_Node4",
+                "name": "zwave:meter_kwh",
+                "unit": "kWh",
+                "value": null
+            },
+            "items": {
+                "current": {
+                    "UID": "Current_Zwave_Node4",
+                    "name": "zwave:meter_current",
+                    "unit": "Amps",
+                    "value": null
+                },
+                "energy": {
+                    "UID": "Energy_Zwave_Node4",
+                    "name": "zwave:meter_kwh",
+                    "unit": "kWh",
+                    "value": null
+                },
+                "power": {
+                    "UID": "Power_Zwave_Node4",
+                    "name": "zwave:meter_watts",
+                    "unit": "Watts",
+                    "value": null
+                },
+                "switch": {
+                    "UID": "Switch_Zwave_Node4",
+                    "name": "zwave:switch_binary",
+                    "unit": "Bool",
+                    "value": null
+                },
+                "voltage": {
+                    "UID": "Voltage_Zwave_Node4",
+                    "name": "zwave:meter_voltage",
+                    "unit": "Volts",
+                    "value": null
+                }
+            },
+            "keys": [
+                "name",
+                "UID",
+                "unit",
+                "value"
+            ],
+            "power": {
+                "UID": "Power_Zwave_Node4",
+                "name": "zwave:meter_watts",
+                "unit": "Watts",
+                "value": null
+            },
+            "status": {
+                "description": null,
+                "status": "ONLINE",
+                "statusDetail": "NONE"
+            },
+            "switch": {
+                "UID": "Switch_Zwave_Node4",
+                "name": "zwave:switch_binary",
+                "unit": "Bool",
+                "value": null
+            },
+            "voltage": {
+                "UID": "Voltage_Zwave_Node4",
+                "name": "zwave:meter_voltage",
+                "unit": "Volts",
+                "value": null
+            }
+        },
+        "zwave:aeon_zw096_00_000:controller:node5": {
+            "AeotechZW096things": {},
+            "MAC": "b8:27:eb:bb:6c:f0",
+            "UID": "zwave:aeon_zw096_00_000:controller:node5",
+            "base_url": "http://localhost:8080/rest",
+            "config": {
+                "UID": "zwave:aeon_zw096_00_000:controller:node5",
+                "bridgeUID": "zwave:serial_zstick:controller",
+                "channels": [
+                    {
+                        "channelTypeUID": "zwave:switch_binary",
+                        "configuration": {},
+                        "defaultTags": [],
+                        "description": "Switch the power on and off",
+                        "id": "switch_binary",
+                        "itemType": "Switch",
+                        "kind": "STATE",
+                        "label": "Switch",
+                        "linkedItems": [
+                            "Switch_Zwave_Node5"
+                        ],
+                        "properties": {
+                            "binding:*:OnOffType": "COMMAND_CLASS_SWITCH_BINARY,COMMAND_CLASS_BASIC"
+                        },
+                        "uid": "zwave:aeon_zw096_00_000:controller:node5:switch_binary"
+                    },
+                    {
+                        "channelTypeUID": "zwave:meter_kwh",
+                        "configuration": {},
+                        "defaultTags": [],
+                        "description": "Indicates the energy consumption (kWh)",
+                        "id": "meter_kwh",
+                        "itemType": "Number",
+                        "kind": "STATE",
+                        "label": "Electric meter (kWh)",
+                        "linkedItems": [
+                            "Energy_Zwave_Node5"
+                        ],
+                        "properties": {
+                            "binding:*:DecimalType": "COMMAND_CLASS_METER;type=E_KWh"
+                        },
+                        "uid": "zwave:aeon_zw096_00_000:controller:node5:meter_kwh"
+                    },
+                    {
+                        "channelTypeUID": "zwave:meter_current",
+                        "configuration": {},
+                        "defaultTags": [],
+                        "description": "Indicates the instantaneous current consumption",
+                        "id": "meter_current",
+                        "itemType": "Number",
+                        "kind": "STATE",
+                        "label": "Electric meter (amps)",
+                        "linkedItems": [
+                            "Current_Zwave_Node5"
+                        ],
+                        "properties": {
+                            "binding:*:DecimalType": "COMMAND_CLASS_METER;type=E_A"
+                        },
+                        "uid": "zwave:aeon_zw096_00_000:controller:node5:meter_current"
+                    },
+                    {
+                        "channelTypeUID": "zwave:meter_voltage",
+                        "configuration": {},
+                        "defaultTags": [],
+                        "description": "Indicates the instantaneous voltage",
+                        "id": "meter_voltage",
+                        "itemType": "Number",
+                        "kind": "STATE",
+                        "label": "Electric meter (volts)",
+                        "linkedItems": [
+                            "Voltage_Zwave_Node5"
+                        ],
+                        "properties": {
+                            "binding:*:DecimalType": "COMMAND_CLASS_METER;type=E_V"
+                        },
+                        "uid": "zwave:aeon_zw096_00_000:controller:node5:meter_voltage"
+                    },
+                    {
+                        "channelTypeUID": "zwave:meter_watts",
+                        "configuration": {},
+                        "defaultTags": [],
+                        "description": "Indicates the instantaneous power consumption",
+                        "id": "meter_watts",
+                        "itemType": "Number",
+                        "kind": "STATE",
+                        "label": "Electric meter (watts)",
+                        "linkedItems": [
+                            "Power_Zwave_Node5"
+                        ],
+                        "properties": {
+                            "binding:*:DecimalType": "COMMAND_CLASS_METER;type=E_W"
+                        },
+                        "uid": "zwave:aeon_zw096_00_000:controller:node5:meter_watts"
+                    },
+                    {
+                        "channelTypeUID": "zwave:meter_reset",
+                        "configuration": {},
+                        "defaultTags": [],
+                        "description": "Reset the meter",
+                        "id": "meter_reset",
+                        "itemType": "Switch",
+                        "kind": "STATE",
+                        "label": "Reset Meter",
+                        "linkedItems": [],
+                        "properties": {
+                            "binding:*:OnOffType": "COMMAND_CLASS_METER;reset=true"
+                        },
+                        "uid": "zwave:aeon_zw096_00_000:controller:node5:meter_reset"
+                    },
+                    {
+                        "channelTypeUID": "zwave:color_color",
+                        "configuration": {},
+                        "defaultTags": [],
+                        "description": "The color channel allows to control the color of a light. It is also possible to dim values and switch the light on and off.",
+                        "id": "color_color",
+                        "itemType": "Color",
+                        "kind": "STATE",
+                        "label": "Color",
+                        "linkedItems": [],
+                        "properties": {
+                            "binding:*:HSBType": "COMMAND_CLASS_SWITCH_COLOR;colorMode=RGB",
+                            "binding:*:PercentType": "COMMAND_CLASS_SWITCH_MULTILEVEL",
+                            "binding:Command:OnOffType": "COMMAND_CLASS_SWITCH_MULTILEVEL"
+                        },
+                        "uid": "zwave:aeon_zw096_00_000:controller:node5:color_color"
+                    }
+                ],
+                "configuration": {
+                    "binding_pollperiod": 10,
+                    "config_100_1_wo": 0,
+                    "config_101_4": 4,
+                    "config_102_4": 8,
+                    "config_103_4": 0,
+                    "config_110_1_wo": 0,
+                    "config_111_4": 3,
+                    "config_112_4": 600,
+                    "config_113_4": 600,
+                    "config_20_1": 0,
+                    "config_252_1": 0,
+                    "config_255_1_wo": 0,
+                    "config_33_4_wo": 0,
+                    "config_3_1": 1,
+                    "config_80_1": 0,
+                    "config_81_1": 0,
+                    "config_83_3": 1774619,
+                    "config_83_3_000000FF": 27,
+                    "config_83_3_0000FF00": 20,
+                    "config_83_3_00FF0000": 27,
+                    "config_84_3": 3289650,
+                    "config_84_3_000000FF": 50,
+                    "config_84_3_0000FF00": 50,
+                    "config_84_3_00FF0000": 50,
+                    "config_90_1": 0,
+                    "config_91_2": 25,
+                    "config_92_1": 5,
+                    "group_1": [
+                        "controller"
+                    ],
+                    "group_2": [],
+                    "node_id": 5,
+                    "switchall_mode": 255
+                },
+                "editable": false,
+                "label": "ZWave Node 5: aeon_plug",
+                "properties": {
+                    "dbReference": "63",
+                    "defaultAssociations": "1",
+                    "manufacturerId": "0086",
+                    "manufacturerRef": "0003:0060,0103:0060,0203:0060,1D03:0060",
+                    "modelId": "ZW096",
+                    "vendor": "AEON Labs",
+                    "zwave_beaming": "true",
+                    "zwave_class_basic": "BASIC_TYPE_ROUTING_SLAVE",
+                    "zwave_class_generic": "GENERIC_TYPE_SWITCH_BINARY",
+                    "zwave_class_specific": "SPECIFIC_TYPE_POWER_SWITCH_BINARY",
+                    "zwave_deviceid": "96",
+                    "zwave_devicetype": "3",
+                    "zwave_frequent": "false",
+                    "zwave_listening": "true",
+                    "zwave_manufacturer": "134",
+                    "zwave_neighbours": "",
+                    "zwave_nodeid": "5",
+                    "zwave_plus_devicetype": "NODE_TYPE_ZWAVEPLUS_NODE",
+                    "zwave_plus_roletype": "ROLE_TYPE_SLAVE_ALWAYS_ON",
+                    "zwave_routing": "true",
+                    "zwave_secure": "false",
+                    "zwave_version": "1.2"
+                },
+                "statusInfo": {
+                    "status": "ONLINE",
+                    "statusDetail": "NONE"
+                },
+                "thingTypeUID": "zwave:aeon_zw096_00_000"
+            },
+            "current": {
+                "UID": "Current_Zwave_Node5",
+                "name": "zwave:meter_current",
+                "unit": "Amps",
+                "value": null
+            },
+            "energy": {
+                "UID": "Energy_Zwave_Node5",
+                "name": "zwave:meter_kwh",
+                "unit": "kWh",
+                "value": null
+            },
+            "items": {
+                "current": {
+                    "UID": "Current_Zwave_Node5",
+                    "name": "zwave:meter_current",
+                    "unit": "Amps",
+                    "value": null
+                },
+                "energy": {
+                    "UID": "Energy_Zwave_Node5",
+                    "name": "zwave:meter_kwh",
+                    "unit": "kWh",
+                    "value": null
+                },
+                "power": {
+                    "UID": "Power_Zwave_Node5",
+                    "name": "zwave:meter_watts",
+                    "unit": "Watts",
+                    "value": null
+                },
+                "switch": {
+                    "UID": "Switch_Zwave_Node5",
+                    "name": "zwave:switch_binary",
+                    "unit": "Bool",
+                    "value": null
+                },
+                "voltage": {
+                    "UID": "Voltage_Zwave_Node5",
+                    "name": "zwave:meter_voltage",
+                    "unit": "Volts",
+                    "value": null
+                }
+            },
+            "keys": [
+                "name",
+                "UID",
+                "unit",
+                "value"
+            ],
+            "power": {
+                "UID": "Power_Zwave_Node5",
+                "name": "zwave:meter_watts",
+                "unit": "Watts",
+                "value": null
+            },
+            "status": {
+                "description": null,
+                "status": "ONLINE",
+                "statusDetail": "NONE"
+            },
+            "switch": {
+                "UID": "Switch_Zwave_Node5",
+                "name": "zwave:switch_binary",
+                "unit": "Bool",
+                "value": null
+            },
+            "voltage": {
+                "UID": "Voltage_Zwave_Node5",
+                "name": "zwave:meter_voltage",
+                "unit": "Volts",
+                "value": null
             }
         }
     }

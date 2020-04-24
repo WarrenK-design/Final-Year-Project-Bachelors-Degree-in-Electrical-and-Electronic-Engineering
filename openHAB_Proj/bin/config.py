@@ -51,7 +51,7 @@ logger.addHandler(stream_handler)
 
 
 async def main():
-    ##create a database connection##
+    #Crete a database connection
     conn = await MySQL.connect()
     ##The process##
     #Intitialse an opeb_HAB object 
@@ -70,12 +70,12 @@ async def main():
                 logger.warning(f"{plug.UID} is offline not including in config file")
             else:
                 #Log to the "Devices" table in community_grid
-                await plug.update_devices_data(conn)
+               # await plug.update_devices_data(conn)
                 #Log to the "items" table in community_grid
-                await plug.update_items_data(conn)
+               # await plug.update_items_data(conn)
                 #Write the configuration file for controlling the scripts
                 await plug.write_config(plug.switch['UID'],plug.UID,'/home/openhabian/Environments/env_1/openHAB_Proj/lib')
-   
+     
 
 
 loop = asyncio.get_event_loop()
@@ -85,4 +85,4 @@ loop.run_until_complete(main())
 #print(datetime.now()-start)
 #print(end)
 #print(start)
-print("Staty Script Complete")
+print("Start Script Complete")

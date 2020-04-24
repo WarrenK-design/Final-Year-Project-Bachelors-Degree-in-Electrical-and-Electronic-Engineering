@@ -175,12 +175,18 @@ class open_HAB:
     # and return the value that is read
     # Inputs:
     #    item - The name of the item  e.g Voltage_Zwave_Node3
-    async def read_item(self,item):
+    async def read_item(self,item,file):
         # Get request, returns a request object 
+   # async def read_item(self,item):
         logger.info(f"Get request sent to {self.base_url}/items/{item}/state")
         async with open_HAB.session.get(f'{self.base_url}/items/{item}/state') as resp:
             res = (await resp.text())
-        return res
+            if (resp.status) == 200:
+                file.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"OK",self.UID,res])
+                return res
+            else:
+                file.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"FAIL",self.UID,res]) 
+
    
     ##get_item##
     #Gets the item configuration from openhab

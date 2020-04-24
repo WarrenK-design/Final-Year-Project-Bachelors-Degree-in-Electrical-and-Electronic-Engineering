@@ -25,7 +25,6 @@ async def main(meter_1):
         print("Executing thread_three event loop")
         while True:
             await meter_1.read_all(csv_writer)
-            await meter_1.read_all(csv_writer)
 
 loop = asyncio.get_event_loop()
 loop, client1 = ModbusClient(schedulers.ASYNC_IO,host =meter_1_IP, loop=loop)

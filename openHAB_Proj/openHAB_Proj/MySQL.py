@@ -163,7 +163,7 @@ async def insert_item(items,conn):
             await cur.executemany(query,items)
             # Commit the query 
             await conn.commit()
-            logger.info(f"Items table has been updated updated{item}")
+            logger.info(f"Items table has been updated updated{items}")
     #Print the error out
     except Exception as e:
         code, message = e.args

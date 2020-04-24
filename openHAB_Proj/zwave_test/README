@@ -1,0 +1,5 @@
+The purpose of this folder is to hold the tests for controlling and querying the z-wave devces on multiple threads
+The directorys:
+
+	single_device    - There is only one smart plug being used per thread
+	multiple_devices - All 4 smart plugs are being used per thread  
