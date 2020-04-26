@@ -160,15 +160,15 @@ class AeotechZW096(open_HAB.open_HAB):
 
     ##read_voltage##
     #Reads the voltage of the z-wave node 
-    async def read_voltage(self,file):
-   # async def read_voltage(self):
+   # async def read_voltage(self,file):
+    async def read_voltage(self):
         if self.status['status']=="OFFLINE":
             logger.warning(f"{self.UID} is offline, setting voltage reading to None")
             self.voltage['value'] = None
         #The return of read_item will be the voltage value 
         else: 
-            val = await self.read_item(self.voltage['UID'],file)
-            #val = await self.read_item(self.voltage['UID'])
+            #val = await self.read_item(self.voltage['UID'],file)
+            val = await self.read_item(self.voltage['UID'])
             if val =='NULL':
                 logger.warning(f"{self.UID} voltage reading has returned NULL, setting voltage reading to None")
                 self.voltage['value'] = None    

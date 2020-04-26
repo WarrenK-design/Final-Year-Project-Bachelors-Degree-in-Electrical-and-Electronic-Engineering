@@ -1,5 +1,5 @@
 {
-    "test": {
+    "test_on_off": {
         "zwave:aeon_zw096_00_000:controller:node2": {
             "AeotechZW096things": {},
             "MAC": "b8:27:eb:bb:6c:f0",

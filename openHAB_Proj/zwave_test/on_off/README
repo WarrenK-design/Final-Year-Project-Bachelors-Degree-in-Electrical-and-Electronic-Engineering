@@ -1,0 +1,11 @@
+The purpose of this directory is to test the reponse time of openhab 
+The tests will send an on/off command to the switches configured in openhab
+There are rules in the openhab file on_off.rules that are trigged by a change in switch states
+These rules call the script timestamp.py and pass it the output csv file to write a timestamp and value to 
+These output csv files are in the results/ directory  
+
+	four_devices.py 	- Turns all devices on and then off in a for loop
+	on_off_by_group 	- This script turns all 4 plugs on and off by group
+	on_off_by_group_delay   - This script turns all 4 plugs on and off by group but there is a delay every loop
+
+The resulst of each of the tests are generated to the results/ directory and have been moved manually after the tests

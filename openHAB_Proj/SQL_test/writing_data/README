@@ -1,0 +1,5 @@
+The purpose of this directory is to see the delay in wiriting data from the raspberry Pi to the remote datbase
+The files:
+	meter_1 - Logs to the database the values from meter_1 (IP ending in 116)
+	meter_2 - Logs to the database the values from meter_2 (IP ending in 80)
+	run.sh  - Starts the two scripts off runing on seprate threads 

@@ -71,7 +71,8 @@ class smart_meter():
     # kvar_2 - 0x1118
     # kVA_2 - 0x111A
     # PF_2  - 0x111C 
-    async def read_all(self,file):
+    #async def read_all(self,file):
+    async def read_all(self,conn): 
         logger.info(f"Attempting to read all registers for channel two")
         try:
             response = await self.client.read_input_registers(0x1112,12) 
@@ -81,9 +82,10 @@ class smart_meter():
                 reg_value[key] = (BinaryPayloadDecoder.fromRegisters(response.registers[x:y],Endian.Big, wordorder=Endian.Little )).decode_32bit_float()
                 x+=2
                 y+=2
-            file.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],self.IP])
+            #file.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],self.IP])
+            await MySQL.update_all_values(reg_value,self.IP,datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],conn)
         except Exception as e:
-            file.writerow(["MISS",self.IP])
+            #file.writerow(["MISS",self.IP])
             logger.exception("Error in reading all regeisters for channel two")
 
 

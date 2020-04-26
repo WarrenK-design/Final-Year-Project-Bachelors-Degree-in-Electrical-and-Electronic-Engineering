@@ -30,6 +30,8 @@ import os
 import pprint
 import json
 import asyncio
+import subprocess
+import time
 
 ##Set up logger##
 #get the logger
@@ -47,6 +49,58 @@ stream_handler.setLevel(logging.ERROR) #set the stream handler level
 logger.addHandler(file_handler) #Add the handler to logger 
 logger.addHandler(stream_handler)
 #os.chmod('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/config.log', 0o777)
+
+##check_process##
+# The purpose of this function is to check if a process is running in the background
+# The process PID's are held in a json file for the control scripts
+# Need to read in the JSON file
+# Check if the process is currently running 
+# If it is running do not launch it agaian
+# If it is not runnning then launch it 
+def check_process(dir):
+    data = dict()
+    #See if there is a file for the config already
+    try:
+        with open(f"{dir}/process_list.json", "r+") as jsonFile:
+            data = json.load(jsonFile)
+            jsonFile.close()
+            print("HETE")
+            logger.info(f"Updating file {dir}/config.json")
+    #If there isnt a config file create it  
+    except Exception as e:
+        fh = open(f'{dir}/process_list.json','w+')
+        logger.info(f"File {dir}/process_list.json created")
+        fh.close()
+        subprocess.call(['chmod','0777',dir+'/process_list.json'])
+        logger.info(f"Permissions changed on {dir}/process_list.json to 777")
+    # Finally write to the file
+    finally:
+        process = ["./meter_1.py"]
+    #    # Open the file 
+        with open(f"{dir}/process_list.json", "w+") as jsonFile:
+            for p in process:
+                # Check if the process is in the JSON file 
+                if p in data:
+                    # Process is in JSON file
+                    # Check if it is running
+                    try:
+                        os.kill(data[p], 0)
+                    except OSError:
+                        # Process is no longer running, set it running and record PID
+                        print(f"Process Not running {data[p]}")
+                        process = subprocess.Popen([p, "&"])
+                        data[p] = process.pid
+                    else:
+                        # Process is running, do not change the PID 
+                        print(f"Process is running {data[p]}")
+                
+                else:
+                    #Process is not in the JSON file
+                    #Start the process and save the PID to the JSON file 
+                    print("Does not exist")
+                    process = subprocess.Popen([p, "&"])
+                    data[p] = process.pid
+            json.dump(data,jsonFile)
 
 
 
@@ -78,11 +132,24 @@ async def main():
      
 
 
-loop = asyncio.get_event_loop()
+#loop = asyncio.get_event_loop()
 #start = datetime.now()
-loop.run_until_complete(main())
-#end = datetime.now()
-#print(datetime.now()-start)
-#print(end)
-#print(start)
+#loop.run_until_complete(main())
+#process = subprocess.Popen(["./meter_1.py", "&"])
+#print(help(process))
+
+
+
+#try:
+#    os.kill(process.pid, 0)
+#except OSError:
+#    print("pid is unassigned")
+#else:
+#    print("pid is in use")
+
+#time.sleep(10)
+#process.kill()
 print("Start Script Complete")
+
+dir = '/home/openhabian/Environments/env_1/openHAB_Proj/lib'
+check_process(dir)

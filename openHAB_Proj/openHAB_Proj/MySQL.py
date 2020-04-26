@@ -394,26 +394,150 @@ async def update_current(value,IP,time,conn):
         await cur.close()
 
 
-
-async def queryVCP(conn,file):
+##query_meter_values##
+# The purpose of this function is to query the meter_values table for the most recent meter read:w
+#+----------------------+--------------+------+-----+----------------------+-------------------+
+#| Field                | Type         | Null | Key | Default              | Extra             |
+#+----------------------+--------------+------+-----+----------------------+-------------------+
+#| Meter_ID             | varchar(255) | NO   | PRI | NULL                 |                   |
+#| Voltage              | float        | YES  |     | NULL                 |                   |
+#| Voltage_Units        | varchar(255) | YES  |     | Volts                |                   |
+#| Current              | float        | YES  |     | NULL                 |                   |
+#| Current_Units        | varchar(255) | YES  |     | Amps                 |                   |
+#| Power                | float        | YES  |     | NULL                 |                   |
+#| Power_Units          | varchar(255) | YES  |     | kW                   |                   |
+#| Reactive_Power       | float        | YES  |     | NULL                 |                   |
+#| Reactive_Power_Units | varchar(255) | YES  |     | kVAR                 |                   |
+#| Apparent_Power       | float        | YES  |     | NULL                 |                   |
+#| Apparent_Power_Units | varchar(255) | YES  |     | kVA                  |                   |
+#| Power_Factor         | float        | YES  |     | NULL                 |                   |
+#| Time_MTCP            | timestamp(3) | YES  |     | NULL                 |                   |
+#| Time_SQL             | timestamp(3) | NO   |     | CURRENT_TIMESTAMP(3) | DEFAULT_GENERATED |
+#+----------------------+--------------+------+-----+----------------------+-------------------+
+#Inputs:
+#    conn - A database connection 
+#    IP   - The IP address of the meter that is to be queried  
+#Return:
+#   Voltage
+#   Current
+#   Power
+#   Reactive Power 
+#   Apparent Power
+#   Power Factor
+async def query_all_values(conn,IP,file):
     try:
-        query = ''' select voltage.value as Volts, power.value as kW, current.value as Amps 
-        from voltage,power,current where voltage.Time_SQL=(select max(Time_SQL) from voltage) 
-        AND power.Time_SQL=(select max(Time_SQL) from power) 
-        AND current.Time_SQL=(select max(Time_SQL) from current);
-        ''' 
+        query = ''' select Voltage, Current, Power, Reactive_Power, Apparent_Power, Power_Factor 
+                    from meter_values where Meter_ID = %s   
+        '''
         async with conn.cursor() as cur:
-            await cur.execute(query)
+            await cur.execute(query,(IP))
             await conn.commit()
     except Exception as e:
         logger.exception(e)
     else:
         result = (await cur.fetchone())
-        file.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],result[0],result[1],result[2]])
+        file.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]])
         logger.info(f"Succesful read")
-        return result[0], result[1], result[2]
+        return result[0], result[1], result[2], result[3], result[4], result[5]
     finally:
         await cur.close()        
 
 
 
+##Update_AllValues##
+# The purpose of this function is to update the all_values table and the meter_values table
+# The all values table keeps a record of historical meter readings, the meter_values table keeps a record of the most recent readings  
+# The layout of the all_values table is:
+#+----------------------+--------------+------+-----+----------------------+-------------------+
+#| Field                | Type         | Null | Key | Default              | Extra             |
+#+----------------------+--------------+------+-----+----------------------+-------------------+
+#| ID                   | int          | NO   | PRI | NULL                 | auto_increment    |
+#| Voltage              | float        | YES  |     | NULL                 |                   |
+#| Voltage_Units        | varchar(255) | YES  |     | Volts                |                   |
+#| Current              | float        | YES  |     | NULL                 |                   |
+#| Current_Units        | varchar(255) | YES  |     | Amps                 |                   |
+#| Power                | float        | YES  |     | NULL                 |                   |
+#| Power_Units          | varchar(255) | YES  |     | kW                   |                   |
+#| Reactive_Power       | float        | YES  |     | NULL                 |                   |
+#| Reactive_Power_Units | varchar(255) | YES  |     | kVAR                 |                   |
+#| Apparent_Power       | float        | YES  |     | NULL                 |                   |
+#| Apparent_Power_Units | varchar(255) | YES  |     | kVA                  |                   |
+#| Power_Factor         | float        | YES  |     | NULL                 |                   |
+#| Meter_ID             | varchar(255) | YES  |     | NULL                 |                   |
+#| Time_MTCP            | timestamp(3) | YES  |     | NULL                 |                   |
+#| Time_SQL             | timestamp(3) | NO   |     | CURRENT_TIMESTAMP(3) | DEFAULT_GENERATED |
+#+----------------------+--------------+------+-----+----------------------+-------------------+
+#The layout of the meter_values table:
+#+----------------------+--------------+------+-----+----------------------+-------------------+
+#| Field                | Type         | Null | Key | Default              | Extra             |
+#+----------------------+--------------+------+-----+----------------------+-------------------+
+#| Meter_ID             | varchar(255) | NO   | PRI | NULL                 |                   |
+#| Voltage              | float        | YES  |     | NULL                 |                   |
+#| Voltage_Units        | varchar(255) | YES  |     | Volts                |                   |
+#| Current              | float        | YES  |     | NULL                 |                   |
+#| Current_Units        | varchar(255) | YES  |     | Amps                 |                   |
+#| Power                | float        | YES  |     | NULL                 |                   |
+#| Power_Units          | varchar(255) | YES  |     | kW                   |                   |
+#| Reactive_Power       | float        | YES  |     | NULL                 |                   |
+#| Reactive_Power_Units | varchar(255) | YES  |     | kVAR                 |                   |
+#| Apparent_Power       | float        | YES  |     | NULL                 |                   |
+#| Apparent_Power_Units | varchar(255) | YES  |     | kVA                  |                   |
+#| Power_Factor         | float        | YES  |     | NULL                 |                   |
+#| Time_MTCP            | timestamp(3) | YES  |     | NULL                 |                   |
+#| Time_SQL             | timestamp(3) | NO   |     | CURRENT_TIMESTAMP(3) | DEFAULT_GENERATED |
+#+----------------------+--------------+------+-----+----------------------+-------------------+
+#Inputs:
+#   regs - A dictionary with the keys "Volts","Current","kW","kvar","kVA","PF" for values 
+#   IP   - The IP of the meter 
+#   time - A time stamp of when the modbus read occured 
+async def update_all_values(regs,IP,time,conn):
+    ##Try to insert in all_values table
+    try:
+        query = ''' INSERT INTO all_values(Voltage,Current,Power,Reactive_Power,Apparent_Power,Power_Factor,Meter_ID,Time_MTCP)
+                 VALUES(%s,%s,%s,%s,%s,%s,%s,%s) '''
+
+        async with conn.cursor() as cur:
+            await cur.execute(query,(regs['Volts'],regs['Current'],regs['kW'],regs['kvar'],regs['kVA'],regs['PF'],IP,time))
+            await conn.commit()
+
+        query = '''INSERT INTO all_values(Voltage,Current,Power,Reactive_Power,Apparent_Power,Power_Factor,Meter_ID,Time_MTCP)
+                 VALUES(%s,%s,%s,%s,%s,%s,%s,%s) '''
+
+    except Exception as e:
+        logger.exception(e)
+    ##Try to insert into the meter_values table
+    try:
+        query = ''' INSERT INTO meter_values(Meter_ID,Voltage,Current,Power,Reactive_Power,Apparent_Power,Power_Factor,Time_MTCP)
+                 VALUES(%s,%s,%s,%s,%s,%s,%s,%s) '''
+        async with conn.cursor() as cur:
+            await cur.execute(query,(IP,regs['Volts'],regs['Current'],regs['kW'],regs['kvar'],regs['kVA'],regs['PF'],time))
+            await conn.commit()
+    except Exception as e:
+        code, message = e.args
+        if code == 1062:
+            logger.warning(f"Entry {IP} exists in meter_Values table, attempting to update entry")
+            query = '''UPDATE meter_values
+                SET 
+                Voltage =%s,
+                Current= %s,
+                Power = %s,
+                Reactive_Power =%s,
+                Apparent_Power =%s,
+                Power_Factor = %s,
+                Time_MTCP =%s,
+                Time_SQL = %s
+                WHERE 
+                Meter_ID = %s'''
+            try:
+                async with conn.cursor() as cur:
+                    await cur.execute(query,(regs['Volts'],regs['Current'],regs['kW'],regs['kvar'],regs['kVA'],regs['PF'],time,datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'),IP))
+                    await conn.commit()
+                    logger.info(f"Entry {IP} has been updated in meter_values table)")
+            except Exception as e:
+                logger.exception(f"Could not update meter_values table with {IP}, tracback shown below\n{e}")
+        else:
+            logger.exception(f"Could not insert entry {IP} into meter_values table\n{e}")
+    else:
+        logger.info(f"New entry from {IP} in the all values table")
+    finally:
+        await cur.close()
