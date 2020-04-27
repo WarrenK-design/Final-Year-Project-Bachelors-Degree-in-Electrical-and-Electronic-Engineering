@@ -15,6 +15,7 @@ from datetime import datetime
 import logging 
 import os
 import pprint
+import subprocess
 
 
 ##Set up logger##
@@ -26,6 +27,8 @@ formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(process)d:%(processNa
 #setup the file handler 
 file_handler = logging.FileHandler('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/AeotechZW096.log') #Get a file handler
 file_handler.setFormatter(formatter)
+file_handler.setLevel(logging.WARNING)
+#subprocess.call(['chmod','0777','/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/AeotechZW096.log'])
 #setup a stream handler
 stream_handler = logging.StreamHandler() # get a stream hander 
 stream_handler.setLevel(logging.ERROR) #set the stream handler level 
@@ -301,6 +304,7 @@ class AeotechZW096(open_HAB.open_HAB):
         sql_data = list()
         #Update the values first to most up to date values
         await self.update_all()
+        print(self.switch)
         #Iterate through the avaialable items
         for key, val in self.items.items():
             sql_data.append((val['UID'],self.UID,val['value'],val['unit'],datetime.now().strftime('%Y-%m-%d %H:%M:%S')))

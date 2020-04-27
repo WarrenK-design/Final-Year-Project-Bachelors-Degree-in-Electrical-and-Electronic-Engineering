@@ -29,6 +29,7 @@ import asyncio
 import aiomysql
 import aiofiles
 from datetime import datetime
+import subprocess
 
 ###Set up logger##
 ##get the logger
@@ -39,6 +40,8 @@ formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(process)d:%(processNa
 #setup the file handler 
 file_handler = logging.FileHandler('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/MySQL.log') #Get a file handler
 file_handler.setFormatter(formatter)
+file_handler.setLevel(logging.ERROR)
+#subprocess.call(['chmod','0777','/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/MySQL.log'])
 #setup a stream handler
 stream_handler = logging.StreamHandler(sys.stdout) # get a stream hander 
 stream_handler.setLevel(logging.ERROR) #set the stream handler level 
@@ -424,7 +427,8 @@ async def update_current(value,IP,time,conn):
 #   Reactive Power 
 #   Apparent Power
 #   Power Factor
-async def query_all_values(conn,IP,file):
+#async def query_all_values(conn,IP,file):
+async def query_all_values(conn,IP):
     try:
         query = ''' select Voltage, Current, Power, Reactive_Power, Apparent_Power, Power_Factor 
                     from meter_values where Meter_ID = %s   
@@ -436,7 +440,7 @@ async def query_all_values(conn,IP,file):
         logger.exception(e)
     else:
         result = (await cur.fetchone())
-        file.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]])
+      #  file.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]])
         logger.info(f"Succesful read")
         return result[0], result[1], result[2], result[3], result[4], result[5]
     finally:
@@ -499,12 +503,10 @@ async def update_all_values(regs,IP,time,conn):
         async with conn.cursor() as cur:
             await cur.execute(query,(regs['Volts'],regs['Current'],regs['kW'],regs['kvar'],regs['kVA'],regs['PF'],IP,time))
             await conn.commit()
-
-        query = '''INSERT INTO all_values(Voltage,Current,Power,Reactive_Power,Apparent_Power,Power_Factor,Meter_ID,Time_MTCP)
-                 VALUES(%s,%s,%s,%s,%s,%s,%s,%s) '''
+            logger.info(f"New entry in the all_values table for {IP}")
 
     except Exception as e:
-        logger.exception(e)
+        logger.exception(f"Error in trying to log new entry in all_values tbale for meter {IP}")
     ##Try to insert into the meter_values table
     try:
         query = ''' INSERT INTO meter_values(Meter_ID,Voltage,Current,Power,Reactive_Power,Apparent_Power,Power_Factor,Time_MTCP)
@@ -512,6 +514,7 @@ async def update_all_values(regs,IP,time,conn):
         async with conn.cursor() as cur:
             await cur.execute(query,(IP,regs['Volts'],regs['Current'],regs['kW'],regs['kvar'],regs['kVA'],regs['PF'],time))
             await conn.commit()
+            logger.info(f"Entry created for meter {IP} in the meter_values table")
     except Exception as e:
         code, message = e.args
         if code == 1062:

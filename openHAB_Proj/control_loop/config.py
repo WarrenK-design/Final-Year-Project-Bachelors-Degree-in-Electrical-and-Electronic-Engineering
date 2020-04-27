@@ -42,6 +42,7 @@ formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(process)d:%(processNa
 #setup the file handler 
 file_handler = logging.FileHandler('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/config.log') #Get a file handler
 file_handler.setFormatter(formatter)
+#subprocess.call(['chmod','0777','/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/config.log'])
 #setup a stream handler
 stream_handler = logging.StreamHandler() # get a stream hander 
 stream_handler.setLevel(logging.ERROR) #set the stream handler level 
@@ -57,15 +58,17 @@ logger.addHandler(stream_handler)
 # Check if the process is currently running 
 # If it is running do not launch it agaian
 # If it is not runnning then launch it 
-def check_process(dir):
+# Inputs:
+#   dir     - The location of the lib directory to generate the process_list to
+#   run_dir - The location of the control_loop directory to run the scripts
+def check_process(dir,run_dir):
     data = dict()
     #See if there is a file for the config already
     try:
         with open(f"{dir}/process_list.json", "r+") as jsonFile:
             data = json.load(jsonFile)
             jsonFile.close()
-            print("HETE")
-            logger.info(f"Updating file {dir}/config.json")
+            logger.info(f"Updating file {dir}/process_list.json")
     #If there isnt a config file create it  
     except Exception as e:
         fh = open(f'{dir}/process_list.json','w+')
@@ -75,30 +78,37 @@ def check_process(dir):
         logger.info(f"Permissions changed on {dir}/process_list.json to 777")
     # Finally write to the file
     finally:
-        process = ["./meter_1.py"]
-    #    # Open the file 
+        # Where python is 
+        python = '/home/openhabian/Environments/env_1/bin/python3'
+        process = ["meter_1_log_data.py","meter_2_log_data.py","control_loop_one.py","control_loop_two.py"]
+        # Open the file 
         with open(f"{dir}/process_list.json", "w+") as jsonFile:
             for p in process:
                 # Check if the process is in the JSON file 
                 if p in data:
                     # Process is in JSON file
                     # Check if it is running
+                    # This will not kill it as it is a 0 command 
                     try:
                         os.kill(data[p], 0)
                     except OSError:
                         # Process is no longer running, set it running and record PID
-                        print(f"Process Not running {data[p]}")
-                        process = subprocess.Popen([p, "&"])
+                        logger.info(f"Process {p} not running, ID: {data[p]}")
+                        cmd = run_dir+p
+                        process = subprocess.Popen([python,cmd,"&"])
+                        logger.info(f"Process {p} now running, process ID: {process.pid}")
                         data[p] = process.pid
                     else:
                         # Process is running, do not change the PID 
-                        print(f"Process is running {data[p]}")
-                
+                        logger.info(f"Process {p} already running, ID:{data[p]}")                
                 else:
                     #Process is not in the JSON file
                     #Start the process and save the PID to the JSON file 
-                    print("Does not exist")
-                    process = subprocess.Popen([p, "&"])
+                    logger.info(f"Process {p} is not in procces_list.json")
+                    cmd = run_dir+p
+                    process = subprocess.Popen([python,cmd,"&"])
+                    logger.info(f"Process {p} launched, PID of {process.pid} added to JSON file")
+                    print(f"Process was not in file, set running now PID of {process.pid}")
                     data[p] = process.pid
             json.dump(data,jsonFile)
 
@@ -132,24 +142,10 @@ async def main():
      
 
 
-#loop = asyncio.get_event_loop()
-#start = datetime.now()
-#loop.run_until_complete(main())
-#process = subprocess.Popen(["./meter_1.py", "&"])
-#print(help(process))
-
-
-
-#try:
-#    os.kill(process.pid, 0)
-#except OSError:
-#    print("pid is unassigned")
-#else:
-#    print("pid is in use")
-
-#time.sleep(10)
-#process.kill()
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main())
 print("Start Script Complete")
 
 dir = '/home/openhabian/Environments/env_1/openHAB_Proj/lib'
-check_process(dir)
+run_dir = '/home/openhabian/Environments/env_1/openHAB_Proj/control_loop/'
+check_process(dir,run_dir)

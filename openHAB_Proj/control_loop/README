@@ -1,0 +1,33 @@
+This directory contains the control loop which is running
+The files:
+    ***config.py***        
+    This is the script which openHAB will set running
+    It creates the config.json file which tells the scripts what devices they control based upon the openHAb groups
+    It then launches the scripts in this directory on seperate thredas keeping track of the PID numbers in the 
+    process_list.json file in the lib/ directory 
+
+    ***meter_1_log_data.py***
+    The function of this script is to log data to the community_grid database for meter 192.168.0.116
+    The tables that will be logged to are the all_values table and the meter_values table
+
+    ***meter_2_log_data.py*** 
+    The function of this script is to log data to the database for meter 192.168.0.80.
+    The tables that will be logged to are the all_values table and the meter_values table
+
+   ***control_loop_one.py***
+   This is the control loop for te decvices which are controlled by meter 192.168.0.116
+   The config.json in the lib directory will be queried to see what devices this script controls 
+   based upon if they are in the group control_loop_one in openHAB.
+   The meter_values table will be queried in this script to see what the current values of meter 192.168.0.116 are
+
+   ***control_loop_two.py***
+   This is the control loop for te decvices which are controlled by meter 192.168.0.80
+   The config.json in the lib directory will be queried to see what devices this script controls 
+   based upon if they are in the group control_loop_two in openHAB.
+   The meter_values table will be queried in this script to see what the current values of meter 192.168.0.80 are
+
+   
+
+
+
+ 

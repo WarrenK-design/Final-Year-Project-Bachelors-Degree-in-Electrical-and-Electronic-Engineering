@@ -29,6 +29,7 @@ from openHAB_Proj import MySQL
 from datetime import datetime
 import logging 
 import os
+import subprocess
 
 ##Set up logger##
 #get the logger
@@ -39,6 +40,8 @@ formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(process)d:%(processNa
 #setup the file handler 
 file_handler = logging.FileHandler('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/smart_meters.log') #Get a file handler
 file_handler.setFormatter(formatter)
+file_handler.setLevel(logging.WARNING)
+#subprocess.call(['chmod','0777','/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/smart_meters.log'])
 #setup a stream handler
 stream_handler = logging.StreamHandler() # get a stream hander 
 stream_handler.setLevel(logging.ERROR) #set the stream handler level 
@@ -83,6 +86,7 @@ class smart_meter():
                 x+=2
                 y+=2
             #file.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],self.IP])
+            logger.info(f"Succesful read of meter {self.IP}, calling function update_all_values from MySQL.py")
             await MySQL.update_all_values(reg_value,self.IP,datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],conn)
         except Exception as e:
             #file.writerow(["MISS",self.IP])

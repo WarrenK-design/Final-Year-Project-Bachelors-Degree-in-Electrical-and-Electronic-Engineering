@@ -48,6 +48,8 @@ formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(process)d:%(processNa
 #setup the file handler 
 file_handler = logging.FileHandler('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/open_HAB.log') #Get a file handler
 file_handler.setFormatter(formatter)
+file_handler.setLevel(logging.WARNING)
+#subprocess.call(['chmod','0777','/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/open_HAB.log'])
 #setup a stream handler
 stream_handler = logging.StreamHandler() # get a stream hander 
 stream_handler.setLevel(logging.ERROR) #set the stream handler level 
