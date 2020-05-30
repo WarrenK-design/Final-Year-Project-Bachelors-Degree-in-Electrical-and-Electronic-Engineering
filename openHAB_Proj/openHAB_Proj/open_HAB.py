@@ -1,38 +1,39 @@
 #!/usr/bin/env python
 
-##House Keeping##
-#Author    - Warren Kavanagh 
-#Last edit - 29/02/2020
+#Author:    Warren Kavanagh
+#Last edit: 09/05/2020
 
 
-##TODOLIST##
-#TODO: Need a function to check the status of a given item 
-#TODO: Need to check the return codes of the HTTP requests  
-#TODO: Delete the pprint import when finished 
 
-#This script will contain all of the openHAB functionalitys 
-#Functions to be implmented:
-#   1. Retrieving items through the REST API  
-#   2. Turing items on and off 
-#   3. Reading the values of items
-#   4. Returng Switch items to implment control over multiple switches 
+
+
+##Description##
+#This file contains the OpenHAB class 
+#It contains the fucntions for interacting with the OpenHAB REST API
+#This includes:
+#   Retrieving Aeotech Smart plugs defined in OpenHAB
+#   Creating instances of the AeotechZW096 class 
+#   Turing items on and off 
+#   Reading the values of items
 
 ##Modules to import##
-# requests  - Allows script to make HTTP requests  https://requests.readthedocs.io/en/master/
-# UUID      - Used to get the MAC address of the raspberry pi  https://docs.python.org/3/library/uuid.html
-# re        - Regular expression library for formatting MAC address https://docs.python.org/3/library/re.html 
-# MySQL     - The MySQL library to connect to the community grid database
-# socket    - Used to get the IP address of the raspberry pi  https://docs.python.org/3/library/socket.html#socket.socket.connect
-# datetime  - Used to get the current time for the timestamp 
+# requests      - Allows script to make HTTP requests  https://requests.readthedocs.io/en/master/
+# UUID          - Used to get the MAC address of the raspberry pi  https://docs.python.org/3/library/uuid.html
+# re            - Regular expression library for formatting MAC address https://docs.python.org/3/library/re.html 
+# MySQL         - The MySQL library to connect to the community grid database
+# socket        - Used to get the IP address of the raspberry pi  https://docs.python.org/3/library/socket.html#socket.socket.connect
+# datetime      - Used to get the current time for the timestamp 
+# json          - Used to generate the config.json file for instanciating the smart plugs 
+# subprocess    - Changes the permissions on the config.json file 
+# asyncio       - Implements the asynchrounous functions in Python 
+# aiohttp       - Allows for asynchrounous http requests in Python    
 import requests
 import uuid
 import re
 from openHAB_Proj import MySQL
 import socket 
 from datetime import datetime
-import pprint #**********DELETE****************
 import json
-import os
 import subprocess
 import logging 
 import asyncio
@@ -48,15 +49,14 @@ formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(process)d:%(processNa
 #setup the file handler 
 file_handler = logging.FileHandler('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/open_HAB.log') #Get a file handler
 file_handler.setFormatter(formatter)
-file_handler.setLevel(logging.WARNING)
-#subprocess.call(['chmod','0777','/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/open_HAB.log'])
+#file_handler.setLevel(logging.WARNING)
+file_handler.setLevel(logging.INFO)
 #setup a stream handler
 stream_handler = logging.StreamHandler() # get a stream hander 
 stream_handler.setLevel(logging.ERROR) #set the stream handler level 
 #Add the handlers to the logger
 logger.addHandler(file_handler) #Add the handler to logger 
 logger.addHandler(stream_handler)
-#os.chmod('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/open_HAB.log', 0o777)
 
 
 
@@ -107,6 +107,8 @@ class open_HAB:
     ##initialise_hub_data##
     #Passes the required values to the hub_data function in the
     #MySQL module to store information on the hub in the database
+    #Input:
+    #   conn - A connection to the community_grid database 
     async def initialise_hub_data(self,conn):
         # Get the IP Address of the RaspberryPi
         IP = self.get_IP()
@@ -177,18 +179,14 @@ class open_HAB:
     # and return the value that is read
     # Inputs:
     #    item - The name of the item  e.g Voltage_Zwave_Node3
-    #async def read_item(self,item,file):
-        # Get request, returns a request object 
     async def read_item(self,item):
         logger.info(f"Get request sent to {self.base_url}/items/{item}/state")
         async with open_HAB.session.get(f'{self.base_url}/items/{item}/state') as resp:
             res = (await resp.text())
             if (resp.status) == 200:
-          #      file.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"OK",self.UID,res])
                 return res
             else:
-                pass
-                #file.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"FAIL",self.UID,res]) 
+                logger.warning(f"Response code {resp.status} returned when reading item {item}")
 
    
     ##get_item##
@@ -223,15 +221,12 @@ class open_HAB:
         logger.info(f"Post request sent to {self.base_url}/items/{item}, data=OFF")
         req = f'{self.base_url}/items/{item}'
         async with open_HAB.session.post(url=req,data='OFF') as resp:
-            rep = (resp.status)  #Need to add check to this
-#            if rep == 200:
- #               self.switch["value"] ="OFF"
+            rep = (resp.status)  
 
         
 
     ##check_status##
     # Checks the status of a given thing passed to it
-    #  
     # Inputs:
     #   UID - The UID of the thing to check the status of 
     async def check_status(self,UID):
@@ -254,6 +249,9 @@ class open_HAB:
 
     ##Write_Config##
     #Writes the config file for the scripts
+    #The config file will contain the information used to instatiate the Aeotech smart plugs
+    #This is based upon the OpenHAB group that the switch items belong to 
+    #The file generated is a JSON file in the lib directory called "config.json"
     #Inputs:
     #   switch - The name of the switch item in openHAB the given script will control 
     #   thing  - A string containing the device UID

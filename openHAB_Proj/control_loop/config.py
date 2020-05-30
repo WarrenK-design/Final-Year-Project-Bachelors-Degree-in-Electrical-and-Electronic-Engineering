@@ -2,7 +2,7 @@
 
 ##House Keeping##
 #Author    - Warren Kavanagh 
-#Last edit - 01/04/2020
+#Last edit - 08/05/2020
 
 ##Decription##
 # This script is used as a configuration script to be run when the openHAB session starts
@@ -15,9 +15,15 @@
 ## Modules to import ##
 # sys          - Used to navigate directorys in python 
 # open_HAB     - Contains the open_HAB Class with functions for interfacing with openHAB
-# smart_meters - Contains functions for interfacing with modubus meters 
+# smart_meters - Contains functions for interfacing with modubus meters
+# AeotechZW096 - Class which contains the functionality for the smart plugs
+# MySQL        - Module which contains the functionality for interacting with SQL database 
 # datetime     - Used for getting time in python 
 # logging      - Used to log to log file
+# os           - USed to see if the processes are still running of control loop 
+# json         - Writes and read to the process_list.json file in the lib directory 
+# asyncio      - Implments Asynchrounous function calls within Python 
+# subprocess   - Used to change the permissions on the process_list.json file 
 import sys
 sys.path.append(r'/home/openhabian/Environments/env_1/openHAB_Proj/')
 from openHAB_Proj.open_HAB import open_HAB
@@ -27,11 +33,9 @@ from openHAB_Proj import MySQL
 from datetime import datetime
 import logging
 import os
-import pprint
 import json
 import asyncio
 import subprocess
-import time
 
 ##Set up logger##
 #get the logger
@@ -42,14 +46,12 @@ formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(process)d:%(processNa
 #setup the file handler 
 file_handler = logging.FileHandler('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/config.log') #Get a file handler
 file_handler.setFormatter(formatter)
-#subprocess.call(['chmod','0777','/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/config.log'])
 #setup a stream handler
 stream_handler = logging.StreamHandler() # get a stream hander 
 stream_handler.setLevel(logging.ERROR) #set the stream handler level 
 #Add the handlers to the logger
 logger.addHandler(file_handler) #Add the handler to logger 
 logger.addHandler(stream_handler)
-#os.chmod('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/config.log', 0o777)
 
 ##check_process##
 # The purpose of this function is to check if a process is running in the background
@@ -108,16 +110,19 @@ def check_process(dir,run_dir):
                     cmd = run_dir+p
                     process = subprocess.Popen([python,cmd,"&"])
                     logger.info(f"Process {p} launched, PID of {process.pid} added to JSON file")
-                    print(f"Process was not in file, set running now PID of {process.pid}")
                     data[p] = process.pid
             json.dump(data,jsonFile)
 
 
 
+##main##
+# The purpose of this function is to query OpenHAB and see what smart plugs are configured 
+# If smart plugs are found an entry for them is added to the database 
+# Then the information to instantiate a new AeotechZW096 instance in the control loop file
+# Is added to the config.json file in the lib directory 
 async def main():
     #Crete a database connection
     conn = await MySQL.connect()
-    ##The process##
     #Intitialse an opeb_HAB object 
     hub = open_HAB()
     #Log the hub data to the "hub" table
@@ -130,22 +135,24 @@ async def main():
     #Loop through each of the devices found 
     if hub.AeotechZW096things is not None:
         for key, plug in hub.AeotechZW096things.items():
+            # If the plug is offline do not include it in the config file 
             if (plug.status['status']) != "ONLINE":
                 logger.warning(f"{plug.UID} is offline not including in config file")
             else:
                 #Log to the "Devices" table in community_grid
-               # await plug.update_devices_data(conn)
+                await plug.update_devices_data(conn)
                 #Log to the "items" table in community_grid
-               # await plug.update_items_data(conn)
+                await plug.update_items_data(conn)
                 #Write the configuration file for controlling the scripts
                 await plug.write_config(plug.switch['UID'],plug.UID,'/home/openhabian/Environments/env_1/openHAB_Proj/lib')
      
 
-
+##The script starts execution here##
+#Get the event loop
 loop = asyncio.get_event_loop()
+#Run the main() function 
 loop.run_until_complete(main())
-print("Start Script Complete")
-
 dir = '/home/openhabian/Environments/env_1/openHAB_Proj/lib'
 run_dir = '/home/openhabian/Environments/env_1/openHAB_Proj/control_loop/'
+# Run the check_process function
 check_process(dir,run_dir)

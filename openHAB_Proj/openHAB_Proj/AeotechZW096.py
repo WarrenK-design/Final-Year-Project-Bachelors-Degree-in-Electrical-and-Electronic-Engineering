@@ -1,21 +1,18 @@
 #!/usr/bin/env python
 
-##House Keeping##
 #Author    - Warren Kavanagh 
-#Last edit - 29/02/2020
+#Last edit - 00/05/2020
 
-##TODOLIST##
-#TODO:Delete the pprint import when finished 
 
 ##Modules to import##
 # open_HAB  - Module which contains the class open_HAB which AeotechZW096 inherits from
+# MySQL     - Module from the OpenHAB_Proj package that implments database functionality
+# datetime  - Used to the current datetime 
+# logging   - Logging module to write to the log file for this class 
 from openHAB_Proj import open_HAB
 from openHAB_Proj import MySQL
 from datetime import datetime
 import logging 
-import os
-import pprint
-import subprocess
 
 
 ##Set up logger##
@@ -23,19 +20,17 @@ import subprocess
 logger = logging.getLogger(__name__) #Get the logger
 logger.setLevel(logging.INFO) #Set the log level 
 #set up the formatting 
-formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(process)d:%(processName)s:%(filename)s:%(message)s') #Crete a formatter
+formatter = logging.Formatter('''%(asctime)s:%(levelname)s:%(process)d:%(processName)s:%(filename)s:%(message)s''') #Crete a formatter
 #setup the file handler 
-file_handler = logging.FileHandler('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/AeotechZW096.log') #Get a file handler
+file_handler = logging.FileHandler('''/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/AeotechZW096.log''') #Get a file handler
 file_handler.setFormatter(formatter)
-file_handler.setLevel(logging.WARNING)
-#subprocess.call(['chmod','0777','/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/AeotechZW096.log'])
+file_handler.setLevel(logging.INFO)
 #setup a stream handler
 stream_handler = logging.StreamHandler() # get a stream hander 
 stream_handler.setLevel(logging.ERROR) #set the stream handler level 
 #Add the handlers to the logger
 logger.addHandler(file_handler) #Add the handler to logger 
 logger.addHandler(stream_handler)
-#os.chmod('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/AeotechZW096.log', 0o777)
 
 ###  Class: AeotechZW096  ###
 ## Description ##
@@ -52,7 +47,8 @@ logger.addHandler(stream_handler)
 ## Functions ##
 #   __init__            - Initialise instance variables and call base class __init__
 #   sort_vars           - Will asses what items are configured for the given AeotechZW096 smart plug 
-#   sort_type           - Will assign unique values to inst variables based config found using sort_vars
+#   sort_type           - Will assign unique values to inst variables based config 
+#                         found using sort_vars
 #   read_voltage        - Read the value of voltage for the given smart plug 
 #   read_current        - Read the value of current for the given smart plug 
 #   read_switch         - Read the value of the switch for the given smart plug 
@@ -74,8 +70,10 @@ logger.addHandler(stream_handler)
 #   UID     [string]     - Unique ID assigned to the thing 
 #   status  [dictionary] - Stores information on the status of the thing
 #   items   [dictionary] - Stores references to the variables which contain the item information  
-#   keys    [list]       - The keys which will be used to instatiate dictionarys based on items instatiated 
-#These dictionarys are instatiated based on openHAB setup and if configured a reference will be stored in the items dictionary:
+#   keys    [list]       - The keys which will be used to instatiate dictionarys based 
+#                          on items instatiated 
+#These dictionarys are instatiated based on openHAB setup and if configured a 
+#reference will be stored in the items dictionary:
 #   switch  [dictionary] - Stores information associated with the switch item   
 #   voltage [dictionary] - Stores information associated with the voltage item
 #   power   [dictionary] - Stores information associated with the power item
@@ -91,6 +89,10 @@ class AeotechZW096(open_HAB.open_HAB):
     #Inputs:
     #   config - The JSON data that describes the smart plug config
     #   UID    - The unique ID assigned to the smart plug 
+    #   status - A dictinary which contains status information of the device
+    #   keys   - The keys used to instatiate the dictinarys for voltage, current, power, 
+    #            energy and switch attributes dynamically 
+    #   items  - A dictinary which contains all the items associated with this aeotech plug instance  
     def __init__ (self,config=None,UID=None):
         super().__init__()
         logger.info(f"AeotechZW096 object instantaited with UID of {UID}")
@@ -104,7 +106,8 @@ class AeotechZW096(open_HAB.open_HAB):
     ##sort_vars##
     #This function sorts the variables of the AeotechZW096 class
     #The JSON data which was found to be associated with the AeotechZW096 things
-    #and stored in the "config" variable is parsed with the item names and channel names configured in openHAB
+    #and stored in the "config" variable is parsed with the item names 
+    #and channel names configured in openHAB 
     #beng assigned to instance variables in python 
     async def sort_vars(self):
         #First check the status of the thing 
@@ -173,7 +176,8 @@ class AeotechZW096(open_HAB.open_HAB):
             #val = await self.read_item(self.voltage['UID'],file)
             val = await self.read_item(self.voltage['UID'])
             if val =='NULL':
-                logger.warning(f"{self.UID} voltage reading has returned NULL, setting voltage reading to None")
+                logger.warning(f'''{self.UID} voltage reading has returned NULL, 
+                                setting voltage reading to None''')
                 self.voltage['value'] = None    
             else:
                 logger.info(f"{self.UID} voltage value has been updated to {val}")
@@ -189,7 +193,8 @@ class AeotechZW096(open_HAB.open_HAB):
         else:
             val = await self.read_item(self.current['UID'])
             if val =='NULL':
-                logger.warning(f"{self.UID} current reading has returned NULL, setting voltage reading to None")
+                logger.warning(f'''{self.UID} current reading has returned NULL, 
+                               setting voltage reading to None''')
                 self.current['value'] = None
             else:
                 logger.info(f"{self.UID} current value has been updated to {val}")
@@ -211,7 +216,8 @@ class AeotechZW096(open_HAB.open_HAB):
                 logger.info(f"{self.switch['UID']} has been updated to {val}")
                 self.switch['value'] = 1
             else:
-                logger.info(f"{self.switch['UID']} has been set to Null due to unreadbale value recieved from API")
+                logger.info(f'''{self.switch['UID']} has been set to 
+                            Null due to unreadbale value recieved from API''')
                 self.switch['value'] = None
 
     ##read_power##
@@ -229,7 +235,6 @@ class AeotechZW096(open_HAB.open_HAB):
        	    else:
                 logger.info(f"{self.power['UID']} has been updated to {val}")
        	        self.power['value'] = val
-       	    #pprint.pprint(self.power)
 
     ##read_energy##
     #Reads the switch of the z-wave node 
@@ -246,7 +251,6 @@ class AeotechZW096(open_HAB.open_HAB):
             else:
                 logger.info(f"{self.energy['UID']} has been updated to {val}")
                 self.energy['value'] = val
-       #     pprint.pprint(self.energy)
 
     ##update_all##
     #This function updates all item values for the given node 
@@ -291,7 +295,8 @@ class AeotechZW096(open_HAB.open_HAB):
         #Call the check_status in the base class
         desc = await (self.check_status(self.UID))
         self.status['status'], self.status['statusDetail'] = desc['status'], desc['statusDetail']
-        logger.info(f"{self.UID} status updated to: {self.status['status']}, StatusDetail: {self.status['statusDetail']}")
+        logger.info(f'''{self.UID} status updated to: 
+                    {self.status['status']}, StatusDetail: {self.status['statusDetail']}''')
         if 'description' in desc:
             self.status['description'] = desc['description']
 
@@ -300,7 +305,8 @@ class AeotechZW096(open_HAB.open_HAB):
     #Inputs:
     #   conn - A aiomysql connection to the community grid database 
     async def update_items_data(self,conn):
-        # sql_data will store a list of tuples which contain infomation to be written to the items table
+        # sql_data will store a list of tuples which contain 
+        # infomation to be written to the items table
         sql_data = list()
         #Update the values first to most up to date values
         await self.update_all()
@@ -327,12 +333,3 @@ class AeotechZW096(open_HAB.open_HAB):
         logger.info(f"Attempting to update 'devices' table for {self.UID} device in database")
         await MySQL.insert_device(self.UID,self.MAC,self.status['status'],self.status['statusDetail'],self.status['description'],'Z-Wave','Z-Wave Binding',datetime.now().strftime('%Y-%m-%d %H:%M:%S'),conn)
 
-
-    ##update_volts##
-    #Function to add an entry to the voltages table 
-    #With the information from an Aeotech plug 
-    def update_volts(self):
-        #Get the most recent value for voltage
-        self.read_voltage()
-        logger.info(f"Attempting to update 'voltages' table for {self.UID} device in database")
-        MySQL.update_voltage(self.voltage['value'],datetime.now().strftime('%Y-%m-%d %H:%M:%S'))

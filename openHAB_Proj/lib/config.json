@@ -180,7 +180,7 @@
                     "zwave_frequent": "false",
                     "zwave_listening": "true",
                     "zwave_manufacturer": "134",
-                    "zwave_neighbours": "1",
+                    "zwave_neighbours": "",
                     "zwave_nodeid": "2",
                     "zwave_plus_devicetype": "NODE_TYPE_ZWAVEPLUS_NODE",
                     "zwave_plus_roletype": "ROLE_TYPE_SLAVE_ALWAYS_ON",
@@ -198,44 +198,44 @@
                 "UID": "Current_Zwave_Node2",
                 "name": "zwave:meter_current",
                 "unit": "Amps",
-                "value": null
+                "value": "0.188"
             },
             "energy": {
                 "UID": "Energy_Zwave_Node2",
                 "name": "zwave:meter_kwh",
                 "unit": "kWh",
-                "value": null
+                "value": "21.979"
             },
             "items": {
                 "current": {
                     "UID": "Current_Zwave_Node2",
                     "name": "zwave:meter_current",
                     "unit": "Amps",
-                    "value": null
+                    "value": "0.188"
                 },
                 "energy": {
                     "UID": "Energy_Zwave_Node2",
                     "name": "zwave:meter_kwh",
                     "unit": "kWh",
-                    "value": null
+                    "value": "21.979"
                 },
                 "power": {
                     "UID": "Power_Zwave_Node2",
                     "name": "zwave:meter_watts",
                     "unit": "Watts",
-                    "value": null
+                    "value": "25.522"
                 },
                 "switch": {
                     "UID": "Switch_Zwave_Node2",
                     "name": "zwave:switch_binary",
                     "unit": "Bool",
-                    "value": null
+                    "value": 1
                 },
                 "voltage": {
                     "UID": "Voltage_Zwave_Node2",
                     "name": "zwave:meter_voltage",
                     "unit": "Volts",
-                    "value": null
+                    "value": "234.915"
                 }
             },
             "keys": [
@@ -248,7 +248,7 @@
                 "UID": "Power_Zwave_Node2",
                 "name": "zwave:meter_watts",
                 "unit": "Watts",
-                "value": null
+                "value": "25.522"
             },
             "status": {
                 "description": null,
@@ -259,13 +259,13 @@
                 "UID": "Switch_Zwave_Node2",
                 "name": "zwave:switch_binary",
                 "unit": "Bool",
-                "value": null
+                "value": 1
             },
             "voltage": {
                 "UID": "Voltage_Zwave_Node2",
                 "name": "zwave:meter_voltage",
                 "unit": "Volts",
-                "value": null
+                "value": "234.915"
             }
         },
         "zwave:aeon_zw096_00_000:controller:node3": {
@@ -448,7 +448,7 @@
                     "zwave_frequent": "false",
                     "zwave_listening": "true",
                     "zwave_manufacturer": "134",
-                    "zwave_neighbours": "1",
+                    "zwave_neighbours": "",
                     "zwave_nodeid": "3",
                     "zwave_plus_devicetype": "NODE_TYPE_ZWAVEPLUS_NODE",
                     "zwave_plus_roletype": "ROLE_TYPE_SLAVE_ALWAYS_ON",
@@ -466,44 +466,44 @@
                 "UID": "Current_Zwave_Node3",
                 "name": "zwave:meter_current",
                 "unit": "Amps",
-                "value": null
+                "value": "0"
             },
             "energy": {
                 "UID": "Energy_Zwave_Node3",
                 "name": "zwave:meter_kwh",
                 "unit": "kWh",
-                "value": null
+                "value": "16.511"
             },
             "items": {
                 "current": {
                     "UID": "Current_Zwave_Node3",
                     "name": "zwave:meter_current",
                     "unit": "Amps",
-                    "value": null
+                    "value": "0"
                 },
                 "energy": {
                     "UID": "Energy_Zwave_Node3",
                     "name": "zwave:meter_kwh",
                     "unit": "kWh",
-                    "value": null
+                    "value": "16.511"
                 },
                 "power": {
                     "UID": "Power_Zwave_Node3",
                     "name": "zwave:meter_watts",
                     "unit": "Watts",
-                    "value": null
+                    "value": "0"
                 },
                 "switch": {
                     "UID": "Switch_Zwave_Node3",
                     "name": "zwave:switch_binary",
                     "unit": "Bool",
-                    "value": null
+                    "value": 1
                 },
                 "voltage": {
                     "UID": "Voltage_Zwave_Node3",
                     "name": "zwave:meter_voltage",
                     "unit": "Volts",
-                    "value": null
+                    "value": "235.31"
                 }
             },
             "keys": [
@@ -516,7 +516,7 @@
                 "UID": "Power_Zwave_Node3",
                 "name": "zwave:meter_watts",
                 "unit": "Watts",
-                "value": null
+                "value": "0"
             },
             "status": {
                 "description": null,
@@ -527,13 +527,13 @@
                 "UID": "Switch_Zwave_Node3",
                 "name": "zwave:switch_binary",
                 "unit": "Bool",
-                "value": null
+                "value": 1
             },
             "voltage": {
                 "UID": "Voltage_Zwave_Node3",
                 "name": "zwave:meter_voltage",
                 "unit": "Volts",
-                "value": null
+                "value": "235.31"
             }
         }
     },
@@ -736,44 +736,44 @@
                 "UID": "Current_Zwave_Node4",
                 "name": "zwave:meter_current",
                 "unit": "Amps",
-                "value": null
+                "value": "0"
             },
             "energy": {
                 "UID": "Energy_Zwave_Node4",
                 "name": "zwave:meter_kwh",
                 "unit": "kWh",
-                "value": null
+                "value": "64.201"
             },
             "items": {
                 "current": {
                     "UID": "Current_Zwave_Node4",
                     "name": "zwave:meter_current",
                     "unit": "Amps",
-                    "value": null
+                    "value": "0"
                 },
                 "energy": {
                     "UID": "Energy_Zwave_Node4",
                     "name": "zwave:meter_kwh",
                     "unit": "kWh",
-                    "value": null
+                    "value": "64.201"
                 },
                 "power": {
                     "UID": "Power_Zwave_Node4",
                     "name": "zwave:meter_watts",
                     "unit": "Watts",
-                    "value": null
+                    "value": "0"
                 },
                 "switch": {
                     "UID": "Switch_Zwave_Node4",
                     "name": "zwave:switch_binary",
                     "unit": "Bool",
-                    "value": null
+                    "value": 1
                 },
                 "voltage": {
                     "UID": "Voltage_Zwave_Node4",
                     "name": "zwave:meter_voltage",
                     "unit": "Volts",
-                    "value": null
+                    "value": "234.895"
                 }
             },
             "keys": [
@@ -786,7 +786,7 @@
                 "UID": "Power_Zwave_Node4",
                 "name": "zwave:meter_watts",
                 "unit": "Watts",
-                "value": null
+                "value": "0"
             },
             "status": {
                 "description": null,
@@ -797,13 +797,13 @@
                 "UID": "Switch_Zwave_Node4",
                 "name": "zwave:switch_binary",
                 "unit": "Bool",
-                "value": null
+                "value": 1
             },
             "voltage": {
                 "UID": "Voltage_Zwave_Node4",
                 "name": "zwave:meter_voltage",
                 "unit": "Volts",
-                "value": null
+                "value": "234.895"
             }
         },
         "zwave:aeon_zw096_00_000:controller:node5": {
@@ -1004,44 +1004,44 @@
                 "UID": "Current_Zwave_Node5",
                 "name": "zwave:meter_current",
                 "unit": "Amps",
-                "value": null
+                "value": "0"
             },
             "energy": {
                 "UID": "Energy_Zwave_Node5",
                 "name": "zwave:meter_kwh",
                 "unit": "kWh",
-                "value": null
+                "value": "0.058"
             },
             "items": {
                 "current": {
                     "UID": "Current_Zwave_Node5",
                     "name": "zwave:meter_current",
                     "unit": "Amps",
-                    "value": null
+                    "value": "0"
                 },
                 "energy": {
                     "UID": "Energy_Zwave_Node5",
                     "name": "zwave:meter_kwh",
                     "unit": "kWh",
-                    "value": null
+                    "value": "0.058"
                 },
                 "power": {
                     "UID": "Power_Zwave_Node5",
                     "name": "zwave:meter_watts",
                     "unit": "Watts",
-                    "value": null
+                    "value": "0"
                 },
                 "switch": {
                     "UID": "Switch_Zwave_Node5",
                     "name": "zwave:switch_binary",
                     "unit": "Bool",
-                    "value": null
+                    "value": 1
                 },
                 "voltage": {
                     "UID": "Voltage_Zwave_Node5",
                     "name": "zwave:meter_voltage",
                     "unit": "Volts",
-                    "value": null
+                    "value": "235.087"
                 }
             },
             "keys": [
@@ -1054,7 +1054,7 @@
                 "UID": "Power_Zwave_Node5",
                 "name": "zwave:meter_watts",
                 "unit": "Watts",
-                "value": null
+                "value": "0"
             },
             "status": {
                 "description": null,
@@ -1065,13 +1065,13 @@
                 "UID": "Switch_Zwave_Node5",
                 "name": "zwave:switch_binary",
                 "unit": "Bool",
-                "value": null
+                "value": 1
             },
             "voltage": {
                 "UID": "Voltage_Zwave_Node5",
                 "name": "zwave:meter_voltage",
                 "unit": "Volts",
-                "value": null
+                "value": "235.087"
             }
         }
     }

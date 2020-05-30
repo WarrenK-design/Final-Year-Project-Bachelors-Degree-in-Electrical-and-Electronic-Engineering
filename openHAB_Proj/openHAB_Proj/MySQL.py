@@ -1,64 +1,67 @@
 #!/usr/bin/env python
 
-##House Keeping##
 #Author    - Warren Kavanagh 
-#Last edit - 11/03/2020
+#Last edit - 00/05/2020
+
 
 ##Description##
 #This module contains functions for interfacing with the community_grid database
 #It allows connection to the database and to store values in the databases tables
 #The database currently contains the following tables:
-#   1.Hubs      - Information on each of the hubs in the network
-#   2.Devices   - Contains information on the smart devices in the network 
-#   3.Items     - Contains information on the items associated with devices in the network
+#   1.Hubs          - Information on each of the hubs in the network
+#   2.Devices       - Contains information on the smart devices in the network 
+#   3.Items         - Contains information on the items associated with devices in the network
+#   4.Meter_Values  - Contains the most up to date meter readings 
+#   4.All_Values    - Contains a record of meter readings 
 
-
-
-##TODOLIST##
 
 
 ##Modules to import##
 # mysql.connector  - Module which contains the functionallity to connect to the MySQL Database
 # ConfigParser     - Module to parse configuration files, used to get database config
+# Logging          - Module used to log to the log file for this file
+# sys              - Sets up stream handler for module
+# asyncio          - Implments the asynchrounous function calls
+# aiomysql         - Implemmtns the asynchrounous databse querys/logs
+# datetime         - Used to get the current date time 
 from mysql.connector import MySQLConnection, Error
 from configparser import ConfigParser
 import logging
 import sys
-import os
 import asyncio
 import aiomysql
-import aiofiles
 from datetime import datetime
-import subprocess
 
 ###Set up logger##
 ##get the logger
 logger = logging.getLogger(__name__) #Get the logger
 logger.setLevel(logging.INFO) #Set the log level 
 #set up the formatting 
-formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(process)d:%(processName)s:%(filename)s:%(message)s') #Crete a formatter
+formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(process)d:%(processName)s:%(filename)s:%(message)s')#Crete a formatter
 #setup the file handler 
-file_handler = logging.FileHandler('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/MySQL.log') #Get a file handler
+file_handler=logging.FileHandler('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/MySQL.log')#Get a file handler
 file_handler.setFormatter(formatter)
-file_handler.setLevel(logging.ERROR)
-#subprocess.call(['chmod','0777','/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/MySQL.log'])
+#file_handler.setLevel(logging.ERROR)
+file_handler.setLevel(logging.INFO)
 #setup a stream handler
 stream_handler = logging.StreamHandler(sys.stdout) # get a stream hander 
 stream_handler.setLevel(logging.ERROR) #set the stream handler level 
 #Add the handlers to the logger
 logger.addHandler(file_handler) #Add the handler to logger 
 logger.addHandler(stream_handler)
-#os.chmod('/home/openhabian/Environments/env_1/openHAB_Proj/lib/logs/MySQL.log', 0o777)
 
 
 ##Function List##
-#   read_db_config - Reads the configuration file for mysql retruns the configuration parameters for in a dictionary
-#   connect        - Connects to a mysql database using a config file returned from read_db_config
-#   update_items   - Updates an multiple enrtys in the items table at once 
-#   insert_items   - Inserts multiple item entrys into the items table, if entrys exists calls the update_items
-#   hub_data       - This function populates the hubs table in the database with an entry 
-#   insert_device  - Inserts a row into the device table of the community_grid database 
-
+#   read_db_config    - Reads the configuration file for mysql retruns the configuration parameters
+#                       in a dictionary
+#   connect           - Connects to a mysql database using a config file returned from read_db_config
+#   update_items      - Updates an multiple enrtys in the items table at once 
+#   insert_items      - Inserts multiple item entrys into the items table, if entrys exists calls 
+#                       the update_items
+#   hub_data          - This function populates the hubs table in the database with an entry 
+#   insert_device     - Inserts a row into the device table of the community_grid database 
+#   query_all_values  - Querys the meter_vales table for most up to date power readings
+#   update_all_values - Updates the all_values and meter_values tables
 
 ##read_db_config##
 #Reads the configuration file for mysql
@@ -155,7 +158,8 @@ async def update_items(item,conn):
 #| Time     | datetime     | YES  |     | NULL    |       |
 #+----------+--------------+------+-----+---------+-------+
 #Inputs:
-#   items - A list contating multiple tuples which have values for ItemUID,DeviceID,Value,Units,Time in that order or single tuple
+#   items - A list contating multiple tuples which have values for ItemUID,DeviceID,Value,Units,Time in 
+#           that order or single tuple
 async def insert_item(items,conn):
     query = '''INSERT INTO items(ItemUID,DeviceID,Value,Units,Time)
                VALUES(%s,%s,%s,%s,%s)'''
@@ -201,8 +205,8 @@ async def insert_item(items,conn):
 #The Location will have to be manually set as the location of the IP server can only be found
 async def hub_data(MAC,IP,Time,conn):
     try:
-        query = '''INSERT INTO hubs(RaspberryPi_ID,IP_Address,Time)
-               VALUES(%s,%s,%s)'''
+        query = '''INSERT INTO hubs(RaspberryPi_ID,IP_Address,Time,Location)
+               VALUES(%s,%s,%s,"Dublin")'''
 
         async with conn.cursor() as cur:
             logger.info("Attempting to update hub table")
@@ -216,7 +220,8 @@ async def hub_data(MAC,IP,Time,conn):
             #Update the value for this primary key
             query = '''UPDATE hubs
                 SET IP_Address = %s,
-                Time = %s
+                Time = %s,
+                Location = "Dublin"
                 WHERE 
                 RaspberryPi_ID = %s'''
             try:
@@ -243,8 +248,10 @@ async def hub_data(MAC,IP,Time,conn):
 #| Communication_Protocol | varchar(255) | YES  |     | NULL    |       |
 #| Binding                | varchar(255) | YES  |     | NULL    |       |
 #+------------------------+--------------+------+-----+---------+-------+
-async def insert_device(DeviceID,RaspberryPi_ID,Status,Status_Detail,Status_Desc,Communication_Protocol,Binding,Time,conn):
-    query = ''' INSERT INTO devices(DeviceID,RaspberryPi_ID,Status,Status_Detail,Status_Description,Communication_Protocol,Binding,Time)
+async def insert_device(DeviceID,RaspberryPi_ID,Status,Status_Detail,
+                        Status_Desc,Communication_Protocol,Binding,Time,conn):
+    query = ''' INSERT INTO devices(DeviceID,RaspberryPi_ID,Status,Status_Detail,Status_Description,
+                                    Communication_Protocol,Binding,Time)
                VALUES(%s,%s,%s,%s,%s,%s,%s,%s)
     '''
 
@@ -280,7 +287,7 @@ async def insert_device(DeviceID,RaspberryPi_ID,Status,Status_Detail,Status_Desc
             except Exception as e:
                 logger.exception("Could not update devices table, tracback shown below\n{e}")
         else:
-            logger.exception("Could not insert new device into devices table, tracback shown below\n{e}")
+            logger.exception("Could not insert new device into devices table, tracback shown below")
 
     #Close the connection
     finally:
@@ -290,114 +297,7 @@ async def insert_device(DeviceID,RaspberryPi_ID,Status,Status_Detail,Status_Desc
             pass
 
 
-##update_voltage##
-#This function will add an entry to the voltages_async table 
-#The schema for the voltages_async table currently is 
-#+-----------+--------------+------+-----+----------------------+-------------------+
-#| Field     | Type         | Null | Key | Default              | Extra             |
-#+-----------+--------------+------+-----+----------------------+-------------------+
-#| ID        | int          | NO   | PRI | NULL                 | auto_increment    |
-#| MeterID   | varchar(255) | YES  |     | NULL                 |                   |
-#| Value     | float        | YES  |     | NULL                 |                   |
-#| Units     | varchar(255) | YES  |     | Volts                |                   |
-#| Time_MTCP | timestamp(3) | YES  |     | NULL                 |                   |
-#| Time_SQL  | timestamp(3) | NO   |     | CURRENT_TIMESTAMP(3) | DEFAULT_GENERATED |
-#+-----------+--------------+------+-----+----------------------+-------------------+
-#Inputs:
-#   value   - The value of voltage 
-#   IP      - The IP address of the smart_meter
-#   time    - The time the voltage reading was recorded at     
-#   conn    - A connection to the database 
-async def update_voltage(value,IP,time,conn):
-    try:
-        query = ''' INSERT INTO voltage(Value,MeterID,Time_MTCP)
-                 VALUES(%s,%s,%s) '''
-
-        async with conn.cursor() as cur:
-            await cur.execute(query,(value,IP,time))
-            await conn.commit()
-    
-    except Exception as e:
-        logger.exception(e)
-
-    else:
-        logger.info(f"New voltage entry from {IP} in voltages table")
-    finally:
-        await cur.close()
-
-
-##update_power##
-#This function will add an entry to the voltages_async table 
-#The schema for the current table currently is 
-#+-----------+--------------+------+-----+----------------------+-------------------+
-#| Field     | Type         | Null | Key | Default              | Extra             |
-#+-----------+--------------+------+-----+----------------------+-------------------+
-#| ID        | int          | NO   | PRI | NULL                 | auto_increment    |
-#| MeterID   | varchar(255) | YES  |     | NULL                 |                   |
-#| Value     | float        | YES  |     | NULL                 |                   |
-#| Units     | varchar(255) | YES  |     | kW                   |                   |
-#| Time_MTCP | timestamp(3) | YES  |     | NULL                 |                   |
-#| Time_SQL  | timestamp(3) | NO   |     | CURRENT_TIMESTAMP(3) | DEFAULT_GENERATED |
-#+-----------+--------------+------+-----+----------------------+-------------------+
-#Inputs:
-#   value   - The value of power in kW 
-#   IP      - The IP address of the smart_meter
-#   time    - The time the voltage reading was recorded at by ModBus
-#   conn    - A connection to the database 
-async def update_power(value,IP,time,conn):
-    try:
-        query = ''' INSERT INTO power(Value,MeterID,Time_MTCP)
-                 VALUES(%s,%s,%s) '''
-
-        async with conn.cursor() as cur:
-            await cur.execute(query,(value,IP,time))
-            await conn.commit()
-    
-    except Exception as e:
-        logger.exception(e)
-
-    else:
-        logger.info(f"New voltage entry from {IP} in power table")
-    finally:
-        await cur.close()
-
-##update_current##
-#This function will add an entry to the voltages_async table 
-#The schema for the current table currently is 
-#+-----------+--------------+------+-----+----------------------+-------------------+
-#| Field     | Type         | Null | Key | Default              | Extra             |
-#+-----------+--------------+------+-----+----------------------+-------------------+
-#| ID        | int          | NO   | PRI | NULL                 | auto_increment    |
-#| MeterID   | varchar(255) | YES  |     | NULL                 |                   |
-#| Value     | float        | YES  |     | NULL                 |                   |
-#| Units     | varchar(255) | YES  |     | kW                   |                   |
-#| Time_MTCP | timestamp(3) | YES  |     | NULL                 |                   |
-#| Time_SQL  | timestamp(3) | NO   |     | CURRENT_TIMESTAMP(3) | DEFAULT_GENERATED |
-#+-----------+--------------+------+-----+----------------------+-------------------+
-#Inputs:
-#   value   - The value of power in kW 
-#   IP      - The IP address of the smart_meter
-#   time    - The time the voltage reading was recorded at by ModBus
-#   conn    - A connection to the database 
-async def update_current(value,IP,time,conn):
-    try:
-        query = ''' INSERT INTO current(Value,MeterID,Time_MTCP)
-                 VALUES(%s,%s,%s) '''
-
-        async with conn.cursor() as cur:
-            await cur.execute(query,(value,IP,time))
-            await conn.commit()
-    
-    except Exception as e:
-        logger.exception(e)
-
-    else:
-        logger.info(f"New voltage entry from {IP} in current table")
-    finally:
-        await cur.close()
-
-
-##query_meter_values##
+##query_all_values##
 # The purpose of this function is to query the meter_values table for the most recent meter read:w
 #+----------------------+--------------+------+-----+----------------------+-------------------+
 #| Field                | Type         | Null | Key | Default              | Extra             |
@@ -427,7 +327,6 @@ async def update_current(value,IP,time,conn):
 #   Reactive Power 
 #   Apparent Power
 #   Power Factor
-#async def query_all_values(conn,IP,file):
 async def query_all_values(conn,IP):
     try:
         query = ''' select Voltage, Current, Power, Reactive_Power, Apparent_Power, Power_Factor 
@@ -440,7 +339,6 @@ async def query_all_values(conn,IP):
         logger.exception(e)
     else:
         result = (await cur.fetchone())
-      #  file.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]])
         logger.info(f"Succesful read")
         return result[0], result[1], result[2], result[3], result[4], result[5]
     finally:
@@ -450,7 +348,8 @@ async def query_all_values(conn,IP):
 
 ##Update_AllValues##
 # The purpose of this function is to update the all_values table and the meter_values table
-# The all values table keeps a record of historical meter readings, the meter_values table keeps a record of the most recent readings  
+# The all values table keeps a record of historical meter readings, the meter_values table keeps
+# a record of the most recent readings  
 # The layout of the all_values table is:
 #+----------------------+--------------+------+-----+----------------------+-------------------+
 #| Field                | Type         | Null | Key | Default              | Extra             |
@@ -537,7 +436,7 @@ async def update_all_values(regs,IP,time,conn):
                     await conn.commit()
                     logger.info(f"Entry {IP} has been updated in meter_values table)")
             except Exception as e:
-                logger.exception(f"Could not update meter_values table with {IP}, tracback shown below\n{e}")
+                logger.exception(f"Could not update meter_values table with {IP}, tracback shown below")
         else:
             logger.exception(f"Could not insert entry {IP} into meter_values table\n{e}")
     else:
