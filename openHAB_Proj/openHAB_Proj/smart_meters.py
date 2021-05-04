@@ -56,7 +56,7 @@ class smart_meter():
     #   IP - The IP address of the smart meter 
     #   client - A modbus client of type 'pymodbus.client.asynchronous.asyncio.ReconnectingAsyncioModbusTcpClient'
     def __init__(self,IP,client):
-        #Create the client object passing the IP address of the slave to it 
+        #Create the client object passing the IP address of the subordinate to it 
         logger.info(f"New instance of smart_meter instantaited with IP of {IP}")
         self.IP = IP
         #self.client - 'pymodbus.client.asynchronous.asyncio.ModbusClientProtocol' 
